@@ -32,6 +32,11 @@ My csdn blog：https://blog.csdn.net/wwt18811707971
 
 （5）app_at24cxx.c：eeprom operate by i2c
 
+（6）c_language_regular.c：some c language regular test
+
+（7）variable.c：gloal variable
+
+
 
 ## Driver：
 （1）drvexflash.c：Spi flash operate （W25X，W25Q ，and so on）
