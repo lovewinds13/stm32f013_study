@@ -101,8 +101,8 @@ void spi_master_init(uint8_t spi_chl)
 	if(spi_chl == 1)
 	{	
 		spi_flash_gpio_init();	//spi flash cs 初始化
-		sd_gpio_init();	//spi sd cs 初始化
-		nrf24l01_gpio_init();//spi nrf24l01 cs 初始化
+//		sd_gpio_init();	//spi sd cs 初始化
+//		nrf24l01_gpio_init();//spi nrf24l01 cs 初始化
 		
 		spi_gpio_init(1);	//spi gpio 初始化
 
