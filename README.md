@@ -8,6 +8,9 @@ My csdn blog：https://blog.csdn.net/wwt18811707971
 
 （1）MCU：STM32F103RC
 
+（2）包含底层通信和对应的应用测试代码
+
+
 
 # 修改记录：
 
