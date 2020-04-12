@@ -2,192 +2,406 @@
 ; commandline ArmCC [--c99 --list --split_sections --debug -c --asm --interleave -o.\main.o --asm_dir=.\ --list_dir=.\ --depend=.\main.d --cpu=Cortex-M3 --apcs=interwork -O0 --diag_suppress=9931 -I..\App\inc -I..\Driver\inc -I..\Libraries\CMSIS\Core\inc -I..\Libraries\CMSIS\Device\inc -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\HalIterface\inc -I..\User\inc -I.\RTE\_Target_1 -IC:\Users\18811\Documents\Keil\STM32F1xx_DFP\1.0.5\Device\Include -IC:\Keil_v5\ARM\CMSIS\Include -D__MICROLIB -D__UVISION_VERSION=529 -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER --omf_browse=.\main.crf ..\User\src\Main.c]
                           THUMB
 
-                          AREA ||i.Hardware_AllInit||, CODE, READONLY, ALIGN=1
+                          AREA ||i.Hardware_AllInit||, CODE, READONLY, ALIGN=2
 
+                          REQUIRE _printf_percent
+                          REQUIRE _printf_flags
+                          REQUIRE _printf_x
+                          REQUIRE _printf_longlong_hex
                   Hardware_AllInit PROC
-;;;44     
-;;;45     void Hardware_AllInit(void)
+;;;88     
+;;;89     void Hardware_AllInit(void)
 000000  b510              PUSH     {r4,lr}
-;;;46     {
-;;;47     	
-;;;48     	Bsp_LedInit();
+;;;90     {
+;;;91     	
+;;;92     	Bsp_LedInit();
 000002  f7fffffe          BL       Bsp_LedInit
-;;;49     	
-;;;50     
-;;;51     	
-;;;52     	
-;;;53     	
-;;;54     	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);	// 设置中断优先级分组2
+;;;93     	
+;;;94     
+;;;95     	
+;;;96     	
+;;;97     	
+;;;98     	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);	// 设置中断优先级分组2
 000006  f44f60a0          MOV      r0,#0x500
 00000a  f7fffffe          BL       NVIC_PriorityGroupConfig
-;;;55     	delay_init();	    	 		//延时函数初始化	  
+;;;99     	delay_init();	    	 		//延时函数初始化	  
 00000e  f7fffffe          BL       delay_init
-;;;56     			  			//初始化与LED连接的硬件接口
-;;;57     //	Usart_Init(USART1, 9600);		//串口1初始化,用于调试信息输出
-;;;58     	uart_init(1, 9600);
+;;;100    			  			//初始化与LED连接的硬件接口
+;;;101    //	Usart_Init(USART1, 9600);		//串口1初始化,用于调试信息输出
+;;;102    	uart_init(1, 9600);
 000012  f44f5116          MOV      r1,#0x2580
 000016  2001              MOVS     r0,#1
 000018  f7fffffe          BL       uart_init
-;;;59     //	printf (" \r\n mcu enter main \r\n");
-;;;60     	
-;;;61     //	stack_test();
-;;;62     //	heap_test();
-;;;63     	pack_test();
-00001c  f7fffffe          BL       pack_test
-;;;64     //	macro_define_test();
-;;;65     //	cpu_mem_endian();
-;;;66     	
-;;;67     	
-;;;68     #ifdef ADC_FUNC_TEST
-;;;69     	Adc_Init();
-;;;70     	App_AdcTest();
-;;;71     	
-;;;72     #endif	//ADC_FUNC_TEST
-;;;73     	
-;;;74     
-;;;75     #if SPI_COMM_MODE
-;;;76     	#ifdef HARD_SPI_COMM
-;;;77     	spi_master_init(1);
-;;;78     	Flash_TestDataInit();
-;;;79     	ulFlashIdVal = spi_flash_read_id();
-;;;80     	printf("Hard --1 spi flash val is 0x%0X \r\n", ulFlashIdVal);
-;;;81     	ulFlashIdVal = spi_flash_read_id();
-;;;82     	printf("Hard --2 Spi flash val is 0x%0X \r\n", ulFlashIdVal);
-;;;83     	#endif	//HARD_SPI_COMM
-;;;84     #else
-;;;85     	#ifdef SOFT_SPI_COMM
-;;;86     	Spi_GpioInit();
-;;;87     	Flash_TestDataInit();
-;;;88     	
-;;;89     	ulFlashIdVal = Flash_ReadJEDECID();
-;;;90     	printf("Spi flash val is 0x%0X \r\n", ulFlashIdVal);
-;;;91     	
-;;;92     //	W25_WriteReadBytes();
-;;;93     //	W25_CircleWriteRead(0x01, 0x00, g_WriteData, g_DataTmpBuffer, 256);	//flash循环读写测试
-;;;94     	#endif	//SOFT_SPI_COMM
-;;;95     #endif	//SPI_COMM_MODE	
-;;;96     
-;;;97     #ifdef I2C_HTU_TEST
-;;;98     	Htu_Init();
-;;;99     	ee_at24cxx_init();
-;;;100    #endif
-;;;101    }
-000020  bd10              POP      {r4,pc}
-;;;102    
+;;;103    //	printf (" \r\n mcu enter main \r\n");
+;;;104    	
+;;;105    //	stack_test();
+;;;106    //	heap_test();
+;;;107    //	pack_test();
+;;;108    //	macro_define_test();
+;;;109    //	cpu_mem_endian();
+;;;110    	
+;;;111    	
+;;;112    #ifdef ADC_FUNC_TEST
+;;;113    	Adc_Init();
+;;;114    	App_AdcTest();
+;;;115    	
+;;;116    #endif	//ADC_FUNC_TEST
+;;;117    	
+;;;118    
+;;;119    #if SPI_COMM_MODE
+;;;120    	#ifdef HARD_SPI_COMM
+;;;121    	spi_master_init(1);
+00001c  2001              MOVS     r0,#1
+00001e  f7fffffe          BL       spi_master_init
+;;;122    	#ifdef OLED_FUNC_TEST
+;;;123    	oled_init();
+000022  f7fffffe          BL       oled_init
+;;;124    	oled_dis_logo();
+000026  f7fffffe          BL       oled_dis_logo
+;;;125    //	oled_dis_picture(0, 0, 128, 7, bmp_buff);
+;;;126    //	oled_dis_num(60, 4, 1314, 4, 16);
+;;;127    //	oled_dis_one_char(5, 2, 'A');
+;;;128    //	oled_dis_one_char(12, 2, 'B');
+;;;129    //	oled_dis_one_char(129, 2, 'B');
+;;;130    //	oled_dis_chinese(33,1,0);
+;;;131    //	oled_dis_chinese(53,1,1);
+;;;132    //	oled_dis_chinese(73,1,2);
+;;;133    //	oled_dis_chinese(93,1,3);
+;;;134    //	oled_dis_chinese(33,5,4);
+;;;135    //	oled_dis_chinese(53,5,5);
+;;;136    //	oled_dis_chinese(73,5,6);
+;;;137    //	oled_dis_chinese(93,5,7);
+;;;138    	#endif
+;;;139    	Flash_TestDataInit();
+00002a  f7fffffe          BL       Flash_TestDataInit
+;;;140    	ulFlashIdVal = spi_flash_read_id();
+00002e  f7fffffe          BL       spi_flash_read_id
+000032  4908              LDR      r1,|L1.84|
+000034  6008              STR      r0,[r1,#0]  ; ulFlashIdVal
+;;;141    	printf("Hard --1 spi flash val is 0x%0X \r\n", ulFlashIdVal);
+000036  4608              MOV      r0,r1
+000038  6801              LDR      r1,[r0,#0]  ; ulFlashIdVal
+00003a  a007              ADR      r0,|L1.88|
+00003c  f7fffffe          BL       __2printf
+;;;142    	ulFlashIdVal = spi_flash_read_id();
+000040  f7fffffe          BL       spi_flash_read_id
+000044  4903              LDR      r1,|L1.84|
+000046  6008              STR      r0,[r1,#0]  ; ulFlashIdVal
+;;;143    	printf("Hard --2 Spi flash val is 0x%0X \r\n", ulFlashIdVal);
+000048  4608              MOV      r0,r1
+00004a  6801              LDR      r1,[r0,#0]  ; ulFlashIdVal
+00004c  a00b              ADR      r0,|L1.124|
+00004e  f7fffffe          BL       __2printf
+;;;144    	#endif	//HARD_SPI_COMM
+;;;145    #else
+;;;146    	#ifdef SOFT_SPI_COMM
+;;;147    	Spi_GpioInit();
+;;;148    	Flash_TestDataInit();
+;;;149    	
+;;;150    	ulFlashIdVal = Flash_ReadJEDECID();
+;;;151    	printf("Spi flash val is 0x%0X \r\n", ulFlashIdVal);
+;;;152    	
+;;;153    //	W25_WriteReadBytes();
+;;;154    //	W25_CircleWriteRead(0x01, 0x00, g_WriteData, g_DataTmpBuffer, 256);	//flash循环读写测试
+;;;155    	#endif	//SOFT_SPI_COMM
+;;;156    #endif	//SPI_COMM_MODE	
+;;;157    
+;;;158    #ifdef I2C_HTU_TEST
+;;;159    	Htu_Init();
+;;;160    	ee_at24cxx_init();
+;;;161    #endif
+;;;162    }
+000052  bd10              POP      {r4,pc}
+;;;163    
                           ENDP
 
+                  |L1.84|
+                          DCD      ulFlashIdVal
+                  |L1.88|
+000058  48617264          DCB      "Hard --1 spi flash val is 0x%0X \r\n",0
+00005c  202d2d31
+000060  20737069
+000064  20666c61
+000068  73682076
+00006c  616c2069
+000070  73203078
+000074  25305820
+000078  0d0a00  
+00007b  00                DCB      0
+                  |L1.124|
+00007c  48617264          DCB      "Hard --2 Spi flash val is 0x%0X \r\n",0
+000080  202d2d32
+000084  20537069
+000088  20666c61
+00008c  73682076
+000090  616c2069
+000094  73203078
+000098  25305820
+00009c  0d0a00  
+00009f  00                DCB      0
 
                           AREA ||i.main||, CODE, READONLY, ALIGN=2
 
+                          REQUIRE _printf_percent
+                          REQUIRE _printf_flags
+                          REQUIRE _printf_x
+                          REQUIRE _printf_longlong_hex
                   main PROC
-;;;103    
-;;;104    int main(void)
+;;;164    
+;;;165    int main(void)
 000000  f7fffffe          BL       Hardware_AllInit
-;;;105    {	
-;;;106    	Hardware_AllInit();
-;;;107    	
-;;;108    #ifdef DEBUG_ENABLE
-;;;109    	printk("Using Usart1 Output Debuging Infomation\r\n");
-000004  a010              ADR      r0,|L2.72|
+;;;166    {	
+;;;167    	Hardware_AllInit();
+;;;168    	
+;;;169    #ifdef DEBUG_ENABLE
+;;;170    	printk("Using Usart1 Output Debuging Infomation\r\n");
+000004  a015              ADR      r0,|L2.92|
 000006  f7fffffe          BL       __2printf
-;;;110    #endif
-;;;111    	
-;;;112    	while(1)
-00000a  e01b              B        |L2.68|
+;;;171    #endif
+;;;172    	
+;;;173    	while(1)
+00000a  e026              B        |L2.90|
                   |L2.12|
-;;;113    	{
-;;;114    		Sys_DelayUs(1000);
+;;;174    	{
+;;;175    		Sys_DelayUs(1000);
 00000c  f44f707a          MOV      r0,#0x3e8
 000010  f7fffffe          BL       Sys_DelayUs
-;;;115    		Sys_DelayUs(1000);
+;;;176    		Sys_DelayUs(1000);
 000014  f44f707a          MOV      r0,#0x3e8
 000018  f7fffffe          BL       Sys_DelayUs
-;;;116    		Sys_DelayUs(1000);
+;;;177    		Sys_DelayUs(1000);
 00001c  f44f707a          MOV      r0,#0x3e8
 000020  f7fffffe          BL       Sys_DelayUs
-;;;117    		Sys_DelayUs(1000);
+;;;178    		Sys_DelayUs(1000);
 000024  f44f707a          MOV      r0,#0x3e8
 000028  f7fffffe          BL       Sys_DelayUs
-;;;118    		Bsp_LedTest(500);
+;;;179    		Bsp_LedTest(500);
 00002c  f44f70fa          MOV      r0,#0x1f4
 000030  f7fffffe          BL       Bsp_LedTest
-;;;119    		
-;;;120    	#ifdef ADC_FUNC_TEST
-;;;121    		Adc_Init();
-;;;122    		App_AdcTest();
-;;;123    		
-;;;124    	#endif	//ADC_FUNC_TEST
-;;;125    
-;;;126    #if SPI_COMM_MODE		
-;;;127    	#ifdef 	HARD_SPI_COMM
-;;;128    		ulFlashIdVal = Flash_ReadJEDECID();
-;;;129    		printf(" hard spi flash val is 0x%0X \r\n", ulFlashIdVal);
-;;;130    		W25_WriteReadBytes();
-;;;131    
-;;;132    	#endif	//HARD_SPI_COMM	
-;;;133    #else	
-;;;134    	#ifdef SOFT_SPI_COMM	
-;;;135    		ulFlashIdVal = Flash_ReadJEDECID();
-;;;136    		printf(" soft spi flash val is 0x%0X \r\n", ulFlashIdVal);
-;;;137    		W25_WriteReadBytes();
-;;;138    	#endif	//SOFT_SPI_COM
-;;;139    	
-;;;140    #endif	//SPI_COMM_MODE
-;;;141    
-;;;142    #ifdef I2C_HTU_TEST
-;;;143    	Htu_Display();
-;;;144    	ee_at24cxx_test();
-;;;145    #endif
-;;;146    
-;;;147    #ifdef UART_FUNC_TEST
-;;;148    //	uart_test();
-;;;149    #endif
-;;;150    
-;;;151    //	printf("Main is ruinning\r\n");
-;;;152    	Bsp_LedTest(300);
-000034  f44f7096          MOV      r0,#0x12c
-000038  f7fffffe          BL       Bsp_LedTest
-;;;153    //	sprintf_test();	
-;;;154    //	strcpy_test();
-;;;155    //	memcmp_test();
-;;;156    //  strcmp_test();
-;;;157    
-;;;158    		delay_ms(500);
-00003c  f44f70fa          MOV      r0,#0x1f4
-000040  f7fffffe          BL       delay_ms
-                  |L2.68|
-000044  e7e2              B        |L2.12|
-;;;159    		
-;;;160    //	if (USART_RX_STA)
-;;;161    //	{
-;;;162    //		printf("mcu will soft reset\r\n");
-;;;163    //		NVIC_SystemReset();
-;;;164    //		printf("mcu reset ok\r\n");
-;;;165    //	}
-;;;166    		
-;;;167    	}
-;;;168    }
-;;;169    
+;;;180    		
+;;;181    	#ifdef ADC_FUNC_TEST
+;;;182    		Adc_Init();
+;;;183    		App_AdcTest();
+;;;184    		
+;;;185    	#endif	//ADC_FUNC_TEST
+;;;186    
+;;;187    #if SPI_COMM_MODE		
+;;;188    	#ifdef 	HARD_SPI_COMM
+;;;189    		ulFlashIdVal = Flash_ReadJEDECID();
+000034  f7fffffe          BL       Flash_ReadJEDECID
+000038  4913              LDR      r1,|L2.136|
+00003a  6008              STR      r0,[r1,#0]  ; ulFlashIdVal
+;;;190    		printf(" hard spi flash val is 0x%0X \r\n", ulFlashIdVal);
+00003c  4608              MOV      r0,r1
+00003e  6801              LDR      r1,[r0,#0]  ; ulFlashIdVal
+000040  a012              ADR      r0,|L2.140|
+000042  f7fffffe          BL       __2printf
+;;;191    		W25_WriteReadBytes();
+000046  f7fffffe          BL       W25_WriteReadBytes
+;;;192    
+;;;193    	#endif	//HARD_SPI_COMM	
+;;;194    #else	
+;;;195    	#ifdef SOFT_SPI_COMM	
+;;;196    		ulFlashIdVal = Flash_ReadJEDECID();
+;;;197    		printf(" soft spi flash val is 0x%0X \r\n", ulFlashIdVal);
+;;;198    		W25_WriteReadBytes();
+;;;199    	#endif	//SOFT_SPI_COM
+;;;200    	
+;;;201    #endif	//SPI_COMM_MODE
+;;;202    
+;;;203    #ifdef I2C_HTU_TEST
+;;;204    	Htu_Display();
+;;;205    	ee_at24cxx_test();
+;;;206    #endif
+;;;207    
+;;;208    #ifdef UART_FUNC_TEST
+;;;209    //	uart_test();
+;;;210    #endif
+;;;211    
+;;;212    //	printf("Main is ruinning\r\n");
+;;;213    	Bsp_LedTest(300);
+00004a  f44f7096          MOV      r0,#0x12c
+00004e  f7fffffe          BL       Bsp_LedTest
+;;;214    //	sprintf_test();	
+;;;215    //	strcpy_test();
+;;;216    //	memcmp_test();
+;;;217    //  strcmp_test();
+;;;218    
+;;;219    		delay_ms(500);
+000052  f44f70fa          MOV      r0,#0x1f4
+000056  f7fffffe          BL       delay_ms
+                  |L2.90|
+00005a  e7d7              B        |L2.12|
+;;;220    		
+;;;221    //	if (USART_RX_STA)
+;;;222    //	{
+;;;223    //		printf("mcu will soft reset\r\n");
+;;;224    //		NVIC_SystemReset();
+;;;225    //		printf("mcu reset ok\r\n");
+;;;226    //	}
+;;;227    		
+;;;228    	}
+;;;229    }
+;;;230    
                           ENDP
 
-000046  0000              DCW      0x0000
-                  |L2.72|
-000048  5573696e          DCB      "Using Usart1 Output Debuging Infomation\r\n",0
-00004c  67205573
-000050  61727431
-000054  204f7574
-000058  70757420
-00005c  44656275
-000060  67696e67
-000064  20496e66
-000068  6f6d6174
-00006c  696f6e0d
-000070  0a00    
-000072  00                DCB      0
-000073  00                DCB      0
+                  |L2.92|
+00005c  5573696e          DCB      "Using Usart1 Output Debuging Infomation\r\n",0
+000060  67205573
+000064  61727431
+000068  204f7574
+00006c  70757420
+000070  44656275
+000074  67696e67
+000078  20496e66
+00007c  6f6d6174
+000080  696f6e0d
+000084  0a00    
+000086  00                DCB      0
+000087  00                DCB      0
+                  |L2.136|
+                          DCD      ulFlashIdVal
+                  |L2.140|
+00008c  20686172          DCB      " hard spi flash val is 0x%0X \r\n",0
+000090  64207370
+000094  6920666c
+000098  61736820
+00009c  76616c20
+0000a0  69732030
+0000a4  78253058
+0000a8  200d0a00
 
                           AREA ||.data||, DATA, ALIGN=2
 
+                  bmp_buff
+000000  00000000          DCB      0x00,0x00,0x00,0x00
+000004  0080c0c0          DCB      0x00,0x80,0xc0,0xc0
+000008  e0e0f0f0          DCB      0xe0,0xe0,0xf0,0xf0
+00000c  f0f0f0e8          DCB      0xf0,0xf0,0xf0,0xe8
+000010  d8b878f8          DCB      0xd8,0xb8,0x78,0xf8
+000014  f0e0c080          DCB      0xf0,0xe0,0xc0,0x80
+000018  00000000          DCB      0x00,0x00,0x00,0x00
+00001c  00000000          DCB      0x00,0x00,0x00,0x00
+000020  00000000          DCB      0x00,0x00,0x00,0x00
+000024  c0c0c000          DCB      0xc0,0xc0,0xc0,0x00
+000028  00000000          DCB      0x00,0x00,0x00,0x00
+00002c  00000000          DCB      0x00,0x00,0x00,0x00
+000030  c0c04040          DCB      0xc0,0xc0,0x40,0x40
+000034  40404040          DCB      0x40,0x40,0x40,0x40
+000038  4040c0c0          DCB      0x40,0x40,0xc0,0xc0
+00003c  00000000          DCB      0x00,0x00,0x00,0x00
+000040  4040c0c0          DCB      0x40,0x40,0xc0,0xc0
+000044  00404040          DCB      0x00,0x40,0x40,0x40
+000048  e0e040c0          DCB      0xe0,0xe0,0x40,0xc0
+00004c  00000000          DCB      0x00,0x00,0x00,0x00
+000050  00c0c0c0          DCB      0x00,0xc0,0xc0,0xc0
+000054  0000c0c0          DCB      0x00,0x00,0xc0,0xc0
+000058  c0c0c0c0          DCB      0xc0,0xc0,0xc0,0xc0
+00005c  c0000000          DCB      0xc0,0x00,0x00,0x00
+000060  000080c0          DCB      0x00,0x00,0x80,0xc0
+000064  c0808000          DCB      0xc0,0x80,0x80,0x00
+000068  c0c0c0c0          DCB      0xc0,0xc0,0xc0,0xc0
+00006c  c0c08000          DCB      0xc0,0xc0,0x80,0x00
+000070  00000080          DCB      0x00,0x00,0x00,0x80
+000074  c0000000          DCB      0xc0,0x00,0x00,0x00
+000078  c0c0c0c0          DCB      0xc0,0xc0,0xc0,0xc0
+00007c  c0c0c000          DCB      0xc0,0xc0,0xc0,0x00
+000080  00e0f8fe          DCB      0x00,0xe0,0xf8,0xfe
+000084  ffffffff          DCB      0xff,0xff,0xff,0xff
+000088  ff3f1f0f          DCB      0xff,0x3f,0x1f,0x0f
+00008c  07030307          DCB      0x07,0x03,0x03,0x07
+000090  0f1f3f7e          DCB      0x0f,0x1f,0x3f,0x7e
+000094  3d1b0703          DCB      0x3d,0x1b,0x07,0x03
+000098  01000000          DCB      0x01,0x00,0x00,0x00
+00009c  0000007f          DCB      0x00,0x00,0x00,0x7f
+0000a0  7f414141          DCB      0x7f,0x41,0x41,0x41
+0000a4  ffffff41          DCB      0xff,0xff,0xff,0x41
+0000a8  41417f7f          DCB      0x41,0x41,0x7f,0x7f
+0000ac  00000000          DCB      0x00,0x00,0x00,0x00
+0000b0  ffff4049          DCB      0xff,0xff,0x40,0x49
+0000b4  497f7f49          DCB      0x49,0x7f,0x7f,0x49
+0000b8  6940ffff          DCB      0x69,0x40,0xff,0xff
+0000bc  00000000          DCB      0x00,0x00,0x00,0x00
+0000c0  62c7fffe          DCB      0x62,0xc7,0xff,0xfe
+0000c4  00555555          DCB      0x00,0x55,0x55,0x55
+0000c8  ffff5557          DCB      0xff,0xff,0x55,0x57
+0000cc  51000000          DCB      0x51,0x00,0x00,0x00
+0000d0  82fefec0          DCB      0x82,0xfe,0xfe,0xc0
+0000d4  408babe8          DCB      0x40,0x8b,0xab,0xe8
+0000d8  e8c8c8f8          DCB      0xe8,0xc8,0xc8,0xf8
+0000dc  bb9b8800          DCB      0xbb,0x9b,0x88,0x00
+0000e0  000313ff          DCB      0x00,0x03,0x13,0xff
+0000e4  fed25200          DCB      0xfe,0xd2,0x52,0x00
+0000e8  ff8a9a7a          DCB      0xff,0x8a,0x9a,0x7a
+0000ec  caef3700          DCB      0xca,0xef,0x37,0x00
+0000f0  00021319          DCB      0x00,0x02,0x13,0x19
+0000f4  fcfe0304          DCB      0xfc,0xfe,0x03,0x04
+0000f8  04048484          DCB      0x04,0x04,0x84,0x84
+0000fc  fcfc0404          DCB      0xfc,0xfc,0x04,0x04
+000100  00071f7f          DCB      0x00,0x07,0x1f,0x7f
+000104  ffffffff          DCB      0xff,0xff,0xff,0xff
+000108  fffefcf8          DCB      0xff,0xfe,0xfc,0xf8
+00010c  f0e0e0f0          DCB      0xf0,0xe0,0xe0,0xf0
+000110  f8fcfeff          DCB      0xf8,0xfc,0xfe,0xff
+000114  ffffffff          DCB      0xff,0xff,0xff,0xff
+000118  3f0f0200          DCB      0x3f,0x0f,0x02,0x00
+00011c  000000e0          DCB      0x00,0x00,0x00,0xe0
+000120  10101000          DCB      0x10,0x10,0x10,0x00
+000124  f1418100          DCB      0xf1,0x41,0x81,0x00
+000128  d000e020          DCB      0xd0,0x00,0xe0,0x20
+00012c  20c00000          DCB      0x20,0xc0,0x00,0x00
+000130  a1a1c101          DCB      0xa1,0xa1,0xc1,0x01
+000134  01e11111          DCB      0x01,0xe1,0x11,0x11
+000138  11c12121          DCB      0x11,0xc1,0x21,0x21
+00013c  c000e020          DCB      0xc0,0x00,0xe0,0x20
+000140  21c10041          DCB      0x21,0xc1,0x00,0x41
+000144  a12101f1          DCB      0xa1,0x21,0x01,0xf1
+000148  2101e121          DCB      0x21,0x01,0xe1,0x21
+00014c  01e00000          DCB      0x01,0xe0,0x00,0x00
+000150  e001c120          DCB      0xe0,0x01,0xc1,0x20
+000154  2000f121          DCB      0x20,0x00,0xf1,0x21
+000158  00d000c1          DCB      0x00,0xd0,0x00,0xc1
+00015c  2121c100          DCB      0x21,0x21,0xc1,0x00
+000160  e02020c1          DCB      0xe0,0x20,0x20,0xc1
+000164  0100f051          DCB      0x01,0x00,0xf0,0x51
+000168  51a10000          DCB      0x51,0xa1,0x00,0x00
+00016c  a0a1c100          DCB      0xa0,0xa1,0xc1,0x00
+000170  e02020c0          DCB      0xe0,0x20,0x20,0xc0
+000174  01e18040          DCB      0x01,0xe1,0x80,0x40
+000178  20000101          DCB      0x20,0x00,0x01,0x01
+00017c  01010000          DCB      0x01,0x01,0x00,0x00
+000180  00000000          DCB      0x00,0x00,0x00,0x00
+000184  00010303          DCB      0x00,0x01,0x03,0x03
+000188  070f0f1f          DCB      0x07,0x0f,0x0f,0x1f
+00018c  1f1f1f1f          DCB      0x1f,0x1f,0x1f,0x1f
+000190  1f0f0707          DCB      0x1f,0x0f,0x07,0x07
+000194  03030100          DCB      0x03,0x03,0x01,0x00
+000198  00000000          DCB      0x00,0x00,0x00,0x00
+00019c  00000001          DCB      0x00,0x00,0x00,0x01
+0001a0  02020200          DCB      0x02,0x02,0x02,0x00
+0001a4  03000300          DCB      0x03,0x00,0x03,0x00
+0001a8  03000300          DCB      0x03,0x00,0x03,0x00
+0001ac  00030001          DCB      0x00,0x03,0x00,0x01
+0001b0  02020300          DCB      0x02,0x02,0x03,0x00
+0001b4  00010202          DCB      0x00,0x01,0x02,0x02
+0001b8  02010202          DCB      0x02,0x01,0x02,0x02
+0001bc  01000300          DCB      0x01,0x00,0x03,0x00
+0001c0  00030002          DCB      0x00,0x03,0x00,0x02
+0001c4  02010003          DCB      0x02,0x01,0x00,0x03
+0001c8  02000300          DCB      0x02,0x00,0x03,0x00
+0001cc  00010202          DCB      0x00,0x01,0x02,0x02
+0001d0  01000102          DCB      0x01,0x00,0x01,0x02
+0001d4  02000302          DCB      0x02,0x00,0x03,0x02
+0001d8  00030001          DCB      0x00,0x03,0x00,0x01
+0001dc  02020100          DCB      0x02,0x02,0x01,0x00
+0001e0  03000003          DCB      0x03,0x00,0x00,0x03
+0001e4  00000302          DCB      0x00,0x00,0x03,0x02
+0001e8  02010001          DCB      0x02,0x01,0x00,0x01
+0001ec  02020300          DCB      0x02,0x02,0x03,0x00
+0001f0  03000003          DCB      0x03,0x00,0x00,0x03
+0001f4  00030001          DCB      0x00,0x03,0x00,0x01
+0001f8  02000000          DCB      0x02,0x00,0x00,0x00
+0001fc  00000000          DCB      0x00,0x00,0x00,0x00
                   ulFlashIdVal
                           DCD      0x00000000
 

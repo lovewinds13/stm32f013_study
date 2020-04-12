@@ -3,9 +3,9 @@
 
 
 //通信方式选择
-//#define SOFT_SPI_COMM
-//#define HARD_SPI_COMM
-//#define SPI_COMM_MODE	1	//确定是硬件还是软件SPI
+#define SOFT_SPI_COMM	//软件模拟SPI
+#define HARD_SPI_COMM	//硬件SPI
+#define SPI_COMM_MODE	1	//确定是硬件还是软件SPI
 
 #define SOFT_I2C_COMM
 //#define I2C_HTU_TEST
@@ -14,6 +14,8 @@
 
 //模块功能测试
 //#define ADC_FUNC_TEST
+#define OLED_FUNC_TEST
+
 
 //-------------------------------------------------------------------------
 //业务逻辑实现

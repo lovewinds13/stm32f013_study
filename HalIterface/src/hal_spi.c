@@ -22,7 +22,7 @@
 //  备    注: 中间层封装底层接口
 //	作    者: by 霁风AI
 //--------------------------------------------------------------------------------------------------------
-bool hal_spi_send_bytes(uint8_t mode, uint8_t *pbdata, uint16_t send_length)
+uint8_t hal_spi_send_bytes(uint8_t mode, uint8_t *pbdata, uint16_t send_length)
 {
     if (mode == 0)
     {
@@ -62,7 +62,7 @@ bool hal_spi_send_bytes(uint8_t mode, uint8_t *pbdata, uint16_t send_length)
 //  备    注: 中间层封装底层接口
 //	作    者: by 霁风AI
 //--------------------------------------------------------------------------------------------------------
-bool hal_spi_recv_bytes(uint8_t mode, uint8_t *pbdata, uint16_t recv_length)
+uint8_t hal_spi_recv_bytes(uint8_t mode, uint8_t *pbdata, uint16_t recv_length)
 {
     if (mode == 0)
     {
