@@ -1,8 +1,12 @@
-#line 1 "..\\Driver\\src\\hardware_spi.c"
+#line 1 "G:\\01.Github_manger\\My_Embedded_Code\\Stm32F10x_Project\\Driver\\src\\drvtimer.c"
 
 
 
-#line 1 "..\\User\\inc\\Typedef.h"
+#line 1 "..\\App\\inc\\Variable.h"
+
+
+
+#line 1 "..\\User\\inc\\typedef.h"
 
 
 
@@ -37,122 +41,6 @@ typedef signed long 	LONG;
 
 
 
-#line 5 "..\\Driver\\src\\hardware_spi.c"
-#line 1 "..\\User\\inc\\declares.h"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#line 6 "..\\Driver\\src\\hardware_spi.c"
-#line 1 "..\\Driver\\inc\\hardware_spi.h"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-extern void spi_master_init(uint8_t spi_chl);			 
-extern uint8_t spi_master_send_recv_byte(uint8_t spi_chl, uint8_t spi_byte);
-extern void spi_master_nvic_set(void);
-
-extern void spi_master_speed_set(uint8_t spi_chl, uint8_t spi_speed); 
-extern uint8_t spi_master_send_byte(uint8_t spi_chl, uint8_t send_byte);
-extern uint8_t spi_master_recv_byte(uint8_t spi_chl);
-
-extern void spi_master_send_some_bytes(uint8_t spi_chl, uint8_t *pbdata, uint16_t send_length);
-extern void spi_master_recv_some_bytes(uint8_t spi_chl, uint8_t *pbdata, uint16_t recv_length);
-
-
-extern uint32_t spi_flash_read_id(void);
-
-
-uint8_t SPI_WriteReadByte(uint8_t TxData);
-uint16_t SFLASH_ReadID(void);
-uint16_t SPI_Flash_ReadID(void);
-uint8_t SPI1_ReadWriteByte(uint8_t TxData);
-
-
-
-#line 7 "..\\Driver\\src\\hardware_spi.c"
-#line 1 "..\\App\\inc\\Variable.h"
-
-
-
 #line 5 "..\\App\\inc\\Variable.h"
 
 extern __align(4) uint8_t g_DataTmpBuffer[0x1000];
@@ -162,15 +50,20 @@ extern __align(4) volatile uint16_t g_SpiTxRxLen;
 extern volatile uint16_t g_timer3_tick;
 
 
-#line 8 "..\\Driver\\src\\hardware_spi.c"
-#line 1 "..\\Driver\\inc\\drvexflash.h"
+#line 5 "G:\\01.Github_manger\\My_Embedded_Code\\Stm32F10x_Project\\Driver\\src\\drvtimer.c"
+#line 6 "G:\\01.Github_manger\\My_Embedded_Code\\Stm32F10x_Project\\Driver\\src\\drvtimer.c"
+#line 1 "..\\Driver\\inc\\drvtimer.h"
 
 
 
+extern void timer_init(uint8_t timer_no);
+extern void timer_test(void);
+	
+#line 7 "G:\\01.Github_manger\\My_Embedded_Code\\Stm32F10x_Project\\Driver\\src\\drvtimer.c"
+#line 1 "..\\Driver\\inc\\drvled.h"
 
 
 
-#line 22 "..\\Driver\\inc\\drvexflash.h"
 
 
 
@@ -181,100 +74,17 @@ extern volatile uint16_t g_timer3_tick;
 
 
 
-struct Flash_Attr  {
-	uint16_t flash_id;
-	uint16_t page_size;
-	uint16_t sector_size;
-	uint8_t block_size;
-};	
 
-extern uint32_t Flash_ReadJEDECID(void);
-extern void Flash_WriteEnable(void);
-extern void Flash_WriteDisable(void);
-extern uint8_t Flash_ReadSR(void);
-extern void Flash_WriteSR(uint8_t _ucByte);
-extern void Flash_WaitNobusy(void);
-extern void Flash_ReadSomeBytes(uint8_t *ucpBuffer, uint32_t _ulReadAddr, uint16_t _usNByte);
-extern void Flash_FastReadByte(uint8_t *ucpBuffer, uint32_t _ulReadAddr, uint16_t _usNByte);
-extern void Flash_WritePage(uint8_t *ucpBuffer, uint32_t _ulWriteAddr, uint16_t _usNByte);
-extern void Flash_WriteNoCheck(uint8_t *ucpBuffer, uint32_t _ulWriteAddr, uint16_t _usNByte);
-extern void Flash_WriteSomeBytes(uint8_t *ucpBuffer, uint32_t _ulWriteAddr, uint16_t _usNByte);
-extern void Flash_ErasePage(uint32_t _ulPageAddr);
-extern void Flash_EraseSector(uint32_t _ulSectorAddr);
-extern void Flash_EraseBlock(uint32_t _ulBlockAddr);
-extern void Flash_EraseChip(void);
-extern void Flash_PowerDown(void);
-extern void Flash_WakeUp(void);
-extern uint16_t Flash_ReadDeviceID(void);
-extern uint32_t Flash_ReadJEDECID(void);
 
 
-#line 9 "..\\Driver\\src\\hardware_spi.c"
-#line 1 "..\\Driver\\inc\\drvsfspi.h"
 
+extern void Bsp_LedInit(void);
+extern void Bsp_LedOn(uint8_t _no);
+extern void Bsp_LedOff(uint8_t _no);
+extern void Bsp_LedToggle(uint8_t _no);
+extern void Bsp_LedTest(uint16_t _uiTime);
 
-
-
-
-
-
-
-
-
-
-
-
-
-#line 22 "..\\Driver\\inc\\drvsfspi.h"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-extern void Spi_GpioInit(void);
-extern void Spi_WriteByte(uint8_t _ucByte);
-extern uint8_t Spi_ReadByte(void);
-
-#line 10 "..\\Driver\\src\\hardware_spi.c"
-#line 1 "..\\Driver\\inc\\drvnrf2401.h"
-
-
-
-
-
-
-
-
-
-
-extern void nrf24l01_gpio_init(void);
-
-
-
-#line 11 "..\\Driver\\src\\hardware_spi.c"
-#line 1 "..\\Driver\\inc\\drvsdcard.h"
-
-
-
-
-
-
-
-
-
-extern void sd_gpio_init(void);
-
-#line 12 "..\\Driver\\src\\hardware_spi.c"
+#line 8 "G:\\01.Github_manger\\My_Embedded_Code\\Stm32F10x_Project\\Driver\\src\\drvtimer.c"
 #line 1 "..\\Libraries\\CMSIS\\Device\\inc\\stm32f10x_conf.h"
 
 
@@ -13597,1015 +13407,35 @@ void SysTick_CLKSourceConfig(uint32_t SysTick_CLKSource);
 
 
  
-#line 13 "..\\Driver\\src\\hardware_spi.c"
-#line 1 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
- 
- 
- 
+#line 9 "G:\\01.Github_manger\\My_Embedded_Code\\Stm32F10x_Project\\Driver\\src\\drvtimer.c"
 
 
 
 
 
- 
 
 
 
 
 
 
- 
 
-
-
-
-
-
-
- 
-
-
-
-
-  
- 
-
-
-
-
-
-
-
-
-#line 47 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
-
-
-  
-
-
-
-    typedef unsigned int size_t;    
-
-
-
-
-
-
-
-
-
- 
- 
-
- 
-
-
-
-    typedef struct __va_list __va_list;
-
-
-
-
-
-
-   
-
-
-
-
- 
-
-
-
-
-typedef struct __fpos_t_struct {
-    unsigned __int64 __pos;
-    
-
-
-
- 
-    struct {
-        unsigned int __state1, __state2;
-    } __mbstate;
-} fpos_t;
-   
-
-
- 
-
-
-   
-
- 
-
-typedef struct __FILE FILE;
-   
-
-
-
-
-
-
- 
-
-#line 136 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
-
-
-extern FILE __stdin, __stdout, __stderr;
-extern FILE *__aeabi_stdin, *__aeabi_stdout, *__aeabi_stderr;
-
-#line 166 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
-    
-
-    
-
-    
-
-
-
-
-
-     
-
-
-
-   
-
-
- 
-
-
-   
-
-
- 
-
-   
-
-
-
- 
-
-   
-
-
- 
-
-
-
-
-   
-
-
- 
-
-
-
-
-
-    
-
-
- 
-
-
-
-
-
-
-extern __declspec(__nothrow) int remove(const char *  ) __attribute__((__nonnull__(1)));
-   
-
-
-
-
-
- 
-extern __declspec(__nothrow) int rename(const char *  , const char *  ) __attribute__((__nonnull__(1,2)));
-   
-
-
-
-
-
-
-
-
- 
-extern __declspec(__nothrow) FILE *tmpfile(void);
-   
-
-
-
-
- 
-extern __declspec(__nothrow) char *tmpnam(char *  );
-   
-
-
-
-
-
-
-
-
-
-
-
- 
-
-extern __declspec(__nothrow) int fclose(FILE *  ) __attribute__((__nonnull__(1)));
-   
-
-
-
-
-
-
-
- 
-extern __declspec(__nothrow) int fflush(FILE *  );
-   
-
-
-
-
-
-
-
- 
-extern __declspec(__nothrow) FILE *fopen(const char * __restrict  ,
-                           const char * __restrict  ) __attribute__((__nonnull__(1,2)));
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-extern __declspec(__nothrow) FILE *freopen(const char * __restrict  ,
-                    const char * __restrict  ,
-                    FILE * __restrict  ) __attribute__((__nonnull__(2,3)));
-   
-
-
-
-
-
-
-
-
- 
-extern __declspec(__nothrow) void setbuf(FILE * __restrict  ,
-                    char * __restrict  ) __attribute__((__nonnull__(1)));
-   
-
-
-
-
- 
-extern __declspec(__nothrow) int setvbuf(FILE * __restrict  ,
-                   char * __restrict  ,
-                   int  , size_t  ) __attribute__((__nonnull__(1)));
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-#pragma __printf_args
-extern __declspec(__nothrow) int fprintf(FILE * __restrict  ,
-                    const char * __restrict  , ...) __attribute__((__nonnull__(1,2)));
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-#pragma __printf_args
-extern __declspec(__nothrow) int _fprintf(FILE * __restrict  ,
-                     const char * __restrict  , ...) __attribute__((__nonnull__(1,2)));
-   
-
-
-
- 
-#pragma __printf_args
-extern __declspec(__nothrow) int printf(const char * __restrict  , ...) __attribute__((__nonnull__(1)));
-   
-
-
-
-
- 
-#pragma __printf_args
-extern __declspec(__nothrow) int _printf(const char * __restrict  , ...) __attribute__((__nonnull__(1)));
-   
-
-
-
- 
-#pragma __printf_args
-extern __declspec(__nothrow) int sprintf(char * __restrict  , const char * __restrict  , ...) __attribute__((__nonnull__(1,2)));
-   
-
-
-
-
-
-
- 
-#pragma __printf_args
-extern __declspec(__nothrow) int _sprintf(char * __restrict  , const char * __restrict  , ...) __attribute__((__nonnull__(1,2)));
-   
-
-
-
- 
-
-#pragma __printf_args
-extern __declspec(__nothrow) int __ARM_snprintf(char * __restrict  , size_t  ,
-                     const char * __restrict  , ...) __attribute__((__nonnull__(3)));
-
-
-#pragma __printf_args
-extern __declspec(__nothrow) int snprintf(char * __restrict  , size_t  ,
-                     const char * __restrict  , ...) __attribute__((__nonnull__(3)));
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-#pragma __printf_args
-extern __declspec(__nothrow) int _snprintf(char * __restrict  , size_t  ,
-                      const char * __restrict  , ...) __attribute__((__nonnull__(3)));
-   
-
-
-
- 
-#pragma __scanf_args
-extern __declspec(__nothrow) int fscanf(FILE * __restrict  ,
-                    const char * __restrict  , ...) __attribute__((__nonnull__(1,2)));
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-#pragma __scanf_args
-extern __declspec(__nothrow) int _fscanf(FILE * __restrict  ,
-                     const char * __restrict  , ...) __attribute__((__nonnull__(1,2)));
-   
-
-
-
- 
-#pragma __scanf_args
-extern __declspec(__nothrow) int scanf(const char * __restrict  , ...) __attribute__((__nonnull__(1)));
-   
-
-
-
-
-
-
- 
-#pragma __scanf_args
-extern __declspec(__nothrow) int _scanf(const char * __restrict  , ...) __attribute__((__nonnull__(1)));
-   
-
-
-
- 
-#pragma __scanf_args
-extern __declspec(__nothrow) int sscanf(const char * __restrict  ,
-                    const char * __restrict  , ...) __attribute__((__nonnull__(1,2)));
-   
-
-
-
-
-
-
-
-
- 
-#pragma __scanf_args
-extern __declspec(__nothrow) int _sscanf(const char * __restrict  ,
-                     const char * __restrict  , ...) __attribute__((__nonnull__(1,2)));
-   
-
-
-
- 
-
- 
-extern __declspec(__nothrow) int vfscanf(FILE * __restrict  , const char * __restrict  , __va_list) __attribute__((__nonnull__(1,2)));
-extern __declspec(__nothrow) int vscanf(const char * __restrict  , __va_list) __attribute__((__nonnull__(1)));
-extern __declspec(__nothrow) int vsscanf(const char * __restrict  , const char * __restrict  , __va_list) __attribute__((__nonnull__(1,2)));
-
-extern __declspec(__nothrow) int _vfscanf(FILE * __restrict  , const char * __restrict  , __va_list) __attribute__((__nonnull__(1,2)));
-extern __declspec(__nothrow) int _vscanf(const char * __restrict  , __va_list) __attribute__((__nonnull__(1)));
-extern __declspec(__nothrow) int _vsscanf(const char * __restrict  , const char * __restrict  , __va_list) __attribute__((__nonnull__(1,2)));
-extern __declspec(__nothrow) int __ARM_vsscanf(const char * __restrict  , const char * __restrict  , __va_list) __attribute__((__nonnull__(1,2)));
-
-extern __declspec(__nothrow) int vprintf(const char * __restrict  , __va_list  ) __attribute__((__nonnull__(1)));
-   
-
-
-
-
-
- 
-extern __declspec(__nothrow) int _vprintf(const char * __restrict  , __va_list  ) __attribute__((__nonnull__(1)));
-   
-
-
-
- 
-extern __declspec(__nothrow) int vfprintf(FILE * __restrict  ,
-                    const char * __restrict  , __va_list  ) __attribute__((__nonnull__(1,2)));
-   
-
-
-
-
-
-
- 
-extern __declspec(__nothrow) int vsprintf(char * __restrict  ,
-                     const char * __restrict  , __va_list  ) __attribute__((__nonnull__(1,2)));
-   
-
-
-
-
-
-
- 
-extern __declspec(__nothrow) int __ARM_vsnprintf(char * __restrict  , size_t  ,
-                     const char * __restrict  , __va_list  ) __attribute__((__nonnull__(3)));
-
-extern __declspec(__nothrow) int vsnprintf(char * __restrict  , size_t  ,
-                     const char * __restrict  , __va_list  ) __attribute__((__nonnull__(3)));
-   
-
-
-
-
-
-
-
- 
-
-extern __declspec(__nothrow) int _vsprintf(char * __restrict  ,
-                      const char * __restrict  , __va_list  ) __attribute__((__nonnull__(1,2)));
-   
-
-
-
- 
-extern __declspec(__nothrow) int _vfprintf(FILE * __restrict  ,
-                     const char * __restrict  , __va_list  ) __attribute__((__nonnull__(1,2)));
-   
-
-
-
- 
-extern __declspec(__nothrow) int _vsnprintf(char * __restrict  , size_t  ,
-                      const char * __restrict  , __va_list  ) __attribute__((__nonnull__(3)));
-   
-
-
-
- 
-
-#pragma __printf_args
-extern __declspec(__nothrow) int asprintf(char **  , const char * __restrict  , ...) __attribute__((__nonnull__(2)));
-extern __declspec(__nothrow) int vasprintf(char **  , const char * __restrict  , __va_list  ) __attribute__((__nonnull__(2)));
-
-#pragma __printf_args
-extern __declspec(__nothrow) int __ARM_asprintf(char **  , const char * __restrict  , ...) __attribute__((__nonnull__(2)));
-extern __declspec(__nothrow) int __ARM_vasprintf(char **  , const char * __restrict  , __va_list  ) __attribute__((__nonnull__(2)));
-   
-
-
-
-
-
-
-
-
- 
-
-extern __declspec(__nothrow) int fgetc(FILE *  ) __attribute__((__nonnull__(1)));
-   
-
-
-
-
-
-
-
- 
-extern __declspec(__nothrow) char *fgets(char * __restrict  , int  ,
-                    FILE * __restrict  ) __attribute__((__nonnull__(1,3)));
-   
-
-
-
-
-
-
-
-
-
-
- 
-extern __declspec(__nothrow) int fputc(int  , FILE *  ) __attribute__((__nonnull__(2)));
-   
-
-
-
-
-
-
-
- 
-extern __declspec(__nothrow) int fputs(const char * __restrict  , FILE * __restrict  ) __attribute__((__nonnull__(1,2)));
-   
-
-
-
-
- 
-extern __declspec(__nothrow) int getc(FILE *  ) __attribute__((__nonnull__(1)));
-   
-
-
-
-
-
-
-
- 
-
-
-
-
-    extern __declspec(__nothrow) int (getchar)(void);
-
-   
-
-
-
-
-
- 
-extern __declspec(__nothrow) char *gets(char *  ) __attribute__((__nonnull__(1)));
-   
-
-
-
-
-
-
-
-
-
- 
-extern __declspec(__nothrow) int putc(int  , FILE *  ) __attribute__((__nonnull__(2)));
-   
-
-
-
-
-
- 
-
-
-
-
-    extern __declspec(__nothrow) int (putchar)(int  );
-
-   
-
-
-
- 
-extern __declspec(__nothrow) int puts(const char *  ) __attribute__((__nonnull__(1)));
-   
-
-
-
-
-
- 
-extern __declspec(__nothrow) int ungetc(int  , FILE *  ) __attribute__((__nonnull__(2)));
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-extern __declspec(__nothrow) size_t fread(void * __restrict  ,
-                    size_t  , size_t  , FILE * __restrict  ) __attribute__((__nonnull__(1,4)));
-   
-
-
-
-
-
-
-
-
-
-
-
- 
-
-extern __declspec(__nothrow) size_t __fread_bytes_avail(void * __restrict  ,
-                    size_t  , FILE * __restrict  ) __attribute__((__nonnull__(1,3)));
-   
-
-
-
-
-
-
-
-
-
-
-
- 
-
-extern __declspec(__nothrow) size_t fwrite(const void * __restrict  ,
-                    size_t  , size_t  , FILE * __restrict  ) __attribute__((__nonnull__(1,4)));
-   
-
-
-
-
-
-
-
- 
-
-extern __declspec(__nothrow) int fgetpos(FILE * __restrict  , fpos_t * __restrict  ) __attribute__((__nonnull__(1,2)));
-   
-
-
-
-
-
-
-
-
- 
-extern __declspec(__nothrow) int fseek(FILE *  , long int  , int  ) __attribute__((__nonnull__(1)));
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-extern __declspec(__nothrow) int fsetpos(FILE * __restrict  , const fpos_t * __restrict  ) __attribute__((__nonnull__(1,2)));
-   
-
-
-
-
-
-
-
-
-
-
- 
-extern __declspec(__nothrow) long int ftell(FILE *  ) __attribute__((__nonnull__(1)));
-   
-
-
-
-
-
-
-
-
-
-
-
- 
-extern __declspec(__nothrow) void rewind(FILE *  ) __attribute__((__nonnull__(1)));
-   
-
-
-
-
-
- 
-
-extern __declspec(__nothrow) void clearerr(FILE *  ) __attribute__((__nonnull__(1)));
-   
-
-
-
-
- 
-
-extern __declspec(__nothrow) int feof(FILE *  ) __attribute__((__nonnull__(1)));
-   
-
-
- 
-extern __declspec(__nothrow) int ferror(FILE *  ) __attribute__((__nonnull__(1)));
-   
-
-
- 
-extern __declspec(__nothrow) void perror(const char *  );
-   
-
-
-
-
-
-
-
-
-
- 
-
-extern __declspec(__nothrow) int _fisatty(FILE *   ) __attribute__((__nonnull__(1)));
-    
- 
-
-extern __declspec(__nothrow) void __use_no_semihosting_swi(void);
-extern __declspec(__nothrow) void __use_no_semihosting(void);
-    
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-#line 1021 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
-
-
-
- 
-
-#line 14 "..\\Driver\\src\\hardware_spi.c"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-void spi_flash_gpio_init(void)
+static void timer_config(uint8_t timer_no, uint16_t timer_arr, uint16_t timer_psc)
 {
-	GPIO_InitTypeDef gpio_config_init;
-
-#line 44 "..\\Driver\\src\\hardware_spi.c"
-	RCC_APB2PeriphClockCmd(((uint32_t)0x00000004), ENABLE);		
-
-	gpio_config_init.GPIO_Pin 	= (((uint16_t)0x0004));	
-	gpio_config_init.GPIO_Mode 	= GPIO_Mode_Out_PP;  
-	gpio_config_init.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), &gpio_config_init);
-
-	GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0004)));	
-
-}
-
-
-
-
-
-
-
-
-
-
-void spi_gpio_init(uint8_t spi_chl)
-{
-	GPIO_InitTypeDef gpio_config_init;
-
-	if (spi_chl == 1)
-	{
-		RCC_APB2PeriphClockCmd(((uint32_t)0x00000004), ENABLE);		
-		
-
-		gpio_config_init.GPIO_Pin 		= (((uint16_t)0x0020)) | (((uint16_t)0x0080));
-		gpio_config_init.GPIO_Mode 		= GPIO_Mode_AF_PP;  
-		gpio_config_init.GPIO_Speed 	= GPIO_Speed_50MHz;
-		
-		GPIO_Init(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), &gpio_config_init);
-		
-		gpio_config_init.GPIO_Pin 		= (((uint16_t)0x0040));	
-		gpio_config_init.GPIO_Mode 		= GPIO_Mode_IN_FLOATING;  
-		gpio_config_init.GPIO_Speed 	= GPIO_Speed_50MHz;
-		GPIO_Init(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), &gpio_config_init);
-
-		GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0020)) | (((uint16_t)0x0040)) | (((uint16_t)0x0080)));	
-	}		
-}
-
-
-
-
-
-
-
-
-
-
-void spi_master_init(uint8_t spi_chl)
-{
-	SPI_InitTypeDef  spi_config_init;
-
-	if(spi_chl == 1)
-	{	
-		spi_flash_gpio_init();	
-
-
-		
-		spi_gpio_init(1);	
-
-		RCC_APB2PeriphClockCmd(((uint32_t)0x00001000), ENABLE);	
-
-		spi_config_init.SPI_Direction 			= ((uint16_t)0x0000);  
-		spi_config_init.SPI_Mode 				= ((uint16_t)0x0104);		
-		spi_config_init.SPI_DataSize 			= ((uint16_t)0x0000);		
-		spi_config_init.SPI_CPOL 				= ((uint16_t)0x0000);		
-		spi_config_init.SPI_CPHA 				= ((uint16_t)0x0000);	
-		spi_config_init.SPI_NSS					= ((uint16_t)0x0200);
-		spi_config_init.SPI_BaudRatePrescaler 	= ((uint16_t)0x0038);		
-		spi_config_init.SPI_FirstBit 			= ((uint16_t)0x0000);	
-		spi_config_init.SPI_CRCPolynomial 		= 7;	
-		
-		SPI_Init(((SPI_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x3000)), &spi_config_init);  
-	 
-		SPI_Cmd(((SPI_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x3000)), ENABLE); 
-		
-
+	TIM_TimeBaseInitTypeDef timer_init_config;
 	
+	if (timer_no == 3)
+	{
+		RCC_APB1PeriphClockCmd(((uint32_t)0x00000002), ENABLE);
+		
+		timer_init_config.TIM_Period 				= timer_arr;	
+		timer_init_config.TIM_Prescaler 			= timer_psc;	
+		timer_init_config.TIM_ClockDivision 		= ((uint16_t)0x0000);	
+		timer_init_config.TIM_CounterMode 			= ((uint16_t)0x0000);	
+		
+		TIM_TimeBaseInit(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)), &timer_init_config);
 	}
-
-} 
-
+}
 
 
 
@@ -14616,293 +13446,86 @@ void spi_master_init(uint8_t spi_chl)
 
 
 
-uint8_t spi_master_send_recv_byte(uint8_t spi_chl, uint8_t spi_byte)
-{		
-	uint8_t time = 0;
+static void timer_nvic_config(uint8_t timer_no)
+{
+	NVIC_InitTypeDef nvic_init_config;
 	
-	if (spi_chl == 1)			    
+	if (timer_no == 3)
 	{
-		while (SPI_I2S_GetFlagStatus(((SPI_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x3000)), ((uint16_t)0x0002)) == RESET) 
-		{
-			time++;
-			if(time>200)
-			{
-				return 0;
-			}
-		}			  
-		SPI_I2S_SendData(((SPI_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x3000)), spi_byte); 
-	
-		time = 0;
+		
+		nvic_init_config.NVIC_IRQChannel 						= TIM3_IRQn; 
+		nvic_init_config.NVIC_IRQChannelPreemptionPriority 		= 2; 
+		nvic_init_config.NVIC_IRQChannelSubPriority 			= 3; 
+		nvic_init_config.NVIC_IRQChannelCmd 					= ENABLE; 
+		NVIC_Init(&nvic_init_config); 
+		
+		TIM_ITConfig(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)), ((uint16_t)0x0001), ENABLE);
+	}
+}	
 
-		while (SPI_I2S_GetFlagStatus(((SPI_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x3000)), ((uint16_t)0x0001)) == RESET)
-		{
-			time++;
-			if(time>200)
-			{
-				return 0;
-			}
-		}	  						    
-			return SPI_I2S_ReceiveData(((SPI_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x3000))); 
+
+
+
+
+
+
+
+
+
+void timer_init(uint8_t timer_no)
+{
+	if (timer_no == 3)
+	{
+		timer_config(timer_no, 4999, 7199);
+		timer_nvic_config(timer_no);
+		
+		TIM_Cmd(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)), ENABLE);
+	}
+	
+	g_timer3_tick = 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+void TIM3_IRQHandler(void)
+{
+	if (TIM_GetITStatus(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)), ((uint16_t)0x0001)) != RESET)
+	{
+		TIM_ClearITPendingBit(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)), ((uint16_t)0x0001));
+		
+		g_timer3_tick++;
+
+
+
+
+	}
+}
+
+void timer_test(void)
+{
+	if (g_timer3_tick /= 2)
+	{
+		Bsp_LedOn(0);
+		Bsp_LedOff(1);
 	}
 	else 
 	{
-		return 0;
+		Bsp_LedOn(1);
+		Bsp_LedOff(0);
 	}
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-void spi_master_speed_set(uint8_t spi_chl, uint8_t spi_speed)
-{
-	SPI_InitTypeDef  spi_config_init;
-
-	if (spi_chl == 1)
+	if (g_timer3_tick > 60000)
 	{
-		spi_config_init.SPI_BaudRatePrescaler = spi_speed ;
-
-		SPI_Init(((SPI_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x3000)), &spi_config_init);
-		SPI_Cmd(((SPI_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x3000)), ENABLE);
-	}
-} 
-#line 245 "..\\Driver\\src\\hardware_spi.c"
-
-
-
-
-
-
-
-
-
-
-
-
-void spi_master_send_some_bytes(uint8_t spi_chl, uint8_t *pbdata, uint16_t send_length)
-{
-	uint16_t i = 0;
-
-	for (i = 0; i < send_length; i++)
-	{
-		spi_master_send_recv_byte(spi_chl, pbdata[i]);
-	}
-	
-
-
-
-
-	
-}
-
-
-
-
-
-
-
-
-
-
-
-
-void spi_master_recv_some_bytes(uint8_t spi_chl, uint8_t *pbdata, uint16_t recv_length)
-{
-	uint8_t *temp_data = pbdata;
-
-	while (recv_length--)
-	{
-		*temp_data++ = spi_master_send_recv_byte(spi_chl, 0xFF);	
-	}
-	
-}
-
-
-
-
-
-
-
-
-
-
-
-void spi_master_nvic_set(void)
-{
-	NVIC_InitTypeDef nvic_config_init;
-	
-	nvic_config_init.NVIC_IRQChannel 						= SPI1_IRQn;
-	nvic_config_init.NVIC_IRQChannelPreemptionPriority 	= 2;
-	nvic_config_init.NVIC_IRQChannelSubPriority 			= 2;
-	nvic_config_init.NVIC_IRQChannelCmd 					= ENABLE;
-
-	NVIC_Init(&nvic_config_init);
-	
-	SPI_I2S_ITConfig(((SPI_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x3000)), ((uint8_t)0x60), ENABLE);	
-}
-
-uint32_t spi_flash_read_id(void)
-{
-	uint32_t ulJedId = 0;
-	uint8_t recv_buff[5] = {0};
-	
-	 (GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0004))));
-
-#line 332 "..\\Driver\\src\\hardware_spi.c"
-	
-
-	spi_master_send_recv_byte(1, 0x9f);	
-	 
-	spi_master_recv_some_bytes(1, recv_buff, sizeof(recv_buff));
-	
-	ulJedId = (recv_buff[0] <<16) | (recv_buff[1] <<8) | (recv_buff[2]);
-	
-
-
-
-
-
-
-
-
-
-
-	
-	for (uint16_t i = 0; i < sizeof(recv_buff); i++)
-	{
-		printf("recv ---> %d 0x%02X \r\n", i, recv_buff[i]);
-	}
-	printf("\r\n");
-	
-
-
-	 (GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0004))));
-	
-	return ulJedId;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-void SPI1_IRQHandler(void)
-{
-	uint16_t i = 0;
-	
-	if (SPI_I2S_GetITStatus(((SPI_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x3000)), ((uint8_t)0x60)) != RESET)	
-	{
-		SPI_I2S_ClearITPendingBit(((SPI_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x3000)), ((uint8_t)0x60));	
-		SPI_I2S_ITConfig(((SPI_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x3000)), ((uint8_t)0x60), DISABLE);	
-		for (i = 0; i < g_SpiTxRxLen; i++)
-		{
-
-			g_DataTmpBuffer[i] = (uint8_t)SPI_I2S_ReceiveData(((SPI_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x3000)));	
-		}
-		SPI_I2S_ITConfig(((SPI_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x3000)), ((uint8_t)0x60), ENABLE);	
+		g_timer3_tick = 0;
 	}
 }
-
-
-
-
-uint8_t SPI_WriteReadByte(uint8_t TxData)
-{
-  while((((SPI_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x3000))->SR & ((uint16_t)0x0002)) == (uint16_t)RESET);
-  ((SPI_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x3000))->DR = TxData;
-
-  while((((SPI_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x3000))->SR & ((uint16_t)0x0001)) == (uint16_t)RESET);
-  return ((SPI_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x3000))->DR;
-}
-
-uint16_t SFLASH_ReadID(void)
-{
-  uint16_t ID = 0;
-   (GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0004))));                              
-
-
-
-
-
-	
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-	spi_master_send_recv_byte(1, 0x90);
-	spi_master_send_recv_byte(1, 0x00); 	    
-	spi_master_send_recv_byte(1, 0x00); 	    
-	spi_master_send_recv_byte(1, 0x00); 
-
-	ID |= spi_master_send_recv_byte(1, 0xFF)<<8;              
-	ID |= spi_master_send_recv_byte(1, 0xFF);
-  
-   (GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0004))));                             
-	
-  return ID;
-}
-
-uint8_t SPI1_ReadWriteByte(u8 TxData)
-{		
-	u8 retry=0;				 	
-	while (SPI_I2S_GetFlagStatus(((SPI_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x3000)), ((uint16_t)0x0002)) == RESET) 
-		{
-		retry++;
-		if(retry>200)return 0;
-		}			  
-	SPI_I2S_SendData(((SPI_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x3000)), TxData); 
-	retry=0;
-
-	while (SPI_I2S_GetFlagStatus(((SPI_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x3000)), ((uint16_t)0x0001)) == RESET)
-		{
-		retry++;
-		if(retry>200)return 0;
-		}	  						    
-	return SPI_I2S_ReceiveData(((SPI_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x3000))); 
-}
-
-uint16_t SPI_Flash_ReadID(void)
-{
-	u16 Temp = 0;	  
-	 (GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0004))));			    
-	SPI1_ReadWriteByte(0x90);
-	SPI1_ReadWriteByte(0x00); 	    
-	SPI1_ReadWriteByte(0x00); 	    
-	SPI1_ReadWriteByte(0x00); 	 			   
-	Temp|=SPI1_ReadWriteByte(0xFF)<<8;  
-	Temp|=SPI1_ReadWriteByte(0xFF);	 
-	 (GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0004))));				    
-	return Temp;
-}  
 
 
 

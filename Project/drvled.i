@@ -13596,11 +13596,13 @@ void Bsp_LedOff(uint8_t _no)
 
 void Bsp_LedToggle(uint8_t _no)
 {
-	if (_no == 0)
+	uint8_t flag = _no % 2;
+	
+	if (flag == 0)
 	{
 		((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800))->ODR ^= ((uint16_t)0x0100);
 	}
-	else if (_no == 1)
+	else if (flag == 1)
 	{
 		((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1400))->ODR ^= ((uint16_t)0x0004);
 	}

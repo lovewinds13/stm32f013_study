@@ -44,6 +44,7 @@
 .\main.o: ..\App\inc\app_htu21d.h
 .\main.o: ..\App\inc\app_at24cxx.h
 .\main.o: ..\Driver\inc\drvoled.h
+.\main.o: ..\Driver\inc\drvtimer.h
 .\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h

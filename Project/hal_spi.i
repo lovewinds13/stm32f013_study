@@ -108,10 +108,14 @@ typedef signed long 	LONG;
 
 
 
-
+#line 5 "..\\App\\inc\\variable.h"
 
 extern __align(4) uint8_t g_DataTmpBuffer[0x1000];
-extern volatile uint16_t g_SpiTxRxLen;
+extern __align(4) volatile uint16_t g_SpiTxRxLen;
+
+
+extern volatile uint16_t g_timer3_tick;
+
 
 #line 7 "..\\HalIterface\\src\\hal_spi.c"
 #line 1 "..\\HalIterface\\inc\\hal_spi.h"

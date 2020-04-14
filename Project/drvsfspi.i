@@ -13560,10 +13560,14 @@ extern uint8_t Spi_ReadByte(void);
 
 
 
-
+#line 5 "..\\App\\inc\\Variable.h"
 
 extern __align(4) uint8_t g_DataTmpBuffer[0x1000];
-extern volatile uint16_t g_SpiTxRxLen;
+extern __align(4) volatile uint16_t g_SpiTxRxLen;
+
+
+extern volatile uint16_t g_timer3_tick;
+
 
 #line 29 "..\\Driver\\src\\drvsfspi.c"
 

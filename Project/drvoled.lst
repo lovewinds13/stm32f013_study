@@ -21642,7 +21642,7 @@ N//	×÷    Õß: by ö«·çAI
 N//---------------------------------------------------------------------------------------------------------------------------------------------
 Nvoid oled_dis_logo(void)
 N{
-N	const uint8_t *pdata = dis_tmp_buff;
+N	const uint8_t *pdata = myBitmap;
 N	uint8_t page = 0;
 N	uint8_t seg = 0;
 N	

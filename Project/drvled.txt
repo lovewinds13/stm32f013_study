@@ -141,26 +141,26 @@
                           AREA ||i.Bsp_LedTest||, CODE, READONLY, ALIGN=1
 
                   Bsp_LedTest PROC
-;;;109    //-------------------------------------------------------------------------------------------------------
-;;;110    void Bsp_LedTest(uint16_t _uiTime)
+;;;111    //-------------------------------------------------------------------------------------------------------
+;;;112    void Bsp_LedTest(uint16_t _uiTime)
 000000  b510              PUSH     {r4,lr}
-;;;111    {
+;;;113    {
 000002  4604              MOV      r4,r0
-;;;112    	Bsp_LedToggle(0);
+;;;114    	Bsp_LedToggle(0);
 000004  2000              MOVS     r0,#0
 000006  f7fffffe          BL       Bsp_LedToggle
-;;;113    	delay_ms(_uiTime);
+;;;115    	delay_ms(_uiTime);
 00000a  4620              MOV      r0,r4
 00000c  f7fffffe          BL       delay_ms
-;;;114    	Bsp_LedToggle(1);
+;;;116    	Bsp_LedToggle(1);
 000010  2001              MOVS     r0,#1
 000012  f7fffffe          BL       Bsp_LedToggle
-;;;115    	delay_ms(_uiTime);
+;;;117    	delay_ms(_uiTime);
 000016  4620              MOV      r0,r4
 000018  f7fffffe          BL       delay_ms
-;;;116    }
+;;;118    }
 00001c  bd10              POP      {r4,pc}
-;;;117     
+;;;119     
                           ENDP
 
 
@@ -169,38 +169,44 @@
                   Bsp_LedToggle PROC
 ;;;91     //-------------------------------------------------------------------------------------------------------
 ;;;92     void Bsp_LedToggle(uint8_t _no)
-000000  b930              CBNZ     r0,|L5.16|
+000000  4602              MOV      r2,r0
 ;;;93     {
-;;;94     	if (_no == 0)
-;;;95     	{
-;;;96     		LED0_GPIO_PORT->ODR ^= LED0_CON_IO;
-000002  4908              LDR      r1,|L5.36|
-000004  6809              LDR      r1,[r1,#0]
-000006  f4817180          EOR      r1,r1,#0x100
-00000a  4a06              LDR      r2,|L5.36|
-00000c  6011              STR      r1,[r2,#0]
-00000e  e007              B        |L5.32|
-                  |L5.16|
-;;;97     	}
-;;;98     	else if (_no == 1)
-000010  2801              CMP      r0,#1
-000012  d105              BNE      |L5.32|
-;;;99     	{
-;;;100    		LED1_GPIO_PORT->ODR ^= LED1_CON_IO;
-000014  4904              LDR      r1,|L5.40|
-000016  6809              LDR      r1,[r1,#0]
-000018  f0810104          EOR      r1,r1,#4
-00001c  4a02              LDR      r2,|L5.40|
-00001e  6011              STR      r1,[r2,#0]
-                  |L5.32|
-;;;101    	}
-;;;102    }
-000020  4770              BX       lr
-;;;103    
+;;;94     	uint8_t flag = _no % 2;
+000002  eb0073d2          ADD      r3,r0,r2,LSR #31
+000006  105b              ASRS     r3,r3,#1
+000008  eba00343          SUB      r3,r0,r3,LSL #1
+00000c  b2d9              UXTB     r1,r3
+;;;95     	
+;;;96     	if (flag == 0)
+00000e  b931              CBNZ     r1,|L5.30|
+;;;97     	{
+;;;98     		LED0_GPIO_PORT->ODR ^= LED0_CON_IO;
+000010  4a07              LDR      r2,|L5.48|
+000012  6812              LDR      r2,[r2,#0]
+000014  f4827280          EOR      r2,r2,#0x100
+000018  4b05              LDR      r3,|L5.48|
+00001a  601a              STR      r2,[r3,#0]
+00001c  e007              B        |L5.46|
+                  |L5.30|
+;;;99     	}
+;;;100    	else if (flag == 1)
+00001e  2901              CMP      r1,#1
+000020  d105              BNE      |L5.46|
+;;;101    	{
+;;;102    		LED1_GPIO_PORT->ODR ^= LED1_CON_IO;
+000022  4a04              LDR      r2,|L5.52|
+000024  6812              LDR      r2,[r2,#0]
+000026  f0820204          EOR      r2,r2,#4
+00002a  4b02              LDR      r3,|L5.52|
+00002c  601a              STR      r2,[r3,#0]
+                  |L5.46|
+;;;103    	}
+;;;104    }
+00002e  4770              BX       lr
+;;;105    
                           ENDP
 
-000022  0000              DCW      0x0000
-                  |L5.36|
+                  |L5.48|
                           DCD      0x4001080c
-                  |L5.40|
+                  |L5.52|
                           DCD      0x4001140c

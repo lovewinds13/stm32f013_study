@@ -497,6 +497,11 @@
               <FileType>1</FileType>
               <FilePath>G:\01.Github_manger\My_Embedded_Code\Stm32F10x_Project\Driver\src\drvoled.c</FilePath>
             </File>
+            <File>
+              <FileName>drvtimer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>G:\01.Github_manger\My_Embedded_Code\Stm32F10x_Project\Driver\src\drvtimer.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

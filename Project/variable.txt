@@ -7,9 +7,12 @@
                   g_DataTmpBuffer
                           %        4096
 
-                          AREA ||.data||, DATA, ALIGN=1
+                          AREA ||.data||, DATA, ALIGN=2
 
                   g_SpiId
 000000  0000              DCW      0x0000
+000002  0000              DCB      0x00,0x00
                   g_SpiTxRxLen
-000002  0000              DCW      0x0000
+000004  0000              DCW      0x0000
+                  g_timer3_tick
+000006  0000              DCW      0x0000

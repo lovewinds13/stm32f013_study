@@ -91,11 +91,13 @@ void Bsp_LedOff(uint8_t _no)
 //-------------------------------------------------------------------------------------------------------
 void Bsp_LedToggle(uint8_t _no)
 {
-	if (_no == 0)
+	uint8_t flag = _no % 2;
+	
+	if (flag == 0)
 	{
 		LED0_GPIO_PORT->ODR ^= LED0_CON_IO;
 	}
-	else if (_no == 1)
+	else if (flag == 1)
 	{
 		LED1_GPIO_PORT->ODR ^= LED1_CON_IO;
 	}

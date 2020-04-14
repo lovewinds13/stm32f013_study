@@ -2,7 +2,7 @@
 
 
 
-#line 1 "..\\User\\inc\\typedef.h"
+#line 1 "..\\User\\inc\\Typedef.h"
 
 
 
@@ -38,9 +38,26 @@ typedef signed long 	LONG;
 
 
 #line 5 "..\\App\\src\\variable.c"
+#line 1 "..\\App\\inc\\variable.h"
+
+
+
+#line 5 "..\\App\\inc\\variable.h"
+
+extern __align(4) uint8_t g_DataTmpBuffer[0x1000];
+extern __align(4) volatile uint16_t g_SpiTxRxLen;
+
+
+extern volatile uint16_t g_timer3_tick;
+
+
+#line 6 "..\\App\\src\\variable.c"
 
 
 uint16_t g_SpiId = 0;
 __align(4) uint8_t g_DataTmpBuffer[0x1000] = {0};
 volatile uint16_t g_SpiTxRxLen = 0;
+
+
+volatile uint16_t g_timer3_tick = 0;
 

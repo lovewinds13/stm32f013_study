@@ -13590,10 +13590,14 @@ extern void I2c_GetNack(void);
 
 
 
-
+#line 5 "..\\App\\inc\\Variable.h"
 
 extern __align(4) uint8_t g_DataTmpBuffer[0x1000];
-extern volatile uint16_t g_SpiTxRxLen;
+extern __align(4) volatile uint16_t g_SpiTxRxLen;
+
+
+extern volatile uint16_t g_timer3_tick;
+
 
 #line 33 "..\\Driver\\src\\drvsfi2c.c"
 #line 1 "..\\Driver\\inc\\delay.h"

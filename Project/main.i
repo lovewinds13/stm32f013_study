@@ -119,10 +119,14 @@ typedef signed long 	LONG;
 
 
 
-
+#line 5 "..\\App\\inc\\variable.h"
 
 extern __align(4) uint8_t g_DataTmpBuffer[0x1000];
-extern volatile uint16_t g_SpiTxRxLen;
+extern __align(4) volatile uint16_t g_SpiTxRxLen;
+
+
+extern volatile uint16_t g_timer3_tick;
+
 
 #line 18 "..\\User\\src\\Main.c"
 #line 1 "..\\Driver\\inc\\drvexflash.h"
@@ -13906,6 +13910,14 @@ extern void oled_dis_logo(void);
 
 
 #line 31 "..\\User\\src\\Main.c"
+#line 1 "..\\Driver\\inc\\drvtimer.h"
+
+
+
+extern void timer_init(uint8_t timer_no);
+extern void timer_test(void);
+	
+#line 32 "..\\User\\src\\Main.c"
 #line 1 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
  
  
@@ -14805,7 +14817,7 @@ extern __declspec(__nothrow) void __use_no_semihosting(void);
 
  
 
-#line 32 "..\\User\\src\\Main.c"
+#line 33 "..\\User\\src\\Main.c"
 #line 1 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
  
  
@@ -15543,7 +15555,7 @@ extern __declspec(__nothrow) int __C_library_version_number(void);
 
 
  
-#line 33 "..\\User\\src\\Main.c"
+#line 34 "..\\User\\src\\Main.c"
 #line 1 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
  
  
@@ -15966,7 +15978,7 @@ extern __declspec(__nothrow) void _membitmovewb(void *  , const void *  , int  ,
 
  
 
-#line 34 "..\\User\\src\\Main.c"
+#line 35 "..\\User\\src\\Main.c"
 #line 1 "..\\App\\inc\\logic_grammer.h"
 
 
@@ -15986,7 +15998,7 @@ extern void memcmp_test(void);
 extern void strcmp_test(void);
 
 
-#line 35 "..\\User\\src\\Main.c"
+#line 36 "..\\User\\src\\Main.c"
 #line 1 "..\\App\\inc\\c_language_regular.h"
 
 
@@ -16051,7 +16063,7 @@ extern void stack_test(void);
 extern void heap_test(void);
 
 
-#line 36 "..\\User\\src\\Main.c"
+#line 37 "..\\User\\src\\Main.c"
 
 
 extern uint8_t g_WriteData[0x100];
@@ -16088,11 +16100,15 @@ void Hardware_AllInit(void)
 
 	
 
+	timer_init(3);
+
+
 
 
 	spi_master_init(1);
 
 	oled_init();
+	oled_dis_logo();
 
 
 
@@ -16106,15 +16122,14 @@ void Hardware_AllInit(void)
 
 
 
-	oled_dis_chinese(50, 3, 8);
-	oled_dis_chinese(80, 3, 9);
+
 
 	Flash_TestDataInit();
 	ulFlashIdVal = spi_flash_read_id();
 	printf("Hard --1 spi flash val is 0x%0X \r\n", ulFlashIdVal);
 	ulFlashIdVal = spi_flash_read_id();
 	printf("Hard --2 Spi flash val is 0x%0X \r\n", ulFlashIdVal);
-#line 111 "..\\User\\src\\Main.c"
+#line 115 "..\\User\\src\\Main.c"
 
 
 
@@ -16151,7 +16166,7 @@ int main(void)
 		printf(" hard spi flash val is 0x%0X \r\n", ulFlashIdVal);
 		W25_WriteReadBytes();
 
-#line 156 "..\\User\\src\\Main.c"
+#line 160 "..\\User\\src\\Main.c"
 
 
 
@@ -16163,7 +16178,11 @@ int main(void)
 
 
 
-	Bsp_LedTest(300);
+	timer_test();
+
+
+	printf("Main is ruinning\r\n");
+
 
 
 

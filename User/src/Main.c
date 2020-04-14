@@ -28,6 +28,7 @@
 #include "app_htu21d.h"
 #include "app_at24cxx.h"
 #include "drvoled.h"
+#include "drvtimer.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -68,13 +69,16 @@ void Hardware_AllInit(void)
 	
 #endif	//ADC_FUNC_TEST
 	
+#ifdef TIMER_FUNC_TEST
+	timer_init(3);
+#endif
 
 #if SPI_COMM_MODE
 	#ifdef HARD_SPI_COMM
 	spi_master_init(1);
 	#ifdef OLED_FUNC_TEST
 	oled_init();
-//	oled_dis_logo();
+	oled_dis_logo();
 //	oled_dis_picture(0, 0, 128, 7, bmp_buff);
 //	oled_dis_num(60, 4, 1314, 4, 16);
 //	oled_dis_one_char(5, 2, 'A');
@@ -87,8 +91,8 @@ void Hardware_AllInit(void)
 //	oled_dis_chinese(33,5,4);
 //	oled_dis_chinese(53,5,5);
 //	oled_dis_chinese(73,5,6);
-	oled_dis_chinese(50, 3, 8);
-	oled_dis_chinese(80, 3, 9);
+//	oled_dis_chinese(50, 3, 8);
+//	oled_dis_chinese(80, 3, 9);
 	#endif
 	Flash_TestDataInit();
 	ulFlashIdVal = spi_flash_read_id();
@@ -163,8 +167,12 @@ int main(void)
 //	uart_test();
 #endif
 
-//	printf("Main is ruinning\r\n");
-	Bsp_LedTest(300);
+#ifdef TIMER_FUNC_TEST
+	timer_test();
+#endif
+
+	printf("Main is ruinning\r\n");
+//	Bsp_LedTest(300);
 //	sprintf_test();	
 //	strcpy_test();
 //	memcmp_test();

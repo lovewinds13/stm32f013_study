@@ -29295,7 +29295,7 @@ N
 N//模块功能测试
 N//#define ADC_FUNC_TEST
 N#define OLED_FUNC_TEST
-N
+N#define TIMER_FUNC_TEST
 N
 N//-------------------------------------------------------------------------
 N//业务逻辑实现
@@ -29430,10 +29430,14 @@ L 1 "..\App\inc\Variable.h" 1
 N#ifndef _VARIABLE_H__
 N#define _VARIABLE_H__
 N
-N//#include "declares.h"
+N#include "typedef.h"
 N
 Nextern __align(4) uint8_t g_DataTmpBuffer[0x1000];
-Nextern volatile uint16_t g_SpiTxRxLen;
+Nextern __align(4) volatile uint16_t g_SpiTxRxLen;
+N
+N
+Nextern volatile uint16_t g_timer3_tick;
+N
 N
 N#endif //_VARIABLE_H__
 L 29 "..\Driver\src\drvsfspi.c" 2

@@ -2,8 +2,8 @@ L 1 "..\App\src\variable.c"
 N#ifndef __PRJ_STM32F10X_VARIABLE_C__
 N#define __PRJ_STM32F10X_VARIABLE_C__
 N
-N#include "typedef.h"
-L 1 "..\User\inc\typedef.h" 1
+N#include "Typedef.h"
+L 1 "..\User\inc\Typedef.h" 1
 N#ifndef __TYPEDEF_H__
 N#define __TYPEDEF_H__
 N
@@ -40,10 +40,29 @@ N
 N
 N#endif
 L 5 "..\App\src\variable.c" 2
-N//#include "variable.h"
+N#include "variable.h"
+L 1 "..\App\inc\variable.h" 1
+N#ifndef _VARIABLE_H__
+N#define _VARIABLE_H__
+N
+N#include "typedef.h"
+N
+Nextern __align(4) uint8_t g_DataTmpBuffer[0x1000];
+Nextern __align(4) volatile uint16_t g_SpiTxRxLen;
+N
+N
+Nextern volatile uint16_t g_timer3_tick;
+N
+N
+N#endif //_VARIABLE_H__
+L 6 "..\App\src\variable.c" 2
+N
 N
 Nuint16_t g_SpiId = 0;
 N__align(4) uint8_t g_DataTmpBuffer[0x1000] = {0};
 Nvolatile uint16_t g_SpiTxRxLen = 0;
+N
+N
+Nvolatile uint16_t g_timer3_tick = 0;
 N
 N#endif	//__PRJ_STM32F10X_VARIABLE_C__

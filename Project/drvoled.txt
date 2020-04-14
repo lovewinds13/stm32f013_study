@@ -143,7 +143,7 @@
 ;;;355    void oled_dis_logo(void)
 000000  b570              PUSH     {r4-r6,lr}
 ;;;356    {
-;;;357    	const uint8_t *pdata = dis_tmp_buff;
+;;;357    	const uint8_t *pdata = myBitmap;
 000002  4d10              LDR      r5,|L3.68|
 ;;;358    	uint8_t page = 0;
 000004  2400              MOVS     r4,#0
@@ -210,7 +210,7 @@
                           ENDP
 
                   |L3.68|
-                          DCD      dis_tmp_buff
+                          DCD      myBitmap
 
                           AREA ||i.oled_dis_num||, CODE, READONLY, ALIGN=1
 

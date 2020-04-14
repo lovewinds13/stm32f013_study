@@ -14313,7 +14313,7 @@ void oled_dis_picture(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t *b
 
 void oled_dis_logo(void)
 {
-	const uint8_t *pdata = dis_tmp_buff;
+	const uint8_t *pdata = myBitmap;
 	uint8_t page = 0;
 	uint8_t seg = 0;
 	

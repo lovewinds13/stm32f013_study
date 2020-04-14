@@ -15,7 +15,7 @@
 //模块功能测试
 //#define ADC_FUNC_TEST
 #define OLED_FUNC_TEST
-
+#define TIMER_FUNC_TEST
 
 //-------------------------------------------------------------------------
 //业务逻辑实现

@@ -15408,10 +15408,14 @@ extern void Usart_Init(USART_TypeDef *UsartChal, uint32_t bound);
 
 
 
-
+#line 5 "..\\App\\inc\\Variable.h"
 
 extern __align(4) uint8_t g_DataTmpBuffer[0x1000];
-extern volatile uint16_t g_SpiTxRxLen;
+extern __align(4) volatile uint16_t g_SpiTxRxLen;
+
+
+extern volatile uint16_t g_timer3_tick;
+
 
 #line 13 "..\\App\\src\\app_htu21d.c"
 

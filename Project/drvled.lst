@@ -29468,12 +29468,14 @@ N//	·µ »Ø Öµ: ÎÞ
 N//-------------------------------------------------------------------------------------------------------
 Nvoid Bsp_LedToggle(uint8_t _no)
 N{
-N	if (_no == 0)
+N	uint8_t flag = _no % 2;
+N	
+N	if (flag == 0)
 N	{
 N		LED0_GPIO_PORT->ODR ^= LED0_CON_IO;
 X		((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800))->ODR ^= ((uint16_t)0x0100);
 N	}
-N	else if (_no == 1)
+N	else if (flag == 1)
 N	{
 N		LED1_GPIO_PORT->ODR ^= LED1_CON_IO;
 X		((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1400))->ODR ^= ((uint16_t)0x0004);

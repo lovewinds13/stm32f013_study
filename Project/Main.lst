@@ -70,7 +70,7 @@ N
 N//模块功能测试
 N//#define ADC_FUNC_TEST
 N#define OLED_FUNC_TEST
-N
+N#define TIMER_FUNC_TEST
 N
 N//-------------------------------------------------------------------------
 N//业务逻辑实现
@@ -123,10 +123,14 @@ L 1 "..\App\inc\variable.h" 1
 N#ifndef _VARIABLE_H__
 N#define _VARIABLE_H__
 N
-N//#include "declares.h"
+N#include "typedef.h"
 N
 Nextern __align(4) uint8_t g_DataTmpBuffer[0x1000];
-Nextern volatile uint16_t g_SpiTxRxLen;
+Nextern __align(4) volatile uint16_t g_SpiTxRxLen;
+N
+N
+Nextern volatile uint16_t g_timer3_tick;
+N
 N
 N#endif //_VARIABLE_H__
 L 18 "..\User\src\Main.c" 2
@@ -29454,6 +29458,16 @@ N
 N
 N#endif	//_DRVOLED_H_
 L 31 "..\User\src\Main.c" 2
+N#include "drvtimer.h"
+L 1 "..\Driver\inc\drvtimer.h" 1
+N#ifndef __DRVTIMER_H__
+N#define __DRVTIMER_H__
+N
+Nextern void timer_init(uint8_t timer_no);
+Nextern void timer_test(void);
+N	
+N#endif	//__DRVTIMER_H__
+L 32 "..\User\src\Main.c" 2
 N#include <stdio.h>
 L 1 "C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h" 1
 N/* stdio.h: ANSI 'C' (X3J11 Oct 88) library header, section 4.9 */
@@ -30566,7 +30580,7 @@ N#endif /* ndef __stdio_h */
 N
 N/* end of stdio.h */
 N
-L 32 "..\User\src\Main.c" 2
+L 33 "..\User\src\Main.c" 2
 N#include <stdlib.h>
 L 1 "C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h" 1
 N/* stdlib.h: ANSI draft (X3J11 May 88) library header, section 4.10 */
@@ -31539,7 +31553,7 @@ N
 N#endif /* __stdlib_h */
 N
 N/* end of stdlib.h */
-L 33 "..\User\src\Main.c" 2
+L 34 "..\User\src\Main.c" 2
 N#include <string.h>
 L 1 "C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h" 1
 N/* string.h: ANSI 'C' (X3J11 Oct 88) library header, section 4.11 */
@@ -32090,7 +32104,7 @@ N#endif
 N
 N/* end of string.h */
 N
-L 34 "..\User\src\Main.c" 2
+L 35 "..\User\src\Main.c" 2
 N#include "logic_grammer.h"
 L 1 "..\App\inc\logic_grammer.h" 1
 N#ifndef __LOGIC_GRAMMER_H__
@@ -32111,7 +32125,7 @@ Nextern void memcmp_test(void);
 Nextern void strcmp_test(void);
 N#endif
 N
-L 35 "..\User\src\Main.c" 2
+L 36 "..\User\src\Main.c" 2
 N#include "c_language_regular.h"
 L 1 "..\App\inc\c_language_regular.h" 1
 N#ifndef __C_LANGUAGE_REGULAR_H__
@@ -32180,7 +32194,7 @@ Nextern void heap_test(void);
 N
 N
 N#endif	//__C_LANGUAGE_REGULAR_H__
-L 36 "..\User\src\Main.c" 2
+L 37 "..\User\src\Main.c" 2
 N
 N
 Nextern uint8_t g_WriteData[0x100];
@@ -32217,6 +32231,9 @@ S	App_AdcTest();
 S	
 N#endif	//ADC_FUNC_TEST
 N	
+N#ifdef TIMER_FUNC_TEST
+N	timer_init(3);
+N#endif
 N
 N#if SPI_COMM_MODE
 X#if 1
@@ -32224,7 +32241,7 @@ N	#ifdef HARD_SPI_COMM
 N	spi_master_init(1);
 N	#ifdef OLED_FUNC_TEST
 N	oled_init();
-N//	oled_dis_logo();
+N	oled_dis_logo();
 N//	oled_dis_picture(0, 0, 128, 7, bmp_buff);
 N//	oled_dis_num(60, 4, 1314, 4, 16);
 N//	oled_dis_one_char(5, 2, 'A');
@@ -32237,8 +32254,8 @@ N//	oled_dis_chinese(93,1,3);
 N//	oled_dis_chinese(33,5,4);
 N//	oled_dis_chinese(53,5,5);
 N//	oled_dis_chinese(73,5,6);
-N	oled_dis_chinese(50, 3, 8);
-N	oled_dis_chinese(80, 3, 9);
+N//	oled_dis_chinese(50, 3, 8);
+N//	oled_dis_chinese(80, 3, 9);
 N	#endif
 N	Flash_TestDataInit();
 N	ulFlashIdVal = spi_flash_read_id();
@@ -32315,8 +32332,12 @@ N#ifdef UART_FUNC_TEST
 N//	uart_test();
 N#endif
 N
-N//	printf("Main is ruinning\r\n");
-N	Bsp_LedTest(300);
+N#ifdef TIMER_FUNC_TEST
+N	timer_test();
+N#endif
+N
+N	printf("Main is ruinning\r\n");
+N//	Bsp_LedTest(300);
 N//	sprintf_test();	
 N//	strcpy_test();
 N//	memcmp_test();
