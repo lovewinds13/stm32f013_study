@@ -29480,9 +29480,51 @@ N	GPIO_Init(PORT_NRF_IRQ, &gpio_config_init);
 X	GPIO_Init(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), &gpio_config_init);
 N}
 N
+N//---------------------------------------------------------------------------------------------------------------------------------------------
+N//	函 数 名: nrf24l01_write_reg
+N//	功能说明: nrf24l01 写寄存器
+N//	形    参: 	reg_no：寄存器
+N//				reg_val：写入寄存器数值
+N//	返 回 值: 	status：寄存器状态值
+N//	日    期: 2020-04-15
+N//  备    注: 
+N//	作    者: by 霁风AI
+N//---------------------------------------------------------------------------------------------------------------------------------------------
 Nuint8_t nrf24l01_write_reg(uint8_t reg_no, uint8_t reg_val)
 N{
 N	uint8_t status = 0;
+N	
+N	NRF_CS_0();
+X	(GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), (((uint16_t)0x0010))));
+N	status = spi_master_send_recv_byte(1, reg_no);
+N	spi_master_send_recv_byte(1, reg_val);
+N	NRF_CS_1();
+X	(GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), (((uint16_t)0x0010))));
+N	
+N	return status;
+N}
+N
+N//---------------------------------------------------------------------------------------------------------------------------------------------
+N//	函 数 名: nrf24l01_read_reg
+N//	功能说明: nrf24l01 读寄存器
+N//	形    参: 	reg_no：寄存器
+N//	返 回 值: 	reg_val：寄存器值
+N//	日    期: 2020-04-15
+N//  备    注: 
+N//	作    者: by 霁风AI
+N//---------------------------------------------------------------------------------------------------------------------------------------------
+Nuint8_t nrf24l01_read_reg(uint8_t reg_no)
+N{
+N	uint8_t reg_val = 0;
+N	
+N	NRF_CS_0();
+X	(GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), (((uint16_t)0x0010))));
+N	spi_master_send_recv_byte(1, reg_no);
+N	reg_val = spi_master_send_recv_byte(1, 0xff);	
+N	NRF_CS_1();
+X	(GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), (((uint16_t)0x0010))));
+N	
+N	return reg_val;
 N}
 N
 N#endif /* __PRJ_STM32F10X_DRVNRF2401_C__ */

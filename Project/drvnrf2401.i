@@ -13608,8 +13608,46 @@ void nrf24l01_gpio_init(void)
 	GPIO_Init(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), &gpio_config_init);
 }
 
+
+
+
+
+
+
+
+
+
+
 uint8_t nrf24l01_write_reg(uint8_t reg_no, uint8_t reg_val)
 {
 	uint8_t status = 0;
+	
+	(GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), (((uint16_t)0x0010))));
+	status = spi_master_send_recv_byte(1, reg_no);
+	spi_master_send_recv_byte(1, reg_val);
+	(GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), (((uint16_t)0x0010))));
+	
+	return status;
+}
+
+
+
+
+
+
+
+
+
+
+uint8_t nrf24l01_read_reg(uint8_t reg_no)
+{
+	uint8_t reg_val = 0;
+	
+	(GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), (((uint16_t)0x0010))));
+	spi_master_send_recv_byte(1, reg_no);
+	reg_val = spi_master_send_recv_byte(1, 0xff);	
+	(GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), (((uint16_t)0x0010))));
+	
+	return reg_val;
 }
 

@@ -84,19 +84,82 @@
                   |L1.124|
                           DCD      0x40010800
 
-                          AREA ||i.nrf24l01_write_reg||, CODE, READONLY, ALIGN=1
+                          AREA ||i.nrf24l01_read_reg||, CODE, READONLY, ALIGN=2
 
-                  nrf24l01_write_reg PROC
-;;;57     
-;;;58     uint8_t nrf24l01_write_reg(uint8_t reg_no, uint8_t reg_val)
-000000  4602              MOV      r2,r0
-;;;59     {
-000002  460b              MOV      r3,r1
-;;;60     	uint8_t status = 0;
-000004  2000              MOVS     r0,#0
-000006  4601              MOV      r1,r0
-;;;61     }
-000008  4770              BX       lr
-;;;62     
+                  nrf24l01_read_reg PROC
+;;;88     //---------------------------------------------------------------------------------------------------------------------------------------------
+;;;89     uint8_t nrf24l01_read_reg(uint8_t reg_no)
+000000  b570              PUSH     {r4-r6,lr}
+;;;90     {
+000002  4604              MOV      r4,r0
+;;;91     	uint8_t reg_val = 0;
+000004  2500              MOVS     r5,#0
+;;;92     	
+;;;93     	NRF_CS_0();
+000006  2110              MOVS     r1,#0x10
+000008  4808              LDR      r0,|L2.44|
+00000a  f7fffffe          BL       GPIO_ResetBits
+;;;94     	spi_master_send_recv_byte(1, reg_no);
+00000e  4621              MOV      r1,r4
+000010  2001              MOVS     r0,#1
+000012  f7fffffe          BL       spi_master_send_recv_byte
+;;;95     	reg_val = spi_master_send_recv_byte(1, 0xff);	
+000016  21ff              MOVS     r1,#0xff
+000018  2001              MOVS     r0,#1
+00001a  f7fffffe          BL       spi_master_send_recv_byte
+00001e  4605              MOV      r5,r0
+;;;96     	NRF_CS_1();
+000020  2110              MOVS     r1,#0x10
+000022  4802              LDR      r0,|L2.44|
+000024  f7fffffe          BL       GPIO_SetBits
+;;;97     	
+;;;98     	return reg_val;
+000028  4628              MOV      r0,r5
+;;;99     }
+00002a  bd70              POP      {r4-r6,pc}
+;;;100    
                           ENDP
 
+                  |L2.44|
+                          DCD      0x40011000
+
+                          AREA ||i.nrf24l01_write_reg||, CODE, READONLY, ALIGN=2
+
+                  nrf24l01_write_reg PROC
+;;;67     //---------------------------------------------------------------------------------------------------------------------------------------------
+;;;68     uint8_t nrf24l01_write_reg(uint8_t reg_no, uint8_t reg_val)
+000000  b570              PUSH     {r4-r6,lr}
+;;;69     {
+000002  4604              MOV      r4,r0
+000004  460d              MOV      r5,r1
+;;;70     	uint8_t status = 0;
+000006  2600              MOVS     r6,#0
+;;;71     	
+;;;72     	NRF_CS_0();
+000008  2110              MOVS     r1,#0x10
+00000a  4809              LDR      r0,|L3.48|
+00000c  f7fffffe          BL       GPIO_ResetBits
+;;;73     	status = spi_master_send_recv_byte(1, reg_no);
+000010  4621              MOV      r1,r4
+000012  2001              MOVS     r0,#1
+000014  f7fffffe          BL       spi_master_send_recv_byte
+000018  4606              MOV      r6,r0
+;;;74     	spi_master_send_recv_byte(1, reg_val);
+00001a  4629              MOV      r1,r5
+00001c  2001              MOVS     r0,#1
+00001e  f7fffffe          BL       spi_master_send_recv_byte
+;;;75     	NRF_CS_1();
+000022  2110              MOVS     r1,#0x10
+000024  4802              LDR      r0,|L3.48|
+000026  f7fffffe          BL       GPIO_SetBits
+;;;76     	
+;;;77     	return status;
+00002a  4630              MOV      r0,r6
+;;;78     }
+00002c  bd70              POP      {r4-r6,pc}
+;;;79     
+                          ENDP
+
+00002e  0000              DCW      0x0000
+                  |L3.48|
+                          DCD      0x40011000
