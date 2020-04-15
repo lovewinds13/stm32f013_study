@@ -1,4 +1,4 @@
-#line 1 "G:\\01.Github_manger\\My_Embedded_Code\\Stm32F10x_Project\\Driver\\src\\drvtimer.c"
+#line 1 "..\\Driver\\src\\drvtimer.c"
 
 
 
@@ -50,8 +50,8 @@ extern __align(4) volatile uint16_t g_SpiTxRxLen;
 extern volatile uint16_t g_timer3_tick;
 
 
-#line 5 "G:\\01.Github_manger\\My_Embedded_Code\\Stm32F10x_Project\\Driver\\src\\drvtimer.c"
-#line 6 "G:\\01.Github_manger\\My_Embedded_Code\\Stm32F10x_Project\\Driver\\src\\drvtimer.c"
+#line 5 "..\\Driver\\src\\drvtimer.c"
+#line 6 "..\\Driver\\src\\drvtimer.c"
 #line 1 "..\\Driver\\inc\\drvtimer.h"
 
 
@@ -59,32 +59,7 @@ extern volatile uint16_t g_timer3_tick;
 extern void timer_init(uint8_t timer_no);
 extern void timer_test(void);
 	
-#line 7 "G:\\01.Github_manger\\My_Embedded_Code\\Stm32F10x_Project\\Driver\\src\\drvtimer.c"
-#line 1 "..\\Driver\\inc\\drvled.h"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-extern void Bsp_LedInit(void);
-extern void Bsp_LedOn(uint8_t _no);
-extern void Bsp_LedOff(uint8_t _no);
-extern void Bsp_LedToggle(uint8_t _no);
-extern void Bsp_LedTest(uint16_t _uiTime);
-
-#line 8 "G:\\01.Github_manger\\My_Embedded_Code\\Stm32F10x_Project\\Driver\\src\\drvtimer.c"
+#line 7 "..\\Driver\\src\\drvtimer.c"
 #line 1 "..\\Libraries\\CMSIS\\Device\\inc\\stm32f10x_conf.h"
 
 
@@ -13407,7 +13382,7 @@ void SysTick_CLKSourceConfig(uint32_t SysTick_CLKSource);
 
 
  
-#line 9 "G:\\01.Github_manger\\My_Embedded_Code\\Stm32F10x_Project\\Driver\\src\\drvtimer.c"
+#line 8 "..\\Driver\\src\\drvtimer.c"
 
 
 
@@ -13494,39 +13469,31 @@ void timer_init(uint8_t timer_no)
 
 
 
+uint16_t t = 0;
 
 void TIM3_IRQHandler(void)
 {
 	if (TIM_GetITStatus(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)), ((uint16_t)0x0001)) != RESET)
 	{
-		TIM_ClearITPendingBit(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)), ((uint16_t)0x0001));
-		
 		g_timer3_tick++;
-
-
-
-
-	}
-}
-
-void timer_test(void)
-{
-	if (g_timer3_tick /= 2)
-	{
-		Bsp_LedOn(0);
-		Bsp_LedOff(1);
-	}
-	else 
-	{
-		Bsp_LedOn(1);
-		Bsp_LedOff(0);
-	}
-	if (g_timer3_tick > 60000)
-	{
-		g_timer3_tick = 0;
+		if ((g_timer3_tick % 20) == 0)
+		{
+		
+		}
+		if (g_timer3_tick == 4999)
+		{
+			t++;
+			g_timer3_tick = 0;
+			Bsp_LedToggle(t);
+			if (t == 65535)
+			{
+				t = 0;
+			}
+		}
+		TIM_ClearITPendingBit(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)), ((uint16_t)0x0001));
 	}
 }
 
 
 
-
+	

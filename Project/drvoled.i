@@ -1,4 +1,4 @@
-#line 1 "G:\\01.Github_manger\\My_Embedded_Code\\Stm32F10x_Project\\Driver\\src\\drvoled.c"
+#line 1 "..\\Driver\\src\\drvoled.c"
 
 
 
@@ -13346,7 +13346,7 @@ void SysTick_CLKSourceConfig(uint32_t SysTick_CLKSource);
 
 
  
-#line 27 "G:\\01.Github_manger\\My_Embedded_Code\\Stm32F10x_Project\\Driver\\src\\drvoled.c"
+#line 27 "..\\Driver\\src\\drvoled.c"
 #line 1 "..\\Driver\\inc\\oled_font.h"
 
 
@@ -13601,47 +13601,7 @@ unsigned char  TEST[][32]={
 
 
 
-#line 28 "G:\\01.Github_manger\\My_Embedded_Code\\Stm32F10x_Project\\Driver\\src\\drvoled.c"
-#line 1 "..\\Driver\\inc\\drvoled.h"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#line 24 "..\\Driver\\inc\\drvoled.h"
-
-
-
-
-
-
-
-
-
-
-
-
-extern void oled_init(void);
-extern void oled_dis_clear(void);
-extern void oled_dis_set(void);
-extern void oled_dis_one_char(uint8_t x, uint8_t y, uint8_t str);	
-extern void oled_dis_str(uint8_t x, uint8_t y, uint8_t *str);
-extern void oled_dis_chinese(uint8_t x, uint8_t y, uint8_t no);
-extern void oled_dis_picture(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t *bmp);
-extern void oled_dis_num(uint8_t x, uint8_t y, uint32_t num, uint8_t len, uint8_t size_num);
-extern void oled_dis_logo(void);
-
-
-#line 29 "G:\\01.Github_manger\\My_Embedded_Code\\Stm32F10x_Project\\Driver\\src\\drvoled.c"
+#line 28 "..\\Driver\\src\\drvoled.c"
 #line 1 "..\\Driver\\inc\\bmp.h"
 
 
@@ -13849,7 +13809,47 @@ const unsigned char dis_tmp_buff[]= {
 	0x1C,0x1C,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
 };
 
-#line 30 "G:\\01.Github_manger\\My_Embedded_Code\\Stm32F10x_Project\\Driver\\src\\drvoled.c"
+#line 29 "..\\Driver\\src\\drvoled.c"
+#line 1 "..\\Driver\\inc\\drvoled.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 24 "..\\Driver\\inc\\drvoled.h"
+
+
+
+
+
+
+
+
+
+
+
+
+extern void oled_init(void);
+extern void oled_dis_clear(void);
+extern void oled_dis_set(void);
+extern void oled_dis_one_char(uint8_t x, uint8_t y, uint8_t str);	
+extern void oled_dis_str(uint8_t x, uint8_t y, uint8_t *str);
+extern void oled_dis_chinese(uint8_t x, uint8_t y, uint8_t no);
+extern void oled_dis_picture(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t *bmp);
+extern void oled_dis_num(uint8_t x, uint8_t y, uint32_t num, uint8_t len, uint8_t size_num);
+extern void oled_dis_logo(void);
+
+
+#line 30 "..\\Driver\\src\\drvoled.c"
 #line 1 "..\\Driver\\inc\\hardware_spi.h"
 
 
@@ -13894,7 +13894,7 @@ uint8_t SPI1_ReadWriteByte(uint8_t TxData);
 
 
 
-#line 31 "G:\\01.Github_manger\\My_Embedded_Code\\Stm32F10x_Project\\Driver\\src\\drvoled.c"
+#line 31 "..\\Driver\\src\\drvoled.c"
 #line 1 "..\\HalIterface\\inc\\hal_spi.h"
 
 
@@ -13902,7 +13902,7 @@ uint8_t SPI1_ReadWriteByte(uint8_t TxData);
 extern uint8_t hal_spi_send_bytes(uint8_t mode, uint8_t *pbdata, uint16_t send_length);
 extern uint8_t hal_spi_recv_bytes(uint8_t mode, uint8_t *pbdata, uint16_t send_length);
 
-#line 32 "G:\\01.Github_manger\\My_Embedded_Code\\Stm32F10x_Project\\Driver\\src\\drvoled.c"
+#line 32 "..\\Driver\\src\\drvoled.c"
 #line 1 "..\\Driver\\inc\\delay.h"
 
 
@@ -13988,7 +13988,7 @@ extern void Sys_delay_ms(volatile uint32_t _ulTmies);
 
 
 
-#line 33 "G:\\01.Github_manger\\My_Embedded_Code\\Stm32F10x_Project\\Driver\\src\\drvoled.c"
+#line 33 "..\\Driver\\src\\drvoled.c"
 
 
 
@@ -14303,17 +14303,9 @@ void oled_dis_picture(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t *b
 }
 
 
-
-
-
-
-
-
-
-
 void oled_dis_logo(void)
 {
-	const uint8_t *pdata = myBitmap;
+	const uint8_t *pdata = dis_tmp_buff;
 	uint8_t page = 0;
 	uint8_t seg = 0;
 	
@@ -14323,25 +14315,25 @@ void oled_dis_logo(void)
 	    oled_write_operate(0, 0x10);
 	    oled_write_operate(0, 0x00);
 		
-		for (seg = 0; seg < 128; seg++)
+
+
+
+
+
+		if (page >= 0xB2 && page <= 0xB5)
 		{
-			oled_write_operate(1, *pdata++);
+			for (seg = 0; seg < 128; seg++)
+			{
+				oled_write_operate(1, *pdata++);
+			}
 		}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		else
+		{
+			for (seg = 0; seg < 128; seg++)
+			{
+				oled_write_operate(1, 0x00);
+			}
+		}
 	}
 }
 

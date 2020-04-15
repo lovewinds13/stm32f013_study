@@ -1,4 +1,4 @@
-L 1 "G:\01.Github_manger\My_Embedded_Code\Stm32F10x_Project\Driver\src\drvtimer.c"
+L 1 "..\Driver\src\drvtimer.c"
 N#ifndef __PRJ_STM32F10X_DRVTIMER_C__
 N#define __PRJ_STM32F10X_DRVTIMER_C__
 N
@@ -54,7 +54,7 @@ Nextern volatile uint16_t g_timer3_tick;
 N
 N
 N#endif //_VARIABLE_H__
-L 5 "G:\01.Github_manger\My_Embedded_Code\Stm32F10x_Project\Driver\src\drvtimer.c" 2
+L 5 "..\Driver\src\drvtimer.c" 2
 N#include "Typedef.h"
 N#include "drvtimer.h"
 L 1 "..\Driver\inc\drvtimer.h" 1
@@ -65,34 +65,7 @@ Nextern void timer_init(uint8_t timer_no);
 Nextern void timer_test(void);
 N	
 N#endif	//__DRVTIMER_H__
-L 7 "G:\01.Github_manger\My_Embedded_Code\Stm32F10x_Project\Driver\src\drvtimer.c" 2
-N#include "drvled.h"
-L 1 "..\Driver\inc\drvled.h" 1
-N#ifndef _DRVLED_H_
-N#define _DRVLED_H_ 
-N
-N//#include "Typedef.h"
-N//#include "stm32f10x.h"
-N
-N
-N#define LED0 PAout(8)	// PA8
-N#define LED1 PDout(2)	// PD2	
-N
-N#define LED0_CON_IO		GPIO_Pin_8
-N#define LED1_CON_IO		GPIO_Pin_2
-N#define LED0_GPIO_PORT	GPIOA
-N#define LED1_GPIO_PORT	GPIOD
-N
-N#define LED_GPIO_CLK_ALLENABLE  (RCC_APB2Periph_GPIOA | RCC_APB2Periph_GPIOD)
-N
-Nextern void Bsp_LedInit(void);//初始化
-Nextern void Bsp_LedOn(uint8_t _no);
-Nextern void Bsp_LedOff(uint8_t _no);
-Nextern void Bsp_LedToggle(uint8_t _no);
-Nextern void Bsp_LedTest(uint16_t _uiTime);
-N
-N#endif	//_DRVLED_H_
-L 8 "G:\01.Github_manger\My_Embedded_Code\Stm32F10x_Project\Driver\src\drvtimer.c" 2
+L 7 "..\Driver\src\drvtimer.c" 2
 N#include "stm32f10x_conf.h"
 L 1 "..\Libraries\CMSIS\Device\inc\stm32f10x_conf.h" 1
 N/**
@@ -20692,7 +20665,7 @@ N
 N#endif /* __STM32F10x_CONF_H */
 N
 N/******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/
-L 9 "G:\01.Github_manger\My_Embedded_Code\Stm32F10x_Project\Driver\src\drvtimer.c" 2
+L 8 "..\Driver\src\drvtimer.c" 2
 N
 N//---------------------------------------------------------------------------------------------------------------------------------------------
 N//	函 数 名: timer_config
@@ -20785,41 +20758,34 @@ N//	日    期: 2020-04-14
 N//  备    注: 
 N//	作    者: by 霁风AI
 N//---------------------------------------------------------------------------------------------------------------------------------------------
+Nuint16_t t = 0;
 N
 Nvoid TIM3_IRQHandler(void)
 N{
 N	if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET)
 X	if (TIM_GetITStatus(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)), ((uint16_t)0x0001)) != RESET)
 N	{
+N		g_timer3_tick++;
+N		if ((g_timer3_tick % 20) == 0)
+N		{
+N		//	printf("the t vale is %d\n",t);		
+N		}
+N		if (g_timer3_tick == 4999)
+N		{
+N			t++;
+N			g_timer3_tick = 0;
+N			Bsp_LedToggle(t);
+N			if (t == 65535)
+N			{
+N				t = 0;
+N			}
+N		}
 N		TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
 X		TIM_ClearITPendingBit(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)), ((uint16_t)0x0001));
-N		
-N		g_timer3_tick++;
-N//		if ((g_timer3_tick % 20) == 0)
-N//		{
-N//		//	printf("the t vale is %d\n",t);		
-N//		}
-N	}
-N}
-N
-Nvoid timer_test(void)
-N{
-N	if (g_timer3_tick /= 2)
-N	{
-N		Bsp_LedOn(0);
-N		Bsp_LedOff(1);
-N	}
-N	else 
-N	{
-N		Bsp_LedOn(1);
-N		Bsp_LedOff(0);
-N	}
-N	if (g_timer3_tick > 60000)
-N	{
-N		g_timer3_tick = 0;
 N	}
 N}
 N
 N
 N#endif	//__PRJ_STM32F10X_DRVTIMER_C__
-N
+W "..\Driver\src\drvtimer.c" 121 2 last line of file ends without a newline
+N	

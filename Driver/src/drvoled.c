@@ -25,6 +25,7 @@
 
 #include "stm32f10x_conf.h"
 #include "oled_font.h"
+#include "bmp.h"
 #include "drvoled.h"
 #include "hardware_spi.h"
 #include "hal_spi.h"
@@ -342,10 +343,10 @@ void oled_dis_picture(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t *b
 	}
 }
 
-extern unsigned char bmp_buff[] ;
+
 void oled_dis_logo(void)
 {
-	const uint8_t *pdata = bmp_buff;
+	const uint8_t *pdata = dis_tmp_buff;
 	uint8_t page = 0;
 	uint8_t seg = 0;
 	

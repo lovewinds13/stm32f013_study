@@ -29273,12 +29273,25 @@ L 1 "..\Driver\inc\drvnrf2401.h" 1
 N#ifndef __DRVNRF2401_H__
 N#define __DRVNRF2401_H__
 N
-N#define NRF_CS_IO     		(GPIO_Pin_4)
-N#define PORT_NRF_GPIO		GPIOC
-N#define RCC_PCLK_NRF_GPIO	RCC_APB2Periph_GPIOC
-N#define NRF_CS_0()			(GPIO_ResetBits(PORT_NRF_GPIO, NRF_CS_IO))		
-N#define NRF_CS_1() 			(GPIO_SetBits(PORT_NRF_GPIO, NRF_CS_IO))
+N#define RCC_PCLK_NRF_GPIO_CS	RCC_APB2Periph_GPIOC
+N#define RCC_PCLK_NRF_GPIO_CE	RCC_APB2Periph_GPIOA
+N#define RCC_PCLK_NRF_GPIO_IRQ	RCC_APB2Periph_GPIOA
 N
+N#define NRF_CS_IO     		(GPIO_Pin_4)	//CS:PC4
+N#define PORT_NRF_CS			GPIOC
+N#define NRF_CS_0()			(GPIO_ResetBits(PORT_NRF_CS, NRF_CS_IO))		
+N#define NRF_CS_1() 			(GPIO_SetBits(PORT_NRF_CS, NRF_CS_IO))
+N
+N#define NRF_CE_IO     		(GPIO_Pin_4)	//CE:PA4
+N#define PORT_NRF_CE			GPIOA
+N#define NRF_CE_0()			(GPIO_ResetBits(PORT_NRF_CE, NRF_CE_IO))		
+N#define NRF_CE_1() 			(GPIO_SetBits(PORT_NRF_CE, NRF_CE_IO))
+N
+N#define NRF_IRQ_IO     			(GPIO_Pin_1)	//CE:PA1
+N#define PORT_NRF_IRQ			GPIOA
+N#define NRF_IRQ_0()				(GPIO_ResetBits(PORT_NRF_IRQ, NRF_IRQ_IO))		
+N#define NRF_IRQ_1() 			(GPIO_SetBits(PORT_NRF_IRQ, NRF_IRQ_IO))
+N#define GET_NRF_IRQ_STATUS		(GPIO_ReadInputDataBit(PORT_NRF_IRQ, NRF_IRQ))
 N
 Nextern void nrf24l01_gpio_init(void);
 N
@@ -29432,18 +29445,46 @@ Nvoid nrf24l01_gpio_init(void)
 N{
 N    GPIO_InitTypeDef gpio_config_init;
 N
-N	RCC_APB2PeriphClockCmd(RCC_PCLK_NRF_GPIO, ENABLE);		//开启NRF CS GPIO时钟
+N	RCC_APB2PeriphClockCmd(RCC_PCLK_NRF_GPIO_CS, ENABLE);		//开启NRF CS GPIO时钟
 X	RCC_APB2PeriphClockCmd(((uint32_t)0x00000010), ENABLE);		
+N	RCC_APB2PeriphClockCmd(RCC_PCLK_NRF_GPIO_CE, ENABLE);
+X	RCC_APB2PeriphClockCmd(((uint32_t)0x00000004), ENABLE);
+N	RCC_APB2PeriphClockCmd(RCC_PCLK_NRF_GPIO_IRQ, ENABLE);
+X	RCC_APB2PeriphClockCmd(((uint32_t)0x00000004), ENABLE);
 N
-N	gpio_config_init.GPIO_Pin = NRF_CS_IO;	//NRF_CS_IO IO初始化
-X	gpio_config_init.GPIO_Pin = (((uint16_t)0x0010));	
-N	gpio_config_init.GPIO_Mode = GPIO_Mode_Out_PP;  //推挽输出
+N	gpio_config_init.GPIO_Pin 	= NRF_CS_IO;	//NRF_CS_IO IO初始化
+X	gpio_config_init.GPIO_Pin 	= (((uint16_t)0x0010));	
+N	gpio_config_init.GPIO_Mode 	= GPIO_Mode_Out_PP;  //推挽输出
 N	gpio_config_init.GPIO_Speed = GPIO_Speed_50MHz;
-N	GPIO_Init(PORT_NRF_GPIO, &gpio_config_init);
+N	GPIO_Init(PORT_NRF_CS, &gpio_config_init);
 X	GPIO_Init(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), &gpio_config_init);
 N
-N	GPIO_SetBits(PORT_NRF_GPIO, NRF_CS_IO);	//IO初始状态都设置为高电平
+N	GPIO_SetBits(PORT_NRF_CS, NRF_CS_IO);	//IO初始状态都设置为高电平
 X	GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), (((uint16_t)0x0010)));	
+N	
+N	gpio_config_init.GPIO_Pin 	= NRF_CE_IO;
+X	gpio_config_init.GPIO_Pin 	= (((uint16_t)0x0010));
+N	gpio_config_init.GPIO_Mode 	= GPIO_Mode_Out_PP;
+N	gpio_config_init.GPIO_Speed = GPIO_Speed_50MHz;
+N	GPIO_Init(PORT_NRF_CE, &gpio_config_init);
+X	GPIO_Init(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), &gpio_config_init);
+N	
+N	GPIO_SetBits(PORT_NRF_CE, NRF_CE_IO);
+X	GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0010)));
+N	
+N	gpio_config_init.GPIO_Pin 	= NRF_IRQ_IO;
+X	gpio_config_init.GPIO_Pin 	= (((uint16_t)0x0002));
+N	gpio_config_init.GPIO_Mode 	= GPIO_Mode_IPU;//上拉输入
+N	gpio_config_init.GPIO_Speed = GPIO_Speed_50MHz;
+N	GPIO_Init(PORT_NRF_IRQ, &gpio_config_init);
+X	GPIO_Init(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), &gpio_config_init);
+N}
+N
+Nuint8_t nrf24l01_write_reg(uint8_t reg_no, uint8_t reg_val)
+N{
+N	uint8_t status = 0;
+W "..\Driver\src\drvnrf2401.c" 61 1 missing return statement at end of non-void function "nrf24l01_write_reg" 
+W "..\Driver\src\drvnrf2401.c" 60 10 variable "status"  was declared but never referenced
 N}
 N
 N#endif /* __PRJ_STM32F10X_DRVNRF2401_C__ */

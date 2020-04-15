@@ -187,6 +187,19 @@ extern uint32_t Flash_ReadJEDECID(void);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 extern void nrf24l01_gpio_init(void);
 
 
@@ -16100,7 +16113,7 @@ void Hardware_AllInit(void)
 
 	
 
-	timer_init(3);
+
 
 
 
@@ -16178,7 +16191,7 @@ int main(void)
 
 
 
-	timer_test();
+
 
 
 	printf("Main is ruinning\r\n");

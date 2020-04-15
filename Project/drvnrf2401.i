@@ -13421,6 +13421,19 @@ void GPIO_ETH_MediaInterfaceConfig(uint32_t GPIO_ETH_MediaInterface);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 extern void nrf24l01_gpio_init(void);
 
 
@@ -13572,12 +13585,31 @@ void nrf24l01_gpio_init(void)
     GPIO_InitTypeDef gpio_config_init;
 
 	RCC_APB2PeriphClockCmd(((uint32_t)0x00000010), ENABLE);		
+	RCC_APB2PeriphClockCmd(((uint32_t)0x00000004), ENABLE);
+	RCC_APB2PeriphClockCmd(((uint32_t)0x00000004), ENABLE);
 
-	gpio_config_init.GPIO_Pin = (((uint16_t)0x0010));	
-	gpio_config_init.GPIO_Mode = GPIO_Mode_Out_PP;  
+	gpio_config_init.GPIO_Pin 	= (((uint16_t)0x0010));	
+	gpio_config_init.GPIO_Mode 	= GPIO_Mode_Out_PP;  
 	gpio_config_init.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), &gpio_config_init);
 
 	GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), (((uint16_t)0x0010)));	
+	
+	gpio_config_init.GPIO_Pin 	= (((uint16_t)0x0010));
+	gpio_config_init.GPIO_Mode 	= GPIO_Mode_Out_PP;
+	gpio_config_init.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), &gpio_config_init);
+	
+	GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0010)));
+	
+	gpio_config_init.GPIO_Pin 	= (((uint16_t)0x0002));
+	gpio_config_init.GPIO_Mode 	= GPIO_Mode_IPU;
+	gpio_config_init.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), &gpio_config_init);
+}
+
+uint8_t nrf24l01_write_reg(uint8_t reg_no, uint8_t reg_val)
+{
+	uint8_t status = 0;
 }
 

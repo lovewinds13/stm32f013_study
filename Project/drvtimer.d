@@ -1,8 +1,7 @@
-.\drvtimer.o: G:\01.Github_manger\My_Embedded_Code\Stm32F10x_Project\Driver\src\drvtimer.c
+.\drvtimer.o: ..\Driver\src\drvtimer.c
 .\drvtimer.o: ..\App\inc\Variable.h
 .\drvtimer.o: ..\User\inc\typedef.h
 .\drvtimer.o: ..\Driver\inc\drvtimer.h
-.\drvtimer.o: ..\Driver\inc\drvled.h
 .\drvtimer.o: ..\Libraries\CMSIS\Device\inc\stm32f10x_conf.h
 .\drvtimer.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h
 .\drvtimer.o: ..\Libraries\CMSIS\Device\inc\stm32f10x.h
