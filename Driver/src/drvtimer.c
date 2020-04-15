@@ -4,6 +4,7 @@
 #include "Variable.h"
 #include "Typedef.h"
 #include "drvtimer.h"
+#include "drvled.h"
 #include "stm32f10x_conf.h"
 
 //---------------------------------------------------------------------------------------------------------------------------------------------
@@ -91,31 +92,39 @@ void timer_init(uint8_t timer_no)
 //  备    注: 
 //	作    者: by 霁风AI
 //---------------------------------------------------------------------------------------------------------------------------------------------
-uint16_t t = 0;
 
 void TIM3_IRQHandler(void)
 {
 	if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET)
 	{
-		g_timer3_tick++;
-		if ((g_timer3_tick % 20) == 0)
-		{
-		//	printf("the t vale is %d\n",t);		
-		}
-		if (g_timer3_tick == 4999)
-		{
-			t++;
-			g_timer3_tick = 0;
-			Bsp_LedToggle(t);
-			if (t == 65535)
-			{
-				t = 0;
-			}
-		}
 		TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
+		
+		g_timer3_tick++;
+//		if ((g_timer3_tick % 20) == 0)
+//		{
+//		//	printf("the t vale is %d\n",t);		
+//		}
+	}
+}
+
+void timer_test(void)
+{
+	if (g_timer3_tick /= 2)
+	{
+		Bsp_LedOn(0);
+		Bsp_LedOff(1);
+	}
+	else 
+	{
+		Bsp_LedOn(1);
+		Bsp_LedOff(0);
+	}
+	if (g_timer3_tick > 60000)
+	{
+		g_timer3_tick = 0;
 	}
 }
 
 
 #endif	//__PRJ_STM32F10X_DRVTIMER_C__
-	
+

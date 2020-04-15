@@ -26,6 +26,7 @@
 #include "stm32f10x_conf.h"
 #include "oled_font.h"
 #include "drvoled.h"
+#include "bmp.h"
 #include "hardware_spi.h"
 #include "hal_spi.h"
 #include "delay.h"
@@ -342,10 +343,18 @@ void oled_dis_picture(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t *b
 	}
 }
 
-extern unsigned char bmp_buff[] ;
+//---------------------------------------------------------------------------------------------------------------------------------------------
+//	函 数 名: oled_dis_logo
+//	功能说明: oled 显示图片logo
+//	形    参: 无
+//	返 回 值: 无
+//	日    期: 2020-04-11
+//  备    注: 整屏幕显示
+//	作    者: by 霁风AI
+//---------------------------------------------------------------------------------------------------------------------------------------------
 void oled_dis_logo(void)
 {
-	const uint8_t *pdata = bmp_buff;
+	const uint8_t *pdata = myBitmap;
 	uint8_t page = 0;
 	uint8_t seg = 0;
 	
@@ -355,25 +364,25 @@ void oled_dis_logo(void)
 	    oled_write_operate(OLED_COMM, 0x10);
 	    oled_write_operate(OLED_COMM, 0x00);
 		
-//		for (seg = 0; seg < 128; seg++)
-//		{
-//			oled_write_operate(OLED_DATA, *pdata++);
-//		}
+		for (seg = 0; seg < 128; seg++)
+		{
+			oled_write_operate(OLED_DATA, *pdata++);
+		}
 
-		if (page >= 0xB2 && page <= 0xB5)
-		{
-			for (seg = 0; seg < 128; seg++)
-			{
-				oled_write_operate(OLED_DATA, *pdata++);
-			}
-		}
-		else
-		{
-			for (seg = 0; seg < 128; seg++)
-			{
-				oled_write_operate(OLED_DATA, 0x00);
-			}
-		}
+//		if (page >= 0xB2 && page <= 0xB5)	//调整图片区域
+//		{
+//			for (seg = 0; seg < 128; seg++)
+//			{
+//				oled_write_operate(OLED_DATA, *pdata++);
+//			}
+//		}
+//		else
+//		{
+//			for (seg = 0; seg < 128; seg++)
+//			{
+//				oled_write_operate(OLED_DATA, 0x00);
+//			}
+//		}
 	}
 }
 //---------------------------------------------------------------------------------------------------------------------------------------------
