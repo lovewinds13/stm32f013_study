@@ -1,4 +1,4 @@
-#line 1 "G:\\01.Github_manger\\My_Embedded_Code\\Stm32F10x_Project\\Driver\\src\\drvtimer.c"
+#line 1 "..\\Driver\\src\\drvtimer.c"
 
 
 
@@ -50,8 +50,8 @@ extern __align(4) volatile uint16_t g_SpiTxRxLen;
 extern volatile uint16_t g_timer3_tick;
 
 
-#line 5 "G:\\01.Github_manger\\My_Embedded_Code\\Stm32F10x_Project\\Driver\\src\\drvtimer.c"
-#line 6 "G:\\01.Github_manger\\My_Embedded_Code\\Stm32F10x_Project\\Driver\\src\\drvtimer.c"
+#line 5 "..\\Driver\\src\\drvtimer.c"
+#line 6 "..\\Driver\\src\\drvtimer.c"
 #line 1 "..\\Driver\\inc\\drvtimer.h"
 
 
@@ -59,7 +59,7 @@ extern volatile uint16_t g_timer3_tick;
 extern void timer_init(uint8_t timer_no);
 extern void timer_test(void);
 	
-#line 7 "G:\\01.Github_manger\\My_Embedded_Code\\Stm32F10x_Project\\Driver\\src\\drvtimer.c"
+#line 7 "..\\Driver\\src\\drvtimer.c"
 #line 1 "..\\Driver\\inc\\drvled.h"
 
 
@@ -84,7 +84,7 @@ extern void Bsp_LedOff(uint8_t _no);
 extern void Bsp_LedToggle(uint8_t _no);
 extern void Bsp_LedTest(uint16_t _uiTime);
 
-#line 8 "G:\\01.Github_manger\\My_Embedded_Code\\Stm32F10x_Project\\Driver\\src\\drvtimer.c"
+#line 8 "..\\Driver\\src\\drvtimer.c"
 #line 1 "..\\Libraries\\CMSIS\\Device\\inc\\stm32f10x_conf.h"
 
 
@@ -13407,7 +13407,7 @@ void SysTick_CLKSourceConfig(uint32_t SysTick_CLKSource);
 
 
  
-#line 9 "G:\\01.Github_manger\\My_Embedded_Code\\Stm32F10x_Project\\Driver\\src\\drvtimer.c"
+#line 9 "..\\Driver\\src\\drvtimer.c"
 
 
 

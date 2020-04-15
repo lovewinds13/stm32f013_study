@@ -21,6 +21,8 @@ del *.tra /s
 del *.dep /s           
 del JLinkLog.txt /s
 
+del *.txt /s 
+
 del *.iex /s
 del *.htm /s
 ::del *.sct /s	::分散加载文件不能删除

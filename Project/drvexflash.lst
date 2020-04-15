@@ -29358,7 +29358,7 @@ N
 N//模块功能测试
 N//#define ADC_FUNC_TEST
 N#define OLED_FUNC_TEST
-N#define TIMER_FUNC_TEST
+N//#define TIMER_FUNC_TEST
 N
 N//-------------------------------------------------------------------------
 N//业务逻辑实现

@@ -1,4 +1,4 @@
-L 1 "G:\01.Github_manger\My_Embedded_Code\Stm32F10x_Project\Driver\src\drvoled.c"
+L 1 "..\Driver\src\drvoled.c"
 N//--------------------------------------------------------------------------------------------------------
 N//
 N//	模块名称 : OLED操作
@@ -20623,7 +20623,7 @@ N
 N#endif /* __STM32F10x_CONF_H */
 N
 N/******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/
-L 27 "G:\01.Github_manger\My_Embedded_Code\Stm32F10x_Project\Driver\src\drvoled.c" 2
+L 27 "..\Driver\src\drvoled.c" 2
 N#include "oled_font.h"
 L 1 "..\Driver\inc\oled_font.h" 1
 N#ifndef __OLED_FONT_H
@@ -20879,57 +20879,7 @@ N
 N#endif
 N
 N
-L 28 "G:\01.Github_manger\My_Embedded_Code\Stm32F10x_Project\Driver\src\drvoled.c" 2
-N#include "drvoled.h"
-L 1 "..\Driver\inc\drvoled.h" 1
-N#ifndef _DRVOLED_H_
-N#define _DRVOLED_H_ 
-N
-N#define MAX_COLUMN	128
-N#define MAX_ROW	64
-N#define SIZE 16 	//显示字体选择()
-N
-N#define OLED_DATA	1
-N#define OLED_COMM	0
-N
-N
-N#define	OLED_GPIO_CLK				RCC_APB2Periph_GPIOA
-N#define	OLED_PORT					GPIOA
-N
-N#if 1
-N#define OLED_CS_PIN		GPIO_Pin_1	//CS
-N#define OLED_CS_LOW		GPIO_ResetBits(OLED_PORT, OLED_CS_PIN)						
-N#define OLED_CS_HIGH	GPIO_SetBits(OLED_PORT, OLED_CS_PIN)
-N#else
-S#define OLED_CS_PIN		GPIO_Pin_4	//CS
-S#define OLED_CS_LOW		GPIO_ResetBits(GPIOC, GPIO_Pin_2)						
-S#define OLED_CS_HIGH	GPIO_SetBits(GPIOC, GPIO_Pin_2)
-N#endif
-N
-N#define OLED_DC_PIN		GPIO_Pin_3	//DC
-N#define OLED_DC_LOW		GPIO_ResetBits(OLED_PORT, OLED_DC_PIN)
-N#define OLED_DC_HIGH	GPIO_SetBits(OLED_PORT, OLED_DC_PIN)
-N
-N#define OLED_RST_PIN	GPIO_Pin_4	//RST
-N#define OLED_RST_LOW	GPIO_ResetBits(OLED_PORT, OLED_RST_PIN)
-N#define OLED_RST_HIGH	GPIO_SetBits(OLED_PORT, OLED_RST_PIN)
-N
-N#define OLED_CLK_PIN	GPIO_Pin_5
-N#define OLED_DATA_PIN	GPIO_Pin_7
-N
-Nextern void oled_init(void);
-Nextern void oled_dis_clear(void);
-Nextern void oled_dis_set(void);
-Nextern void oled_dis_one_char(uint8_t x, uint8_t y, uint8_t str);	
-Nextern void oled_dis_str(uint8_t x, uint8_t y, uint8_t *str);
-Nextern void oled_dis_chinese(uint8_t x, uint8_t y, uint8_t no);
-Nextern void oled_dis_picture(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t *bmp);
-Nextern void oled_dis_num(uint8_t x, uint8_t y, uint32_t num, uint8_t len, uint8_t size_num);
-Nextern void oled_dis_logo(void);
-N
-N
-N#endif	//_DRVOLED_H_
-L 29 "G:\01.Github_manger\My_Embedded_Code\Stm32F10x_Project\Driver\src\drvoled.c" 2
+L 28 "..\Driver\src\drvoled.c" 2
 N#include "bmp.h"
 L 1 "..\Driver\inc\bmp.h" 1
 N#ifndef _BMP_H_
@@ -21139,7 +21089,58 @@ N	0x1C,0x1C,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x0
 N};
 N
 N#endif	//_BMP_H_
-L 30 "G:\01.Github_manger\My_Embedded_Code\Stm32F10x_Project\Driver\src\drvoled.c" 2
+L 29 "..\Driver\src\drvoled.c" 2
+N#include "drvoled.h"
+L 1 "..\Driver\inc\drvoled.h" 1
+N#ifndef _DRVOLED_H_
+N#define _DRVOLED_H_ 
+N
+N#define MAX_COLUMN	128
+N#define MAX_ROW	64
+N#define SIZE 16 	//显示字体选择()
+N
+N#define OLED_DATA	1
+N#define OLED_COMM	0
+N
+N
+N#define	OLED_GPIO_CLK				RCC_APB2Periph_GPIOA
+N#define	OLED_PORT					GPIOA
+N
+N#if 1
+N#define OLED_CS_PIN		GPIO_Pin_1	//CS
+N#define OLED_CS_LOW		GPIO_ResetBits(OLED_PORT, OLED_CS_PIN)						
+N#define OLED_CS_HIGH	GPIO_SetBits(OLED_PORT, OLED_CS_PIN)
+N#else
+S#define OLED_CS_PIN		GPIO_Pin_4	//CS
+S#define OLED_CS_LOW		GPIO_ResetBits(GPIOC, GPIO_Pin_2)						
+S#define OLED_CS_HIGH	GPIO_SetBits(GPIOC, GPIO_Pin_2)
+N#endif
+N
+N#define OLED_DC_PIN		GPIO_Pin_3	//DC
+N#define OLED_DC_LOW		GPIO_ResetBits(OLED_PORT, OLED_DC_PIN)
+N#define OLED_DC_HIGH	GPIO_SetBits(OLED_PORT, OLED_DC_PIN)
+N
+N#define OLED_RST_PIN	GPIO_Pin_4	//RST
+N#define OLED_RST_LOW	GPIO_ResetBits(OLED_PORT, OLED_RST_PIN)
+N#define OLED_RST_HIGH	GPIO_SetBits(OLED_PORT, OLED_RST_PIN)
+N
+N#define OLED_CLK_PIN	GPIO_Pin_5
+N#define OLED_DATA_PIN	GPIO_Pin_7
+N
+Nextern void oled_init(void);
+Nextern void oled_dis_clear(void);
+Nextern void oled_dis_set(void);
+Nextern void oled_dis_one_char(uint8_t x, uint8_t y, uint8_t str);	
+Nextern void oled_dis_str(uint8_t x, uint8_t y, uint8_t *str);
+Nextern void oled_dis_chinese(uint8_t x, uint8_t y, uint8_t no);
+Nextern void oled_dis_picture(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t *bmp);
+Nextern void oled_dis_num(uint8_t x, uint8_t y, uint32_t num, uint8_t len, uint8_t size_num);
+Nextern void oled_dis_logo(void);
+N
+N
+N#endif	//_DRVOLED_H_
+L 30 "..\Driver\src\drvoled.c" 2
+N#include "bmp.h"
 N#include "hardware_spi.h"
 L 1 "..\Driver\inc\hardware_spi.h" 1
 N#ifndef __HARDWARE_SPI__H__
@@ -21185,7 +21186,7 @@ Nuint8_t SPI1_ReadWriteByte(uint8_t TxData);
 N
 N#endif	//__HARDWARE_SPI__H__
 N
-L 31 "G:\01.Github_manger\My_Embedded_Code\Stm32F10x_Project\Driver\src\drvoled.c" 2
+L 32 "..\Driver\src\drvoled.c" 2
 N#include "hal_spi.h"
 L 1 "..\HalIterface\inc\hal_spi.h" 1
 N#ifndef __HAL_SPI_H__
@@ -21195,7 +21196,7 @@ Nextern uint8_t hal_spi_send_bytes(uint8_t mode, uint8_t *pbdata, uint16_t send_
 Nextern uint8_t hal_spi_recv_bytes(uint8_t mode, uint8_t *pbdata, uint16_t send_length);
 N
 N#endif	//__HAL_SPI_H__
-L 32 "G:\01.Github_manger\My_Embedded_Code\Stm32F10x_Project\Driver\src\drvoled.c" 2
+L 33 "..\Driver\src\drvoled.c" 2
 N#include "delay.h"
 L 1 "..\Driver\inc\delay.h" 1
 N#ifndef __DELAY_H
@@ -21282,7 +21283,7 @@ N
 N
 N
 N
-L 33 "G:\01.Github_manger\My_Embedded_Code\Stm32F10x_Project\Driver\src\drvoled.c" 2
+L 34 "..\Driver\src\drvoled.c" 2
 N
 N
 N//---------------------------------------------------------------------------------------------------------------------------------------------
@@ -21642,7 +21643,7 @@ N//	作    者: by 霁风AI
 N//---------------------------------------------------------------------------------------------------------------------------------------------
 Nvoid oled_dis_logo(void)
 N{
-N	const uint8_t *pdata = myBitmap;
+N	const uint8_t *pdata = dis_tmp_buff;
 N	uint8_t page = 0;
 N	uint8_t seg = 0;
 N	
@@ -21677,6 +21678,7 @@ N//			}
 N//		}
 N	}
 N}
+N
 N//---------------------------------------------------------------------------------------------------------------------------------------------
 N//	函 数 名: oled_pow
 N//	功能说明: 计算 m的n次方

@@ -1,4 +1,4 @@
-.\drvoled.o: G:\01.Github_manger\My_Embedded_Code\Stm32F10x_Project\Driver\src\drvoled.c
+.\drvoled.o: ..\Driver\src\drvoled.c
 .\drvoled.o: ..\Libraries\CMSIS\Device\inc\stm32f10x_conf.h
 .\drvoled.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h
 .\drvoled.o: ..\Libraries\CMSIS\Device\inc\stm32f10x.h
@@ -29,8 +29,8 @@
 .\drvoled.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_wwdg.h
 .\drvoled.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h
 .\drvoled.o: ..\Driver\inc\oled_font.h
-.\drvoled.o: ..\Driver\inc\drvoled.h
 .\drvoled.o: ..\Driver\inc\bmp.h
+.\drvoled.o: ..\Driver\inc\drvoled.h
 .\drvoled.o: ..\Driver\inc\hardware_spi.h
 .\drvoled.o: ..\HalIterface\inc\hal_spi.h
 .\drvoled.o: ..\Driver\inc\delay.h

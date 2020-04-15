@@ -70,7 +70,7 @@ N
 N//模块功能测试
 N//#define ADC_FUNC_TEST
 N#define OLED_FUNC_TEST
-N#define TIMER_FUNC_TEST
+N//#define TIMER_FUNC_TEST
 N
 N//-------------------------------------------------------------------------
 N//业务逻辑实现
@@ -202,12 +202,25 @@ L 1 "..\Driver\inc\drvnrf2401.h" 1
 N#ifndef __DRVNRF2401_H__
 N#define __DRVNRF2401_H__
 N
-N#define NRF_CS_IO     		(GPIO_Pin_4)
-N#define PORT_NRF_GPIO		GPIOC
-N#define RCC_PCLK_NRF_GPIO	RCC_APB2Periph_GPIOC
-N#define NRF_CS_0()			(GPIO_ResetBits(PORT_NRF_GPIO, NRF_CS_IO))		
-N#define NRF_CS_1() 			(GPIO_SetBits(PORT_NRF_GPIO, NRF_CS_IO))
+N#define RCC_PCLK_NRF_GPIO_CS	RCC_APB2Periph_GPIOC
+N#define RCC_PCLK_NRF_GPIO_CE	RCC_APB2Periph_GPIOA
+N#define RCC_PCLK_NRF_GPIO_IRQ	RCC_APB2Periph_GPIOA
 N
+N#define NRF_CS_IO     		(GPIO_Pin_4)	//CS:PC4
+N#define PORT_NRF_CS			GPIOC
+N#define NRF_CS_0()			(GPIO_ResetBits(PORT_NRF_CS, NRF_CS_IO))		
+N#define NRF_CS_1() 			(GPIO_SetBits(PORT_NRF_CS, NRF_CS_IO))
+N
+N#define NRF_CE_IO     		(GPIO_Pin_4)	//CE:PA4
+N#define PORT_NRF_CE			GPIOA
+N#define NRF_CE_0()			(GPIO_ResetBits(PORT_NRF_CE, NRF_CE_IO))		
+N#define NRF_CE_1() 			(GPIO_SetBits(PORT_NRF_CE, NRF_CE_IO))
+N
+N#define NRF_IRQ_IO     			(GPIO_Pin_1)	//CE:PA1
+N#define PORT_NRF_IRQ			GPIOA
+N#define NRF_IRQ_0()				(GPIO_ResetBits(PORT_NRF_IRQ, NRF_IRQ_IO))		
+N#define NRF_IRQ_1() 			(GPIO_SetBits(PORT_NRF_IRQ, NRF_IRQ_IO))
+N#define GET_NRF_IRQ_STATUS		(GPIO_ReadInputDataBit(PORT_NRF_IRQ, NRF_IRQ))
 N
 Nextern void nrf24l01_gpio_init(void);
 N
@@ -32232,7 +32245,7 @@ S
 N#endif	//ADC_FUNC_TEST
 N	
 N#ifdef TIMER_FUNC_TEST
-N	timer_init(3);
+S	timer_init(3);
 N#endif
 N
 N#if SPI_COMM_MODE
@@ -32333,7 +32346,7 @@ N//	uart_test();
 N#endif
 N
 N#ifdef TIMER_FUNC_TEST
-N	timer_test();
+S	timer_test();
 N#endif
 N
 N	printf("Main is ruinning\r\n");

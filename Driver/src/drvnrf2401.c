@@ -31,14 +31,33 @@ void nrf24l01_gpio_init(void)
 {
     GPIO_InitTypeDef gpio_config_init;
 
-	RCC_APB2PeriphClockCmd(RCC_PCLK_NRF_GPIO, ENABLE);		//开启NRF CS GPIO时钟
+	RCC_APB2PeriphClockCmd(RCC_PCLK_NRF_GPIO_CS, ENABLE);		//开启NRF CS GPIO时钟
+	RCC_APB2PeriphClockCmd(RCC_PCLK_NRF_GPIO_CE, ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_PCLK_NRF_GPIO_IRQ, ENABLE);
 
-	gpio_config_init.GPIO_Pin = NRF_CS_IO;	//NRF_CS_IO IO初始化
-	gpio_config_init.GPIO_Mode = GPIO_Mode_Out_PP;  //推挽输出
+	gpio_config_init.GPIO_Pin 	= NRF_CS_IO;	//NRF_CS_IO IO初始化
+	gpio_config_init.GPIO_Mode 	= GPIO_Mode_Out_PP;  //推挽输出
 	gpio_config_init.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(PORT_NRF_GPIO, &gpio_config_init);
+	GPIO_Init(PORT_NRF_CS, &gpio_config_init);
 
-	GPIO_SetBits(PORT_NRF_GPIO, NRF_CS_IO);	//IO初始状态都设置为高电平
+	GPIO_SetBits(PORT_NRF_CS, NRF_CS_IO);	//IO初始状态都设置为高电平
+	
+	gpio_config_init.GPIO_Pin 	= NRF_CE_IO;
+	gpio_config_init.GPIO_Mode 	= GPIO_Mode_Out_PP;
+	gpio_config_init.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(PORT_NRF_CE, &gpio_config_init);
+	
+	GPIO_SetBits(PORT_NRF_CE, NRF_CE_IO);
+	
+	gpio_config_init.GPIO_Pin 	= NRF_IRQ_IO;
+	gpio_config_init.GPIO_Mode 	= GPIO_Mode_IPU;//上拉输入
+	gpio_config_init.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(PORT_NRF_IRQ, &gpio_config_init);
+}
+
+uint8_t nrf24l01_write_reg(uint8_t reg_no, uint8_t reg_val)
+{
+	uint8_t status = 0;
 }
 
 #endif /* __PRJ_STM32F10X_DRVNRF2401_C__ */

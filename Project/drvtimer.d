@@ -1,4 +1,4 @@
-.\drvtimer.o: G:\01.Github_manger\My_Embedded_Code\Stm32F10x_Project\Driver\src\drvtimer.c
+.\drvtimer.o: ..\Driver\src\drvtimer.c
 .\drvtimer.o: ..\App\inc\Variable.h
 .\drvtimer.o: ..\User\inc\typedef.h
 .\drvtimer.o: ..\Driver\inc\drvtimer.h

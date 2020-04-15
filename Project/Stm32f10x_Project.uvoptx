@@ -471,7 +471,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>G:\01.Github_manger\My_Embedded_Code\Stm32F10x_Project\Driver\src\drvoled.c</PathWithFileName>
+      <PathWithFileName>..\Driver\src\drvoled.c</PathWithFileName>
       <FilenameWithoutPath>drvoled.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -483,7 +483,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>G:\01.Github_manger\My_Embedded_Code\Stm32F10x_Project\Driver\src\drvtimer.c</PathWithFileName>
+      <PathWithFileName>..\Driver\src\drvtimer.c</PathWithFileName>
       <FilenameWithoutPath>drvtimer.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
