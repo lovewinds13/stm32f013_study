@@ -116,7 +116,7 @@ uint8_t Spi_ReadByte(void)
 	SPI_CLK_HIGH;
 	for(ucDataLen = 0; ucDataLen < 8; ucDataLen++)	
 	{
-		SPI_CLK_LOW;	//下降沿后读取数据
+		SPI_CLK_LOW;	//上升沿后读取数据
 		//nrf_delay_ms(1);
 		ucTmpVal <<= 1;	//最高位已经在数据线上了
 		if(SPI_MISO_READ)	//

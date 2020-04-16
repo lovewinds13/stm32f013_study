@@ -502,6 +502,11 @@
               <FileType>1</FileType>
               <FilePath>..\Driver\src\drvtimer.c</FilePath>
             </File>
+            <File>
+              <FileName>drvexti.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\src\drvexti.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

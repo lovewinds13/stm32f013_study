@@ -21,6 +21,7 @@
 ".\drvled.o"
 ".\drvoled.o"
 ".\drvtimer.o"
+".\drvexti.o"
 ".\core_cm3.o"
 ".\stm32f10x_it.o"
 ".\system_stm32f10x.o"
