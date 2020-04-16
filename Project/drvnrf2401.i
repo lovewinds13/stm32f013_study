@@ -13434,6 +13434,22 @@ void GPIO_ETH_MediaInterfaceConfig(uint32_t GPIO_ETH_MediaInterface);
 
 
 
+
+#line 37 "..\\Driver\\inc\\drvnrf2401.h"
+
+
+
+									
+#line 66 "..\\Driver\\inc\\drvnrf2401.h"
+
+
+
+
+
+
+
+#line 79 "..\\Driver\\inc\\drvnrf2401.h"
+
 extern void nrf24l01_gpio_init(void);
 
 
@@ -13571,6 +13587,9 @@ extern void Sys_delay_ms(volatile uint32_t _ulTmies);
 
 #line 20 "..\\Driver\\src\\drvnrf2401.c"
 
+const uint8_t TX_ADDRESS_X[5] = {0x34,0x43,0x10,0x10,0x01};
+const uint8_t RX_ADDRESS_X[5] = {0x34,0x43,0x10,0x10,0x01};
+
 
 
 
@@ -13649,5 +13668,255 @@ uint8_t nrf24l01_read_reg(uint8_t reg_no)
 	(GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), (((uint16_t)0x0010))));
 	
 	return reg_val;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+uint8_t nrf24l01_read_buff(uint8_t reg_no, uint8_t *pbdata, uint16_t read_length)
+{
+	uint8_t status = 0;
+	uint16_t i = 0;
+	
+	(GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), (((uint16_t)0x0010))));
+	
+	status = spi_master_send_recv_byte(1, reg_no);
+	
+	for (i = 0; i < read_length; i++)
+	{
+		*pbdata++ = spi_master_send_recv_byte(1, 0xff);	
+	}
+	
+	(GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), (((uint16_t)0x0010))));
+	
+	return status;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+uint8_t nrf24l01_write_buff(uint8_t reg_no, uint8_t *pbdata, uint16_t write_length)
+{
+	uint8_t status = 0;
+	uint16_t i = 0;
+	
+	(GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), (((uint16_t)0x0010))));
+	
+	status = spi_master_send_recv_byte(1, reg_no);
+	
+	for (i = 0; i < write_length; i++)
+	{
+		spi_master_send_recv_byte(1, pbdata[i]);	
+	}
+	
+	(GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), (((uint16_t)0x0010))));
+	
+	return status;
+}
+
+
+
+
+
+
+
+
+
+
+void nrf24l01_tx_mode(void)
+{
+	(GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0010))));
+	
+	nrf24l01_write_buff(0x20 + 0x10, (uint8_t *)TX_ADDRESS_X, 5);	
+	nrf24l01_write_buff(0x20 + 0x0A, (uint8_t *) RX_ADDRESS_X, 5);	
+	nrf24l01_write_reg(0x20 + 0x01, 0x01);	
+	nrf24l01_write_reg(0x20 + 0x02, 0x01);	
+	nrf24l01_write_reg(0x20 + 0x04, 0x1a);	
+	nrf24l01_write_reg(0x20 + 0x05, 40);	
+	nrf24l01_write_reg(0x20 + 0x06, 0x0f);	
+	nrf24l01_write_reg(0x20 + 0x00, 0x0e);	
+	
+	(GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0010))));
+	
+	delay_us(12);
+}
+
+
+
+
+
+
+
+
+
+
+void nrf24l01_rx_mode(void)
+{
+	(GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0010))));
+	
+	nrf24l01_write_buff(0x20 + 0x0A, (uint8_t *) RX_ADDRESS_X, 5);	
+	nrf24l01_write_reg(0x20 + 0x01, 0x01);	
+	nrf24l01_write_reg(0x20 + 0x02, 0x01);	
+	nrf24l01_write_reg(0x20 + 0x05, 40);	
+	nrf24l01_write_reg(0x20 + 0x11, 5);	
+	nrf24l01_write_reg(0x20 + 0x06, 0x0f); 
+	nrf24l01_write_reg(0x20 + 0x00, 0x0f);	
+	
+	(GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0010))));
+}
+
+
+
+
+
+
+
+
+
+
+uint8_t nrf24l01_tx_packet(uint8_t *tx_buff)
+{
+	uint8_t ret_val = 0;
+
+	(GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0010))));
+	
+	nrf24l01_write_buff(0XA0, tx_buff, 5);	
+	
+	(GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0010))));	
+	
+	while ((GPIO_ReadInputDataBit(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0002)))));
+	
+	ret_val = nrf24l01_read_reg(0x07);	
+	nrf24l01_write_reg(0x20 + 0x07, ret_val);	
+	
+	if (ret_val & 0x10)	
+	{
+		nrf24l01_write_reg(0xE1, 0xff);	
+		
+		return 0x10;
+	}
+	
+	if(ret_val & 0x20)	
+	{
+		return 0x20;
+	}
+	
+	return 0xff;
+}
+
+
+
+
+
+
+
+
+
+
+uint8_t nrf24l01_rx_packet(uint8_t *rx_buf)
+{
+	uint8_t ret_val = 0;
+
+	(GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0010))));
+	
+	while((GPIO_ReadInputDataBit(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0002)))));
+	
+	(GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0010))));
+
+	ret_val = nrf24l01_read_reg(0x07);	
+	nrf24l01_write_reg(0x20+0x07, ret_val);	
+	
+	if(ret_val & 0x40)	
+	{
+		nrf24l01_read_buff(0x61, rx_buf, 5);	
+		nrf24l01_write_reg(0xE2, 0xff);	
+		
+		return 0x00;
+	}
+	
+	return 0xff;	
+}
+
+
+
+
+
+
+
+
+
+
+uint8_t nrf24l01_check_state(void)
+{
+	uint8_t buff[5]={0xa5, 0xa5, 0xa5, 0xa5, 0xa5};
+	uint8_t i = 0;
+
+	nrf24l01_write_buff(0x20+0x10, buff, 5);
+	nrf24l01_read_buff(0x10, buff, 5);
+	
+	for(i = 0; i < 5; i++)
+	{
+		if(buff[i] != 0xa5)
+		{
+			break;
+		}
+	}
+	
+	if(i != 5)
+	{
+		return 1;
+	}
+	
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+void nrf24l01_power_down_mode(void)
+{
+	(GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), (((uint16_t)0x0010))));
+	nrf24l01_write_reg(0x00, 0x00);
+	(GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), (((uint16_t)0x0010))));
+	
+}
+
+
+
+
+
+
+
+
+
+
+void nrf24l01_init(void)
+{
+	nrf24l01_gpio_init();
+	
+	(GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), (((uint16_t)0x0010))));
+	(GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0010))));
 }
 

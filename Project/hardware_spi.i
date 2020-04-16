@@ -270,6 +270,22 @@ extern uint8_t Spi_ReadByte(void);
 
 
 
+
+#line 37 "..\\Driver\\inc\\drvnrf2401.h"
+
+
+
+									
+#line 66 "..\\Driver\\inc\\drvnrf2401.h"
+
+
+
+
+
+
+
+#line 79 "..\\Driver\\inc\\drvnrf2401.h"
+
 extern void nrf24l01_gpio_init(void);
 
 

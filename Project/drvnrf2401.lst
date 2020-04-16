@@ -29277,21 +29277,77 @@ N#define RCC_PCLK_NRF_GPIO_CS	RCC_APB2Periph_GPIOC
 N#define RCC_PCLK_NRF_GPIO_CE	RCC_APB2Periph_GPIOA
 N#define RCC_PCLK_NRF_GPIO_IRQ	RCC_APB2Periph_GPIOA
 N
-N#define NRF_CS_IO     		(GPIO_Pin_4)	//CS:PC4
-N#define PORT_NRF_CS			GPIOC
-N#define NRF_CS_0()			(GPIO_ResetBits(PORT_NRF_CS, NRF_CS_IO))		
-N#define NRF_CS_1() 			(GPIO_SetBits(PORT_NRF_CS, NRF_CS_IO))
+N#define NRF_CS_IO     			(GPIO_Pin_4)	//CS:PC4
+N#define PORT_NRF_CS				GPIOC
+N#define NRF_CS_0()				(GPIO_ResetBits(PORT_NRF_CS, NRF_CS_IO))		
+N#define NRF_CS_1() 				(GPIO_SetBits(PORT_NRF_CS, NRF_CS_IO))
 N
-N#define NRF_CE_IO     		(GPIO_Pin_4)	//CE:PA4
-N#define PORT_NRF_CE			GPIOA
-N#define NRF_CE_0()			(GPIO_ResetBits(PORT_NRF_CE, NRF_CE_IO))		
-N#define NRF_CE_1() 			(GPIO_SetBits(PORT_NRF_CE, NRF_CE_IO))
+N#define NRF_CE_IO     			(GPIO_Pin_4)	//CE:PA4
+N#define PORT_NRF_CE				GPIOA
+N#define NRF_CE_0()				(GPIO_ResetBits(PORT_NRF_CE, NRF_CE_IO))		
+N#define NRF_CE_1() 				(GPIO_SetBits(PORT_NRF_CE, NRF_CE_IO))
 N
 N#define NRF_IRQ_IO     			(GPIO_Pin_1)	//CE:PA1
 N#define PORT_NRF_IRQ			GPIOA
 N#define NRF_IRQ_0()				(GPIO_ResetBits(PORT_NRF_IRQ, NRF_IRQ_IO))		
 N#define NRF_IRQ_1() 			(GPIO_SetBits(PORT_NRF_IRQ, NRF_IRQ_IO))
-N#define GET_NRF_IRQ_STATUS		(GPIO_ReadInputDataBit(PORT_NRF_IRQ, NRF_IRQ))
+N#define GET_NRF_IRQ_STATUS		(GPIO_ReadInputDataBit(PORT_NRF_IRQ, NRF_IRQ_IO))
+N
+N//命令宏定义
+N#define R_REGISTER			0x00
+N#define W_REGISTER			0x20
+N#define R_RX_PAYLOAD		0x61
+N#define W_TX_PAYLOAD		0XA0
+N#define FLUSH_TX			0xE1
+N#define FLUSH_RX			0xE2
+N#define RESUE_TX_PL			0xE3
+N#define ACTIVATE			0x50
+N#define R_RX_PL_WID			0x60
+N#define W_AC_PAYLOAD		0xA8
+N#define W_TX_PAYLOAD_NOACK	0xB0
+N#define NRF24L01_NOP		0xFF
+N
+N//NRF24L01寄存器
+N#define	NRF24L01_CONFIG		0x00	//配置寄存器:bit0:0-TX;1-RX;bit1:上电使能选择;bit2:CRC模式;bit3:CRC使能
+N									//bit4:最大重发次数中断(MAX_RT)使能;bit5:中断TX_DS使能;bit6:中断RX_DR使能
+N#define EN_AA				0x01
+N#define EN_RXADDR			0x02
+N#define SETUP_AW			0x03
+N#define SETUP_PETR			0x04
+N#define RF_CH				0x05
+N#define RF_SETUP			0x06
+N#define NRF24L01_STATUS		0x07
+N#define OBSERVE_TX			0x08
+N#define RPD					0X09			
+N#define RX_ADDR_P0			0x0A
+N#define RX_ADDR_P1			0x0B
+N#define RX_ADDR_P2			0x0C
+N#define RX_ADDR_P3			0x0D
+N#define RX_ADDR_P4			0x0E
+N#define RX_ADDR_P5			0x0F
+N#define TX_ADDR				0x10
+N#define RX_PW_P0			0x11
+N#define RX_PW_P1			0x12
+N#define RX_PW_P2			0x13
+N#define RX_PW_P3			0x14
+N#define RX_PW_P4			0x15
+N#define RX_PW_P5			0x16
+N#define FIFO_STATUS			0x17
+N#define DYNPD				0x1C
+N#define NRF24L01_FEATURE	0x1D
+N
+N//nrf24l01发送数据宽度定义
+N#define TX_ADR_WIDTH		5	//5字节的地址宽度
+N#define RX_ADR_WIDTH		5	//5字节的地址宽度
+N#define TX_PLOAD_WIDTH		5//32	//32字节的用户数据宽度
+N#define RX_PLOAD_WIDTH		5//32	//32字节的用户数据宽度
+N
+N#define MAX_TX				0x10	//达到最大发送次数中断
+N#define TX_OK				0x20	//发送完成中断
+N#define RX_OK				0x40	//接收数据中断
+N#define TX_FAIL				0xff	//达到最大发送次数中断
+N#define RX_FAIL				0xff	//达到最大发送次数中断
+N#define RX_SUCCESS			0x00	//达到最大发送次数中断
 N
 Nextern void nrf24l01_gpio_init(void);
 N
@@ -29432,6 +29488,11 @@ N
 N
 L 20 "..\Driver\src\drvnrf2401.c" 2
 N
+Nconst uint8_t TX_ADDRESS_X[TX_ADR_WIDTH] = {0x34,0x43,0x10,0x10,0x01};//发送端地址
+Xconst uint8_t TX_ADDRESS_X[5] = {0x34,0x43,0x10,0x10,0x01};
+Nconst uint8_t RX_ADDRESS_X[RX_ADR_WIDTH] = {0x34,0x43,0x10,0x10,0x01};//接收端地址
+Xconst uint8_t RX_ADDRESS_X[5] = {0x34,0x43,0x10,0x10,0x01};
+N
 N//---------------------------------------------------------------------------------------------------------------------------------------------
 N//	函 数 名: nrf24l01_gpio_init
 N//	功能说明: nrf24l01 gpio 初始化
@@ -29525,6 +29586,308 @@ N	NRF_CS_1();
 X	(GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), (((uint16_t)0x0010))));
 N	
 N	return reg_val;
+N}
+N
+N//---------------------------------------------------------------------------------------------------------------------------------------------
+N//	函 数 名: nrf24l01_read_buff
+N//	功能说明: nrf24l01 读数据
+N//	形    参: 	reg_no：寄存器
+N//				pbdata：数据指针
+N//				read_length：读取数据长度
+N//	返 回 值: 	status：寄存器状态值
+N//	日    期: 2020-04-16
+N//  备    注: 
+N//	作    者: by 霁风AI
+N//---------------------------------------------------------------------------------------------------------------------------------------------
+Nuint8_t nrf24l01_read_buff(uint8_t reg_no, uint8_t *pbdata, uint16_t read_length)
+N{
+N	uint8_t status = 0;
+N	uint16_t i = 0;
+N	
+N	NRF_CS_0();
+X	(GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), (((uint16_t)0x0010))));
+N	
+N	status = spi_master_send_recv_byte(1, reg_no);
+N	
+N	for (i = 0; i < read_length; i++)
+N	{
+N		*pbdata++ = spi_master_send_recv_byte(1, 0xff);	//发送ff得到spi的时钟
+N	}
+N	
+N	NRF_CS_1();
+X	(GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), (((uint16_t)0x0010))));
+N	
+N	return status;
+N}
+N
+N//---------------------------------------------------------------------------------------------------------------------------------------------
+N//	函 数 名: nrf24l01_write_buff
+N//	功能说明: nrf24l01 写数据
+N//	形    参: 	reg_no：寄存器
+N//				pbdata：数据指针
+N//				write_length：读取数据长度
+N//	返 回 值: 	status：寄存器状态值
+N//	日    期: 2020-04-16
+N//  备    注: 
+N//	作    者: by 霁风AI
+N//---------------------------------------------------------------------------------------------------------------------------------------------
+Nuint8_t nrf24l01_write_buff(uint8_t reg_no, uint8_t *pbdata, uint16_t write_length)
+N{
+N	uint8_t status = 0;
+N	uint16_t i = 0;
+N	
+N	NRF_CS_0();
+X	(GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), (((uint16_t)0x0010))));
+N	
+N	status = spi_master_send_recv_byte(1, reg_no);
+N	
+N	for (i = 0; i < write_length; i++)
+N	{
+N		spi_master_send_recv_byte(1, pbdata[i]);	//连续写入数据
+N	}
+N	
+N	NRF_CS_1();
+X	(GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), (((uint16_t)0x0010))));
+N	
+N	return status;
+N}
+N
+N//---------------------------------------------------------------------------------------------------------------------------------------------
+N//	函 数 名: nrf24l01_tx_mode
+N//	功能说明: nrf24l01 发送模式设置
+N//	形    参: 无
+N//	返 回 值: 无
+N//	日    期: 2020-04-16
+N//  备    注: 
+N//	作    者: by 霁风AI
+N//---------------------------------------------------------------------------------------------------------------------------------------------
+Nvoid nrf24l01_tx_mode(void)
+N{
+N	NRF_CE_0();
+X	(GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0010))));
+N	
+N	nrf24l01_write_buff(W_REGISTER + TX_ADDR, (uint8_t *)TX_ADDRESS_X, TX_ADR_WIDTH);	//写TX节点地址
+X	nrf24l01_write_buff(0x20 + 0x10, (uint8_t *)TX_ADDRESS_X, 5);	
+N	nrf24l01_write_buff(W_REGISTER + RX_ADDR_P0, (uint8_t *) RX_ADDRESS_X, RX_ADR_WIDTH);	//写RX节点地址,为了自动使能ACK
+X	nrf24l01_write_buff(0x20 + 0x0A, (uint8_t *) RX_ADDRESS_X, 5);	
+N	nrf24l01_write_reg(W_REGISTER + EN_AA, 0x01);	//使能通道0自动应答
+X	nrf24l01_write_reg(0x20 + 0x01, 0x01);	
+N	nrf24l01_write_reg(W_REGISTER + EN_RXADDR, 0x01);	//使能通道0接收地址
+X	nrf24l01_write_reg(0x20 + 0x02, 0x01);	
+N	nrf24l01_write_reg(W_REGISTER + SETUP_PETR, 0x1a);	//设置自动重发间隔时间:500us+86us,最大重大次数:10次
+X	nrf24l01_write_reg(0x20 + 0x04, 0x1a);	
+N	nrf24l01_write_reg(W_REGISTER + RF_CH, 40);	//设置通道为40
+X	nrf24l01_write_reg(0x20 + 0x05, 40);	
+N	nrf24l01_write_reg(W_REGISTER + RF_SETUP, 0x0f);	//设置发射参数:0dB增益;2Mnps;低噪声增益开启
+X	nrf24l01_write_reg(0x20 + 0x06, 0x0f);	
+N	nrf24l01_write_reg(W_REGISTER + NRF24L01_CONFIG, 0x0e);	//基本参数:PWR_UP;EN_CRC;16BIT_CRC;发送模式;开启所有中断
+X	nrf24l01_write_reg(0x20 + 0x00, 0x0e);	
+N	
+N	NRF_CE_1();
+X	(GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0010))));
+N	
+N	delay_us(12);
+N}
+N
+N//---------------------------------------------------------------------------------------------------------------------------------------------
+N//	函 数 名: nrf24l01_rx_mode
+N//	功能说明: nrf24l01 接收模式设置
+N//	形    参: 无
+N//	返 回 值: 无
+N//	日    期: 2020-04-16
+N//  备    注: 
+N//	作    者: by 霁风AI
+N//---------------------------------------------------------------------------------------------------------------------------------------------
+Nvoid nrf24l01_rx_mode(void)
+N{
+N	NRF_CE_0();
+X	(GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0010))));
+N	
+N	nrf24l01_write_buff(W_REGISTER + RX_ADDR_P0, (uint8_t *) RX_ADDRESS_X, RX_ADR_WIDTH);	//写RX地址节点
+X	nrf24l01_write_buff(0x20 + 0x0A, (uint8_t *) RX_ADDRESS_X, 5);	
+N	nrf24l01_write_reg(W_REGISTER + EN_AA, 0x01);	//使能通道0自动应答
+X	nrf24l01_write_reg(0x20 + 0x01, 0x01);	
+N	nrf24l01_write_reg(W_REGISTER + EN_RXADDR, 0x01);	//使能通道0接收地址
+X	nrf24l01_write_reg(0x20 + 0x02, 0x01);	
+N	nrf24l01_write_reg(W_REGISTER + RF_CH, 40);	//设置RF通信频率
+X	nrf24l01_write_reg(0x20 + 0x05, 40);	
+N	nrf24l01_write_reg(W_REGISTER + RX_PW_P0, RX_PLOAD_WIDTH);	//选择通道0有效数据宽度
+X	nrf24l01_write_reg(0x20 + 0x11, 5);	
+N	nrf24l01_write_reg(W_REGISTER + RF_SETUP, 0x0f); //设置TX发射参数:0db增益,2Mbps,低噪声增益开启
+X	nrf24l01_write_reg(0x20 + 0x06, 0x0f); 
+N	nrf24l01_write_reg(W_REGISTER + NRF24L01_CONFIG, 0x0f);	//基本参数:PWR_UP;EN_CRC;16BIT_CRC;接收模式;开启所有中断
+X	nrf24l01_write_reg(0x20 + 0x00, 0x0f);	
+N	
+N	NRF_CE_1();//CE为高,进入接收模式
+X	(GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0010))));
+N}
+N
+N//---------------------------------------------------------------------------------------------------------------------------------------------
+N//	函 数 名: nrf24l01_tx_packet
+N//	功能说明: nrf24l01 发送数据设置
+N//	形    参: 	tx_buff：发送的数据
+N//	返 回 值: 操作状态(MAX_TX：发送到最大次数;TX_OK：发送完成；TX_FAIL：发送失败)
+N//	日    期: 2020-04-16
+N//  备    注: 
+N//	作    者: by 霁风AI
+N//---------------------------------------------------------------------------------------------------------------------------------------------
+Nuint8_t nrf24l01_tx_packet(uint8_t *tx_buff)
+N{
+N	uint8_t ret_val = 0;
+N
+N	NRF_CE_0();
+X	(GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0010))));
+N	
+N	nrf24l01_write_buff(W_TX_PAYLOAD, tx_buff, TX_PLOAD_WIDTH);	//写数据到txbuf,32字节
+X	nrf24l01_write_buff(0XA0, tx_buff, 5);	
+N	
+N	NRF_CE_1();	//启动发送
+X	(GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0010))));	
+N	
+N	while (GET_NRF_IRQ_STATUS);//等待发送完成
+X	while ((GPIO_ReadInputDataBit(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0002)))));
+N	
+N	ret_val = nrf24l01_read_reg(NRF24L01_STATUS);	//读取状态寄存器的值
+X	ret_val = nrf24l01_read_reg(0x07);	
+N	nrf24l01_write_reg(W_REGISTER + NRF24L01_STATUS, ret_val);	//清除TX_DS or MAX_RT的中断标志
+X	nrf24l01_write_reg(0x20 + 0x07, ret_val);	
+N	
+N	if (ret_val & MAX_TX)	//达到最大重发次数
+X	if (ret_val & 0x10)	
+N	{
+N		nrf24l01_write_reg(FLUSH_TX, 0xff);	//清除TX FIFO寄存器
+X		nrf24l01_write_reg(0xE1, 0xff);	
+N		
+N		return MAX_TX;
+X		return 0x10;
+N	}
+N	
+N	if(ret_val & TX_OK)	//发送完成
+X	if(ret_val & 0x20)	
+N	{
+N		return TX_OK;
+X		return 0x20;
+N	}
+N	
+N	return TX_FAIL;//发送失败
+X	return 0xff;
+N}
+N
+N//---------------------------------------------------------------------------------------------------------------------------------------------
+N//	函 数 名: nrf24l01_rx_packet
+N//	功能说明: nrf24l01 接收数据设置
+N//	形    参: 	rx_buff：发送的数据
+N//	返 回 值: 操作状态(RX_SUCCESS：接收成功;RX_FAIL：接收失败)
+N//	日    期: 2020-04-16
+N//  备    注: 
+N//	作    者: by 霁风AI
+N//---------------------------------------------------------------------------------------------------------------------------------------------
+Nuint8_t nrf24l01_rx_packet(uint8_t *rx_buf)
+N{
+N	uint8_t ret_val = 0;
+N
+N	NRF_CE_1();
+X	(GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0010))));
+N	
+N	while(GET_NRF_IRQ_STATUS);
+X	while((GPIO_ReadInputDataBit(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0002)))));
+N	
+N	NRF_CE_0();
+X	(GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0010))));
+N
+N	ret_val = nrf24l01_read_reg(NRF24L01_STATUS);	//读取状态寄存器的值
+X	ret_val = nrf24l01_read_reg(0x07);	
+N	nrf24l01_write_reg(W_REGISTER+NRF24L01_STATUS, ret_val);	//清除TX_DS or MAX_RT的中断标志
+X	nrf24l01_write_reg(0x20+0x07, ret_val);	
+N	
+N	if(ret_val & RX_OK)	//接收到数据
+X	if(ret_val & 0x40)	
+N	{
+N		nrf24l01_read_buff(R_RX_PAYLOAD, rx_buf, RX_PLOAD_WIDTH);	//读取数据
+X		nrf24l01_read_buff(0x61, rx_buf, 5);	
+N		nrf24l01_write_reg(FLUSH_RX, 0xff);	//清除RX FIFO寄存器
+X		nrf24l01_write_reg(0xE2, 0xff);	
+N		
+N		return RX_SUCCESS;
+X		return 0x00;
+N	}
+N	
+N	return RX_FAIL;	//没有接收到数据
+X	return 0xff;	
+N}
+N
+N//---------------------------------------------------------------------------------------------------------------------------------------------
+N//	函 数 名: nrf24l01_check_state
+N//	功能说明: nrf24l01 状态检测
+N//	形    参: 无
+N//	返 回 值: 操作状态(0：ok;1：fail)
+N//	日    期: 2020-04-16
+N//  备    注: 
+N//	作    者: by 霁风AI
+N//---------------------------------------------------------------------------------------------------------------------------------------------
+Nuint8_t nrf24l01_check_state(void)
+N{
+N	uint8_t buff[5]={0xa5, 0xa5, 0xa5, 0xa5, 0xa5};
+N	uint8_t i = 0;
+N
+N	nrf24l01_write_buff(W_REGISTER+TX_ADDR, buff, 5);//写入5字节的地址
+X	nrf24l01_write_buff(0x20+0x10, buff, 5);
+N	nrf24l01_read_buff(TX_ADDR, buff, 5);
+X	nrf24l01_read_buff(0x10, buff, 5);
+N	
+N	for(i = 0; i < 5; i++)
+N	{
+N		if(buff[i] != 0xa5)
+N		{
+N			break;
+N		}
+N	}
+N	
+N	if(i != 5)
+N	{
+N		return 1;
+N	}
+N	
+N	return 0;
+N}
+N
+N//---------------------------------------------------------------------------------------------------------------------------------------------
+N//	函 数 名: nrf24l01_power_down_mode
+N//	功能说明: nrf24l01 进入下电模式
+N//	形    参: 无
+N//	返 回 值: 操作状态(0：ok;1：fail)
+N//	日    期: 2020-04-16
+N//  备    注: 
+N//	作    者: by 霁风AI
+N//---------------------------------------------------------------------------------------------------------------------------------------------
+Nvoid nrf24l01_power_down_mode(void)
+N{
+N	NRF_CS_0();
+X	(GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), (((uint16_t)0x0010))));
+N	nrf24l01_write_reg(NRF24L01_CONFIG, 0x00);
+X	nrf24l01_write_reg(0x00, 0x00);
+N	NRF_CS_1();
+X	(GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), (((uint16_t)0x0010))));
+N	
+N}
+N
+N//---------------------------------------------------------------------------------------------------------------------------------------------
+N//	函 数 名: nrf24l01_init
+N//	功能说明: nrf24l01 初始化
+N//	形    参: 无
+N//	返 回 值: 无
+N//	日    期: 2020-04-16
+N//  备    注: 
+N//	作    者: by 霁风AI
+N//---------------------------------------------------------------------------------------------------------------------------------------------
+Nvoid nrf24l01_init(void)
+N{
+N	nrf24l01_gpio_init();
+N	
+N	NRF_CS_1();
+X	(GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), (((uint16_t)0x0010))));
+N	NRF_CE_0();
+X	(GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0010))));
 N}
 N
 N#endif /* __PRJ_STM32F10X_DRVNRF2401_C__ */
