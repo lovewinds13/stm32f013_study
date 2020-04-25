@@ -13487,6 +13487,7 @@ void GPIO_ETH_MediaInterfaceConfig(uint32_t GPIO_ETH_MediaInterface);
 
 
 
+
 #line 30 "..\\Driver\\src\\drvsfi2c.c"
 #line 1 "..\\User\\inc\\Typedef.h"
 

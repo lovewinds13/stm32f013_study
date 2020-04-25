@@ -967,6 +967,7 @@ extern __declspec(__nothrow) void __use_no_semihosting(void);
 
 
 
+
 #line 6 "..\\App\\src\\app_at24cxx.c"
 #line 1 "..\\User\\inc\\Typedef.h"
 

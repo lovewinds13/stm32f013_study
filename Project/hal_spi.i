@@ -103,6 +103,7 @@ typedef signed long 	LONG;
 
 
 
+
 #line 6 "..\\HalIterface\\src\\hal_spi.c"
 #line 1 "..\\App\\inc\\variable.h"
 

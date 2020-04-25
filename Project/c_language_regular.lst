@@ -2834,7 +2834,6 @@ N
 N	printf("g_data_length addr is			%p \r\n", &g_data_length);
 N	printf("g_data_length1 addr is			%p \r\n", &g_data_length1);
 N	printf("\r\n");
-W "..\App\src\c_language_regular.c" 64 10 variable "data_size"  was declared but never referenced
 N}
 N
 N//--------------------------------------------------------------------------------------------------------

@@ -29,6 +29,7 @@
 #include "app_at24cxx.h"
 #include "drvoled.h"
 #include "drvtimer.h"
+#include "drvexti.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -72,6 +73,10 @@ void Hardware_AllInit(void)
 #ifdef TIMER_FUNC_TEST
 	timer_init(3);
 #endif
+
+#ifdef EXTI_FUNC_TEST
+	exti_init(0);
+#endif	//EXTI_FUNC_TEST
 
 #if SPI_COMM_MODE
 	#ifdef HARD_SPI_COMM
@@ -134,7 +139,7 @@ int main(void)
 		Sys_DelayUs(1000);
 		Sys_DelayUs(1000);
 		Sys_DelayUs(1000);
-		Bsp_LedTest(500);
+//		Bsp_LedTest(500);
 		
 	#ifdef ADC_FUNC_TEST
 		Adc_Init();

@@ -1793,6 +1793,7 @@ __declspec(__nothrow) long double truncl(long double );
 
 
 
+
 #line 7 "..\\App\\src\\app_htu21d.c"
 #line 1 "..\\User\\inc\\Typedef.h"
 

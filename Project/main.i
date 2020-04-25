@@ -114,6 +114,7 @@ typedef signed long 	LONG;
 
 
 
+
 #line 17 "..\\User\\src\\Main.c"
 #line 1 "..\\App\\inc\\variable.h"
 
@@ -13947,6 +13948,13 @@ extern void timer_init(uint8_t timer_no);
 extern void timer_test(void);
 	
 #line 32 "..\\User\\src\\Main.c"
+#line 1 "..\\Driver\\inc\\drvexti.h"
+
+
+
+extern void exti_init(uint8_t exti_no);
+
+#line 33 "..\\User\\src\\Main.c"
 #line 1 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
  
  
@@ -14846,7 +14854,7 @@ extern __declspec(__nothrow) void __use_no_semihosting(void);
 
  
 
-#line 33 "..\\User\\src\\Main.c"
+#line 34 "..\\User\\src\\Main.c"
 #line 1 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
  
  
@@ -15584,7 +15592,7 @@ extern __declspec(__nothrow) int __C_library_version_number(void);
 
 
  
-#line 34 "..\\User\\src\\Main.c"
+#line 35 "..\\User\\src\\Main.c"
 #line 1 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
  
  
@@ -16007,7 +16015,7 @@ extern __declspec(__nothrow) void _membitmovewb(void *  , const void *  , int  ,
 
  
 
-#line 35 "..\\User\\src\\Main.c"
+#line 36 "..\\User\\src\\Main.c"
 #line 1 "..\\App\\inc\\logic_grammer.h"
 
 
@@ -16027,7 +16035,7 @@ extern void memcmp_test(void);
 extern void strcmp_test(void);
 
 
-#line 36 "..\\User\\src\\Main.c"
+#line 37 "..\\User\\src\\Main.c"
 #line 1 "..\\App\\inc\\c_language_regular.h"
 
 
@@ -16092,7 +16100,7 @@ extern void stack_test(void);
 extern void heap_test(void);
 
 
-#line 37 "..\\User\\src\\Main.c"
+#line 38 "..\\User\\src\\Main.c"
 
 
 extern uint8_t g_WriteData[0x100];
@@ -16133,6 +16141,10 @@ void Hardware_AllInit(void)
 
 
 
+	exti_init(0);
+
+
+
 
 	spi_master_init(1);
 
@@ -16158,7 +16170,7 @@ void Hardware_AllInit(void)
 	printf("Hard --1 spi flash val is 0x%0X \r\n", ulFlashIdVal);
 	ulFlashIdVal = spi_flash_read_id();
 	printf("Hard --2 Spi flash val is 0x%0X \r\n", ulFlashIdVal);
-#line 115 "..\\User\\src\\Main.c"
+#line 120 "..\\User\\src\\Main.c"
 
 
 
@@ -16181,7 +16193,7 @@ int main(void)
 		Sys_DelayUs(1000);
 		Sys_DelayUs(1000);
 		Sys_DelayUs(1000);
-		Bsp_LedTest(500);
+
 		
 
 
@@ -16195,7 +16207,7 @@ int main(void)
 		printf(" hard spi flash val is 0x%0X \r\n", ulFlashIdVal);
 		W25_WriteReadBytes();
 
-#line 160 "..\\User\\src\\Main.c"
+#line 165 "..\\User\\src\\Main.c"
 
 
 

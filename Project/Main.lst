@@ -71,6 +71,7 @@ N//模块功能测试
 N//#define ADC_FUNC_TEST
 N#define OLED_FUNC_TEST
 N//#define TIMER_FUNC_TEST
+N#define EXTI_FUNC_TEST
 N
 N//-------------------------------------------------------------------------
 N//业务逻辑实现
@@ -29537,6 +29538,15 @@ Nextern void timer_test(void);
 N	
 N#endif	//__DRVTIMER_H__
 L 32 "..\User\src\Main.c" 2
+N#include "drvexti.h"
+L 1 "..\Driver\inc\drvexti.h" 1
+N#ifndef __DRVEXTI_H__
+N#define __DRVEXTI_H__
+N
+Nextern void exti_init(uint8_t exti_no);
+N
+N#endif	//__DRVEXTI_H__
+L 33 "..\User\src\Main.c" 2
 N#include <stdio.h>
 L 1 "C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h" 1
 N/* stdio.h: ANSI 'C' (X3J11 Oct 88) library header, section 4.9 */
@@ -30649,7 +30659,7 @@ N#endif /* ndef __stdio_h */
 N
 N/* end of stdio.h */
 N
-L 33 "..\User\src\Main.c" 2
+L 34 "..\User\src\Main.c" 2
 N#include <stdlib.h>
 L 1 "C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h" 1
 N/* stdlib.h: ANSI draft (X3J11 May 88) library header, section 4.10 */
@@ -31622,7 +31632,7 @@ N
 N#endif /* __stdlib_h */
 N
 N/* end of stdlib.h */
-L 34 "..\User\src\Main.c" 2
+L 35 "..\User\src\Main.c" 2
 N#include <string.h>
 L 1 "C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h" 1
 N/* string.h: ANSI 'C' (X3J11 Oct 88) library header, section 4.11 */
@@ -32173,7 +32183,7 @@ N#endif
 N
 N/* end of string.h */
 N
-L 35 "..\User\src\Main.c" 2
+L 36 "..\User\src\Main.c" 2
 N#include "logic_grammer.h"
 L 1 "..\App\inc\logic_grammer.h" 1
 N#ifndef __LOGIC_GRAMMER_H__
@@ -32194,7 +32204,7 @@ Nextern void memcmp_test(void);
 Nextern void strcmp_test(void);
 N#endif
 N
-L 36 "..\User\src\Main.c" 2
+L 37 "..\User\src\Main.c" 2
 N#include "c_language_regular.h"
 L 1 "..\App\inc\c_language_regular.h" 1
 N#ifndef __C_LANGUAGE_REGULAR_H__
@@ -32263,7 +32273,7 @@ Nextern void heap_test(void);
 N
 N
 N#endif	//__C_LANGUAGE_REGULAR_H__
-L 37 "..\User\src\Main.c" 2
+L 38 "..\User\src\Main.c" 2
 N
 N
 Nextern uint8_t g_WriteData[0x100];
@@ -32303,6 +32313,10 @@ N
 N#ifdef TIMER_FUNC_TEST
 S	timer_init(3);
 N#endif
+N
+N#ifdef EXTI_FUNC_TEST
+N	exti_init(0);
+N#endif	//EXTI_FUNC_TEST
 N
 N#if SPI_COMM_MODE
 X#if 1
@@ -32367,7 +32381,7 @@ N		Sys_DelayUs(1000);
 N		Sys_DelayUs(1000);
 N		Sys_DelayUs(1000);
 N		Sys_DelayUs(1000);
-N		Bsp_LedTest(500);
+N//		Bsp_LedTest(500);
 N		
 N	#ifdef ADC_FUNC_TEST
 S		Adc_Init();

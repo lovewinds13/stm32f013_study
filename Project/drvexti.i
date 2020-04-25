@@ -42,10 +42,10 @@ typedef signed long 	LONG;
 
 
 
-
+extern void exti_init(uint8_t exti_no);
 
 #line 6 "..\\Driver\\src\\drvexti.c"
-#line 1 "..\\Libraries\\CMSIS\\Device\\inc\\stm32f10x_conf.h"
+#line 1 "..\\Driver\\inc\\drvled.h"
 
 
 
@@ -63,49 +63,20 @@ typedef signed long 	LONG;
 
 
 
+extern void Bsp_LedInit(void);
+extern void Bsp_LedOn(uint8_t _no);
+extern void Bsp_LedOff(uint8_t _no);
+extern void Bsp_LedToggle(uint8_t _no);
+extern void Bsp_LedTest(uint16_t _uiTime);
 
-
- 
-
- 
-
-
-
- 
- 
-
-#line 1 "..\\Libraries\\STM32F10x_StdPeriph_Driver\\inc\\stm32f10x_adc.h"
+#line 7 "..\\Driver\\src\\drvexti.c"
+#line 1 "..\\Driver\\inc\\delay.h"
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
- 
-
-
-
-
-
-
-
- 
 #line 1 "..\\Libraries\\CMSIS\\Device\\inc\\stm32f10x.h"
 
 
@@ -6331,15 +6302,67 @@ typedef struct
  
 
  
-#line 78 "..\\Libraries\\CMSIS\\Device\\inc\\stm32f10x_conf.h"
-
- 
-#line 8298 "..\\Libraries\\CMSIS\\Device\\inc\\stm32f10x.h"
-
 
 
 
  
+ 
+
+#line 1 "..\\Libraries\\STM32F10x_StdPeriph_Driver\\inc\\stm32f10x_adc.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+ 
+
+
+
+
+
+
+
+ 
+#line 1 "..\\Libraries\\CMSIS\\Device\\inc\\stm32f10x.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -6361,9 +6384,13 @@ typedef struct
 
 
 
+ 
 
 
 
+ 
+    
+#line 8327 "..\\Libraries\\CMSIS\\Device\\inc\\stm32f10x.h"
 
 
 
@@ -13367,21 +13394,244 @@ void SysTick_CLKSourceConfig(uint32_t SysTick_CLKSource);
 
 
  
-#line 7 "..\\Driver\\src\\drvexti.c"
+#line 8298 "..\\Libraries\\CMSIS\\Device\\inc\\stm32f10x.h"
 
-void exti_config(void)
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+ 
+
+  
+
+ 
+
+ 
+#line 8 "..\\Driver\\inc\\delay.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	 
+extern void Sys_DelayUs(volatile uint32_t _ulDelayTimes);
+void delay_init(void);
+void delay_ms(u16 nms);
+void delay_us(u32 nus);
+extern void Sys_delay_us(volatile uint32_t _ulTmies);
+extern void Sys_delay_ms(volatile uint32_t _ulTmies);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 8 "..\\Driver\\src\\drvexti.c"
+#line 9 "..\\Driver\\src\\drvexti.c"
+
+volatile uint8_t g_exti_cnt = 0;
+
+
+
+
+
+
+
+
+
+
+static void exti_gpio_config(void)
+{
+	GPIO_InitTypeDef gpio_init_config;
+
+ 	RCC_APB2PeriphClockCmd(((uint32_t)0x00000004), ENABLE);
+	
+	gpio_init_config.GPIO_Pin  		= ((uint16_t)0x0001);
+	gpio_init_config.GPIO_Mode 		= GPIO_Mode_IPD; 
+	GPIO_Init(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), &gpio_init_config);
+}
+
+
+
+
+
+
+
+
+
+
+static void exti_config(void)
 {
 	EXTI_InitTypeDef exti_init_config;
 	
 	RCC_APB2PeriphClockCmd(((uint32_t)0x00000001), ENABLE);	
 	
-	GPIO_EXTILineConfig(((uint8_t)0x02), ((uint8_t)0x05));	
+	GPIO_EXTILineConfig(((uint8_t)0x00), ((uint8_t)0x00));	
 	
-	exti_init_config.EXTI_Line		= ((uint32_t)0x00020);
+	exti_init_config.EXTI_Line		= ((uint32_t)0x00001);
   	exti_init_config.EXTI_Mode 		= EXTI_Mode_Interrupt;	
-  	exti_init_config.EXTI_Trigger 	= EXTI_Trigger_Falling;
+  	exti_init_config.EXTI_Trigger 	= EXTI_Trigger_Rising;
   	exti_init_config.EXTI_LineCmd 	= ENABLE;
-  	EXTI_Init(&exti_init_config);	 	
+  	
+	EXTI_Init(&exti_init_config);	 	
 }
 
+
+
+
+
+
+
+
+
+
+static void exti_nvic_config(void)
+{
+	NVIC_InitTypeDef nvic_init_config;
+	
+	nvic_init_config.NVIC_IRQChannel 					= EXTI0_IRQn;
+	nvic_init_config.NVIC_IRQChannelPreemptionPriority 	= 0x02;
+	nvic_init_config.NVIC_IRQChannelSubPriority 		= 0x02;
+	nvic_init_config.NVIC_IRQChannelCmd 				= ENABLE;
+	
+	NVIC_Init(&nvic_init_config);
+}
+
+
+
+
+
+
+
+
+
+
+void exti_init(uint8_t exti_no)
+{
+	if (exti_no == 0)
+	{
+		exti_gpio_config();
+		exti_config();
+		exti_nvic_config();
+	}
+}
+
+
+
+
+
+
+
+
+
+
+void EXTI0_IRQHandler(void)
+{
+	if (EXTI_GetITStatus(((uint32_t)0x00001)) != RESET)  
+	{
+		g_exti_cnt++;
+		
+		if (g_exti_cnt % 2)
+		{
+			Bsp_LedOn(0);	
+		}
+		else 
+		{
+			Bsp_LedOff(0);	
+		}
+		
+		if (g_exti_cnt > 200)
+		{
+			g_exti_cnt = 0;
+		}
+		
+		EXTI_ClearITPendingBit(((uint32_t)0x00001));	
+	}
+}
 

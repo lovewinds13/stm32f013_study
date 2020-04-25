@@ -29296,6 +29296,7 @@ N//模块功能测试
 N//#define ADC_FUNC_TEST
 N#define OLED_FUNC_TEST
 N//#define TIMER_FUNC_TEST
+N#define EXTI_FUNC_TEST
 N
 N//-------------------------------------------------------------------------
 N//业务逻辑实现
@@ -29545,7 +29546,7 @@ N	SPI_CLK_HIGH;
 X	(GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0020))));
 N	for(ucDataLen = 0; ucDataLen < 8; ucDataLen++)	
 N	{
-N		SPI_CLK_LOW;	//下降沿后读取数据
+N		SPI_CLK_LOW;	//上升沿后读取数据
 X		(GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), (((uint16_t)0x0020))));	
 N		//nrf_delay_ms(1);
 N		ucTmpVal <<= 1;	//最高位已经在数据线上了
