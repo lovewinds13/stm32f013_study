@@ -478,6 +478,7 @@ Section Cross References
     drvfreq.o(i.freq_get_value) refers to logic_grammer.o(i.bubble_sort) for bubble_sort
     drvfreq.o(i.freq_get_value) refers to ffltui.o(.text) for __aeabi_ui2f
     drvfreq.o(i.freq_get_value) refers to fdiv.o(.text) for __aeabi_fdiv
+    drvfreq.o(i.freq_get_value) refers to stm32f10x_tim.o(i.TIM_SetCounter) for TIM_SetCounter
     drvfreq.o(i.freq_get_value) refers to drvfreq.o(.data) for TIM_CAP_STA
     drvfreq.o(i.freq_get_value) refers to drvfreq.o(.bss) for g_freq_buff
     drvfreq.o(i.freq_gpio_input_config) refers to stm32f10x_rcc.o(i.RCC_APB2PeriphClockCmd) for RCC_APB2PeriphClockCmd
@@ -1006,7 +1007,7 @@ Removing Unused input sections from the image.
     Removing drvtimer.o(i.timer_init), (52 bytes).
     Removing drvtimer.o(i.timer_nvic_config), (56 bytes).
     Removing drvtimer.o(i.timer_test), (68 bytes).
-    Removing drvfreq.o(i.freq_get_value), (336 bytes).
+    Removing drvfreq.o(i.freq_get_value), (452 bytes).
     Removing drvfreq.o(i.freq_gpio_input_config), (44 bytes).
     Removing drvfreq.o(i.timer_capture_config), (76 bytes).
     Removing drvfreq.o(i.timer_counter_config), (236 bytes).
@@ -1465,7 +1466,7 @@ Removing Unused input sections from the image.
     Removing d2f.o(.text), (56 bytes).
     Removing fepilogue.o(.text), (110 bytes).
 
-567 unused section(s) (total 29586 bytes) removed from the image.
+567 unused section(s) (total 29702 bytes) removed from the image.
 
 ==============================================================================
 

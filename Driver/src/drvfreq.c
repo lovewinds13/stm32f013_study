@@ -371,6 +371,26 @@ void freq_get_value(uint8_t freq_rank)
 			}
 		}
 	}
+	else if (freq_rank == 1)
+	{
+		freq_value = g_cnt_value + g_over_time * 65536;
+		
+		TIM_Cmd(TIM3, DISABLE);
+		TIM_ITConfig(TIM3, TIM_IT_Update, DISABLE);
+		
+		TIM_Cmd(TIM2, DISABLE);
+		TIM_ITConfig(TIM2, TIM_IT_Update, DISABLE);
+		TIM_SetCounter(TIM2, 0);
+		
+		TIM_Cmd(TIM3, ENABLE);
+		TIM_ITConfig(TIM3, TIM_IT_Update, ENABLE);
+		
+		TIM_Cmd(TIM2, ENABLE);
+		TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
+		
+		//显示部分处理
+		//printf();
+	}
 }
 
 #endif	//__PRJ_STM32F10X_DRVFREQ_C__

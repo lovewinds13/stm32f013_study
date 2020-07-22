@@ -14706,5 +14706,25 @@ void freq_get_value(uint8_t freq_rank)
 			}
 		}
 	}
+	else if (freq_rank == 1)
+	{
+		freq_value = g_cnt_value + g_over_time * 65536;
+		
+		TIM_Cmd(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)), DISABLE);
+		TIM_ITConfig(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)), ((uint16_t)0x0001), DISABLE);
+		
+		TIM_Cmd(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0000)), DISABLE);
+		TIM_ITConfig(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0000)), ((uint16_t)0x0001), DISABLE);
+		TIM_SetCounter(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0000)), 0);
+		
+		TIM_Cmd(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)), ENABLE);
+		TIM_ITConfig(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)), ((uint16_t)0x0001), ENABLE);
+		
+		TIM_Cmd(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0000)), ENABLE);
+		TIM_ITConfig(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0000)), ((uint16_t)0x0001), ENABLE);
+		
+		
+		
+	}
 }
 
