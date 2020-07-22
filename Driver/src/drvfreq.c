@@ -3,6 +3,9 @@
 
 #include "drvfreq.h"
 #include "logic_grammer.h"
+#include "drvuart.h"
+#include "stdio.h"
+
 
 #define FREQ_TEST_NUM	(10)
 
@@ -19,6 +22,8 @@ uint8_t TIM_CAP_STA = 0;	//捕获状态描述(8位)
 uint8_t g_freq_flag = 0;	//(用于频率范围区分)
 
 uint8_t g_cap_cnt = 0;	//捕获的次数
+
+uint32_t g_freq_buff[10] = {0};
 
 //---------------------------------------------------------------------------------------------------------------------------------------------
 //	函 数 名: freq_gpio_input_config
@@ -311,8 +316,9 @@ void TIM5_IRQHandler(void)
 void freq_get_value(uint8_t freq_rank)
 {
 	uint8_t temp_value = freq_rank;
-	uint32_t freq_buff[10] = {0};
+//	uint32_t freq_buff[10] = {0};
 	uint8_t i = 0;
+	float freq_value = 0.0;
 	
 	if (temp_value == 0)
 	{
@@ -323,19 +329,45 @@ void freq_get_value(uint8_t freq_rank)
 		TIM_Cmd(TIM3, DISABLE);
 		
 		freq_gpio_input_config();
-		timer_counter_config(5, 0xFFFF, 17);
+		timer_counter_config(5, 0xFFFF, 17);	//计数频率 = 72/17 = 4MHz
 		timer_counter_nvic_config(5);
 		timer_capture_config(5);
 		TIM_Cmd(TIM5, ENABLE);	//定时器使能
 		
 		if (TIM_CAP_STA & 0x80)
 		{
-			if (g_cap_cnt < 10)
+			if (g_cap_cnt < 10)	//捕获10次,减少误差
 			{
 				if ((g_cap_value2 > g_cap_value1) && (TIM_CAP_STA & 0x3F) != 0x3F)
 				{
-					freq_buff[g_cap_cnt] = g_timer_cap_value;	//捕获一次,暂存一次数值
+					g_freq_buff[g_cap_cnt] = g_cap_value2 - g_cap_value1;	//捕获一次,暂存一次数值
 				}
+				else 
+				{
+					g_freq_buff[g_cap_cnt] = 65536 * ((TIM_CAP_STA & 0x3F) - 1) + (65536 - g_cap_value1 + g_cap_value2);
+				}
+			}
+			else 
+			{
+				bubble_sort(g_freq_buff, 10);	//排序
+			
+				for (i = 0; i < 8; i++)
+				{
+					g_freq_buff[0] += g_freq_buff[i+1];	//去掉最大,最小值
+				}
+				
+				freq_value = g_freq_buff[0] / 8;	//得到8次捕获的平均值
+				
+				freq_value = 1 / (freq_value / 4000000);	//计算频率(f=1/T)
+				
+				//显示部分
+				//printf("freq_value = %f \r\n", freq_value);
+				
+				TIM_CAP_STA = 0;	//一次测量结束,相关变量清0
+				g_cap_cnt = 0;
+				g_cap_value1 = 0;
+				g_cap_value2 = 0;
+				g_timer_cap_value = 0;
 			}
 		}
 	}

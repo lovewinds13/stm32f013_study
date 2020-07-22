@@ -1,0 +1,321 @@
+L 1 "..\HalIterface\src\hal_spi.c"
+N#ifndef __PRJ_STM32F10X_HAL_SPI_C__
+N#define __PRJ_STM32F10X_HAL_SPI_C__
+N
+N#include "Typedef.h"
+L 1 "..\User\inc\Typedef.h" 1
+N#ifndef __TYPEDEF_H__
+N#define __TYPEDEF_H__
+N
+Ntypedef unsigned char bool;
+N
+Ntypedef unsigned char uint8_t;
+Ntypedef unsigned short uint16_t;
+Ntypedef unsigned int uint32_t;
+Ntypedef unsigned long ULONG;
+N
+Ntypedef signed char  	int8_t;
+Ntypedef signed short 	int16_t;
+Ntypedef signed int 		int32_t;
+Ntypedef signed long 	LONG;
+N#define __IO volatile 
+N	
+N#define FALSE 0
+N#define TRUE  1
+N
+N#ifndef true
+N#define true	1
+N#endif
+N
+N#ifndef false
+N#define false	0
+N#endif
+N	
+N#define DEBUG_ENABLE
+N#ifdef DEBUG_ENABLE
+N#define printk	printf
+N#endif 
+N
+N
+N
+N#endif
+L 5 "..\HalIterface\src\hal_spi.c" 2
+N#include "declares.h"
+L 1 "..\User\inc\declares.h" 1
+N#ifndef _DECLARES_H_
+N#define _DECLARES_H_
+N
+N
+N//ÈÄö‰ø°ÊñπÂºèÈÄâÊã©
+N#define SOFT_SPI_COMM	//ËΩØ‰ª∂Ê®°ÊãüSPI
+N#define HARD_SPI_COMM	//Á°¨‰ª∂SPI
+N#define SPI_COMM_MODE	1	//Á°ÆÂÆöÊòØÁ°¨‰ª∂ËøòÊòØËΩØ‰ª∂SPI
+N
+N#define SOFT_I2C_COMM
+N//#define I2C_HTU_TEST
+N
+N#define UART_FUNC_TEST
+N
+N//Ê®°ÂùóÂäüËÉΩÊµãËØï
+N//#define ADC_FUNC_TEST
+N#define OLED_FUNC_TEST
+N//#define TIMER_FUNC_TEST
+N#define EXTI_FUNC_TEST
+N
+N//-------------------------------------------------------------------------
+N//‰∏öÂä°ÈÄªËæëÂÆûÁé∞
+N//#include "typedef.h"	//Êï∞ÊçÆÁ±ªÂûãÂÆö‰πâ
+N
+N//-------------------------------------------------------------------------
+N
+N
+N//-------------------------------------------------------------------------
+N//Â∫ïÂ±ÇÈ©±Âä®Â∫ì
+N//-------------------------------------------------------------------------
+N
+N
+N//-------------------------------------------------------------------------
+N//CÂ∫ì
+N//#include "stdio.h"
+N//#include "string.h"
+N//#include "stdlib.h"
+N//-------------------------------------------------------------------------
+N
+N//-------------------------------------------------------------------------
+N//Á°¨‰ª∂È©±Âä®
+N//#include "sys.h"	//ÂåÖÂê´ "stm32f10x.h"
+N//#include "led.h"
+N//#include "delay.h"
+N//#include "usart.h"
+N//#include "hardware_spi.h"
+N//#include "drvsfspi.h"
+N//#include "drvsfi2c.h"
+N//#include "drvadc.h"
+N//#include "drvexflash.h"
+N//-------------------------------------------------------------------------
+N
+N//-------------------------------------------------------------------------
+N//Â∫îÁî®ÂÆûÁé∞
+N//#include "variable.h"
+N//#include "app_flash.h"
+N//#include "app_adc.h"
+N//-------------------------------------------------------------------------
+N
+N
+N#endif
+N
+N
+N
+N//***************************** ÂæÆ‰ø°ÂÖ¨‰ºóÂè∑ TECHTIMES (END OF FILE) *********************************/
+L 6 "..\HalIterface\src\hal_spi.c" 2
+N#include "variable.h"
+L 1 "..\App\inc\variable.h" 1
+N#ifndef _VARIABLE_H__
+N#define _VARIABLE_H__
+N
+N#include "typedef.h"
+N
+Nextern __align(4) uint8_t g_DataTmpBuffer[0x1000];
+Nextern __align(4) volatile uint16_t g_SpiTxRxLen;
+N
+N
+Nextern volatile uint16_t g_timer3_tick;
+N
+N
+N#endif //_VARIABLE_H__
+L 7 "..\HalIterface\src\hal_spi.c" 2
+N#include "hal_spi.h"
+L 1 "..\HalIterface\inc\hal_spi.h" 1
+N#ifndef __HAL_SPI_H__
+N#define __HAL_SPI_H__
+N
+Nextern uint8_t hal_spi_send_bytes(uint8_t mode, uint8_t *pbdata, uint16_t send_length);
+Nextern uint8_t hal_spi_recv_bytes(uint8_t mode, uint8_t *pbdata, uint16_t send_length);
+N
+N#endif	//__HAL_SPI_H__
+L 8 "..\HalIterface\src\hal_spi.c" 2
+N#include "hardware_spi.h"
+L 1 "..\Driver\inc\hardware_spi.h" 1
+N#ifndef __HARDWARE_SPI__H__
+N#define __HARDWARE_SPI__H__
+N
+N//#include "stm32f10x.h"
+N
+N//#define SPI1_IRQ_ENABLE
+N#define SPIM1_GPIO_PORT	    GPIOA
+N
+N#define SPIM1_CLK_IO	(GPIO_Pin_5)
+N#define SPIM1_MISO_IO	(GPIO_Pin_6)
+N#define SPIM1_MOSI_IO	(GPIO_Pin_7)
+N
+N#define FLASH_CS_IO     		(GPIO_Pin_2)
+N#define FLASH_CS_0()			(GPIO_ResetBits(SPIM1_GPIO_PORT, FLASH_CS_IO))		
+N#define FLASH_CS_1() 			(GPIO_SetBits(SPIM1_GPIO_PORT, FLASH_CS_IO))
+N
+N#define RCC_PCLK_SPIM1_GPIO     RCC_APB2Periph_GPIOA
+N#define RCC_PCLK_SPIM1_HD       RCC_APB2Periph_SPI1
+N
+N
+N
+Nextern void spi_master_init(uint8_t spi_chl);			 //≥ı ºªØSPIø⁄
+Nextern uint8_t spi_master_send_recv_byte(uint8_t spi_chl, uint8_t spi_byte);
+Nextern void spi_master_nvic_set(void);
+N
+Nextern void spi_master_speed_set(uint8_t spi_chl, uint8_t spi_speed); //…Ë÷√SPIÀŸ∂»   
+Nextern uint8_t spi_master_send_byte(uint8_t spi_chl, uint8_t send_byte);//SPI◊‹œﬂ∂¡–¥“ª∏ˆ◊÷Ω⁄
+Nextern uint8_t spi_master_recv_byte(uint8_t spi_chl);
+N
+Nextern void spi_master_send_some_bytes(uint8_t spi_chl, uint8_t *pbdata, uint16_t send_length);
+Nextern void spi_master_recv_some_bytes(uint8_t spi_chl, uint8_t *pbdata, uint16_t recv_length);
+N
+N
+Nextern uint32_t spi_flash_read_id(void);
+N
+N//u8 SPI1_ReadWriteByte(u8 TxData);
+Nuint8_t SPI_WriteReadByte(uint8_t TxData);
+Nuint16_t SFLASH_ReadID(void);
+Nuint16_t SPI_Flash_ReadID(void);
+Nuint8_t SPI1_ReadWriteByte(uint8_t TxData);
+N
+N#endif	//__HARDWARE_SPI__H__
+N
+L 9 "..\HalIterface\src\hal_spi.c" 2
+N#include "drvsfspi.h"
+L 1 "..\Driver\inc\drvsfspi.h" 1
+N#ifndef __DRVSFSPI_H__
+N#define __DRVSFSPI_H__
+N
+N
+N#ifdef SOFT_SPI_COMM
+N
+N#define RCC_PCLK_SPI1_IO			RCC_APB2Periph_GPIOA
+N#define RCC_PCLK_SPI1_HD			RCC_APB2Periph_SPI1
+N#define PORT_SPI1_IO				GPIOA
+N
+N#define FLASH_CS     		(GPIO_Pin_2)
+N#define FLASH_CS_LOW		(GPIO_ResetBits(PORT_SPI1_IO, FLASH_CS))		
+N#define FLASH_CS_HIGH 		(GPIO_SetBits(PORT_SPI1_IO, FLASH_CS))
+N
+N#else
+S
+S//#define GPIO_FLASH_CS     		(GPIO9)
+S//#define FLASH_CS_0()              (IOMSetGPIOVal(GPIO_FLASH_CS, 0))
+S//#define FLASH_CS_1()              (IOMSetGPIOVal(GPIO_FLASH_CS, 1))
+S
+N#endif
+N
+N#define SPI_CLK      (GPIO_Pin_5)
+N#define SPI_CLK_LOW 		(GPIO_ResetBits(PORT_SPI1_IO, SPI_CLK))
+N#define SPI_CLK_HIGH 		(GPIO_SetBits(PORT_SPI1_IO, SPI_CLK))
+N
+N#define SPI_MOSI  	  (GPIO_Pin_7)
+N#define SPI_MOSI_LOW 		(GPIO_ResetBits(PORT_SPI1_IO, SPI_MOSI))
+N#define SPI_MOSI_HIGH		(GPIO_SetBits(PORT_SPI1_IO, SPI_MOSI))
+N
+N#define SPI_MISO  	   (GPIO_Pin_6)
+N#define SPI_MISO_LOW 		(GPIO_ResetBits(PORT_SPI1_IO, SPI_MISO))
+N#define SPI_MISO_HIGH		(GPIO_SetBits(PORT_SPI1_IO, SPI_MISO))
+N#define SPI_MISO_READ		GPIO_ReadInputDataBit(PORT_SPI1_IO, SPI_MISO)
+N
+N
+Nextern void Spi_GpioInit(void);
+Nextern void Spi_WriteByte(uint8_t _ucByte);
+Nextern uint8_t Spi_ReadByte(void);
+N
+N#endif	//__DRVSFSPI_H__
+L 10 "..\HalIterface\src\hal_spi.c" 2
+N
+N#ifdef SOFT_SPI_COMM
+N#ifdef HARD_SPI_COMM
+N
+N//--------------------------------------------------------------------------------------------------------
+N//	∫Ø  ˝ √˚: hal_spi_send_bytes
+N//	π¶ƒ‹Àµ√˜: SPI ∑¢ÀÕ ˝æ›,∞¸∫¨»Ìº˛∫Õ”≤º˛Õ®–≈∑Ω Ω
+N//	–Œ    ≤Œ: 	mode£∫Õ®–≈∑Ω Ω—°‘Ò(0£∫»Ìº˛SPI;1£∫”≤º˛SPI)
+N//				pbdata£∫∑¢ÀÕ ˝æ›µƒ ◊µÿ÷∑
+N//				send_length£∫∑¢ÀÕ ˝æ›≥§∂»
+N//	∑µ ªÿ ÷µ: ÷¥––◊¥Ã¨(true or false)
+N//	»’    ∆⁄: 2020-03-12
+N//  ±∏    ◊¢: ÷–º‰≤„∑‚◊∞µ◊≤„Ω”ø⁄
+N//	◊˜    ’ﬂ: by ˆ´∑ÁAI
+N//--------------------------------------------------------------------------------------------------------
+Nuint8_t hal_spi_send_bytes(uint8_t mode, uint8_t *pbdata, uint16_t send_length)
+N{
+N    if (mode == 0)
+N    {
+N        for (uint16_t i = 0; i < send_length; i++)
+N        {
+N            Spi_WriteByte(pbdata[i]);
+N        }
+N		
+N		return true;
+X		return 1;
+N    }
+N    else if (mode == 1)
+N    {
+N        spi_master_send_some_bytes(1, pbdata, send_length);
+N		
+N//		for (uint16_t i = 0; i < send_length; i++)
+N//        {
+N//            spi_master_send_recv_byte(1, pbdata[i]);
+N//        }
+N		
+N		return true;
+X		return 1;
+N    }
+N	else 
+N	{
+N		return false;
+X		return 0;
+N	}
+N    
+N}
+N
+N//--------------------------------------------------------------------------------------------------------
+N//	∫Ø  ˝ √˚: hal_spi_recv_bytes
+N//	π¶ƒ‹Àµ√˜: SPI Ω” ’ ˝æ›,∞¸∫¨»Ìº˛∫Õ”≤º˛Õ®–≈∑Ω Ω
+N//	–Œ    ≤Œ: 	mode£∫Õ®–≈∑Ω Ω—°‘Ò(0£∫»Ìº˛SPI;1£∫”≤º˛SPI)
+N//				pbdata£∫∑¢ÀÕ ˝æ›µƒ ◊µÿ÷∑
+N//				send_length£∫∑¢ÀÕ ˝æ›≥§∂»
+N//	∑µ ªÿ ÷µ: ÷¥––◊¥Ã¨(true or false)
+N//	»’    ∆⁄: 2020-03-12
+N//  ±∏    ◊¢: ÷–º‰≤„∑‚◊∞µ◊≤„Ω”ø⁄
+N//	◊˜    ’ﬂ: by ˆ´∑ÁAI
+N//--------------------------------------------------------------------------------------------------------
+Nuint8_t hal_spi_recv_bytes(uint8_t mode, uint8_t *pbdata, uint16_t recv_length)
+N{
+N    if (mode == 0)
+N    {
+N        for (uint16_t i = 0; i < recv_length; i++)
+N        {
+N             *pbdata++ = Spi_ReadByte();	//»Ìº˛ƒ£ƒ‚SPI
+N        }   
+N		
+N		return true;
+X		return 1;
+N    }
+N    else if (mode == 1)
+N    {
+N        spi_master_recv_some_bytes(1, pbdata, recv_length);	//”≤º˛SPI
+N		
+N//		for (uint16_t i = 0; i < recv_length; i++)
+N//        {
+N//            *pbdata++ = spi_master_send_recv_byte(1, 0xFF);
+N//        }
+N		
+N		return true;
+X		return 1;
+N    }
+N	else 
+N	{
+N		return false;
+X		return 0;
+N	}
+N    
+N}
+N
+N#endif	// SOFT_SPI_COMM
+N
+N#endif	// HARD_SPI_COMM
+N
+N#endif	//__PRJ_STM32F10X_HAL_SPI_C__

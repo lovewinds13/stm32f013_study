@@ -1946,9 +1946,9 @@
       </Doc>
       <Doc>
         <Name>..\Driver\src\drvfreq.c</Name>
-        <ColumnNumber>73</ColumnNumber>
-        <TopLine>277</TopLine>
-        <CurrentLine>287</CurrentLine>
+        <ColumnNumber>37</ColumnNumber>
+        <TopLine>357</TopLine>
+        <CurrentLine>333</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>
