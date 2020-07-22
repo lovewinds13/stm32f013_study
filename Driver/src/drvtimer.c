@@ -92,7 +92,7 @@ void timer_init(uint8_t timer_no)
 //  备    注: 
 //	作    者: by 霁风AI
 //---------------------------------------------------------------------------------------------------------------------------------------------
-
+#if 0
 void TIM3_IRQHandler(void)
 {
 	if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET)
@@ -106,6 +106,7 @@ void TIM3_IRQHandler(void)
 //		}
 	}
 }
+#endif
 
 void timer_test(void)
 {

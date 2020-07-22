@@ -9,6 +9,7 @@ extern void *My_Memcpy(void *dest, const void *src, unsigned int count);
 extern int My_Strcmp(const char *str1, const char *str2);
 extern void cpu_mem_endian(void);
 extern uint16_t Crc_B16(uint8_t *Indata, uint16_t len, uint16_t wCrcTmp);
+extern void bubble_sort(uint32_t *pbdata, uint16_t length);
 
 extern void sprintf_test(void);
 extern void strcpy_test(void);

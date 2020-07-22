@@ -332,4 +332,37 @@ uint16_t Crc_B16(uint8_t *Indata, uint16_t len, uint16_t CrcTmp)
 	return (~y & 0xffff);
 }
 
+void bubble_sort(uint32_t *pbdata, uint16_t length)
+{
+	uint16_t i = 0;
+	uint16_t j = 0;
+	uint32_t temp_value = 0;
+	uint8_t sort_flag = 0;
+	
+	for (i = 0; i < length-1; i++)
+	{
+		sort_flag = 1;
+		
+		for (j = 0; j < length-1-i; j++)
+		{
+			if (pbdata[j] > pbdata[j+1])
+			{
+				temp_value	= pbdata[j];
+				pbdata[j]	= pbdata[j+1];
+				pbdata[j+1]	= temp_value;
+				
+				sort_flag = 0;
+			}
+		}
+		
+		if (sort_flag == 1)
+		{
+			goto exit;
+		}
+	}
+	
+exit:	
+	return;
+}
+
 #endif	//__PRJ_STM32F10X_LOGIC_GRAMMER_C__
