@@ -1,9 +1,9 @@
 .\app_flash.o: ..\App\src\app_flash.c
-.\app_flash.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
-.\app_flash.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\app_flash.o: D:\keil_arm\ARM\ARMCC\Bin\..\include\stdio.h
+.\app_flash.o: D:\keil_arm\ARM\ARMCC\Bin\..\include\string.h
 .\app_flash.o: ..\Libraries\CMSIS\Device\inc\stm32f10x.h
 .\app_flash.o: ..\Libraries\CMSIS\Core\inc\core_cm3.h
-.\app_flash.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\app_flash.o: D:\keil_arm\ARM\ARMCC\Bin\..\include\stdint.h
 .\app_flash.o: ..\Libraries\CMSIS\Device\inc\system_stm32f10x.h
 .\app_flash.o: ..\Libraries\CMSIS\Device\inc\stm32f10x_conf.h
 .\app_flash.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h

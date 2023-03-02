@@ -35,6 +35,8 @@
 #include <string.h>
 #include "logic_grammer.h"
 #include "c_language_regular.h"
+#include "hcsr04.h"
+
 
 
 extern uint8_t g_WriteData[0x100];
@@ -122,6 +124,28 @@ void Hardware_AllInit(void)
 	Htu_Init();
 	ee_at24cxx_init();
 #endif
+}
+
+//超声波测试函数
+int main_hcr(void)
+{
+	delay_init();	    	 //延时函数初始化	
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);// 设置中断优先级分组2
+	uart_init(1, 115200 * 8);	 //串口初始化为961200
+	Bsp_LedInit();		  	 //初始化与LED连接的硬件接口 
+	
+	timer4_cap_init(0Xffff, 72 - 1);
+	
+	while (1)
+	{
+		hcsr04_read_distance();
+		delay_ms(500);
+		LED0 = 1;
+		delay_ms(500);
+		LED0 = 0;
+		
+		printf("g_cap_distance = %d \r\n", g_cap_distance);	//用串口1打印输出
+	}
 }
 
 

@@ -110,7 +110,7 @@ N
 N#endif	//__C_LANGUAGE_REGULAR_H__
 L 6 "..\App\src\c_language_regular.c" 2
 N#include <stdio.h>
-L 1 "C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h" 1
+L 1 "D:\keil_arm\ARM\ARMCC\Bin\..\include\stdio.h" 1
 N/* stdio.h: ANSI 'C' (X3J11 Oct 88) library header, section 4.9 */
 N/* Copyright (C) Codemist Ltd., 1988-1993                       */
 N/* Copyright 1991-1998 ARM Limited. All rights reserved.        */
@@ -130,7 +130,7 @@ N */
 N
 N#ifndef __stdio_h
 N#define __stdio_h
-N#define __ARMCLIB_VERSION 5060037
+N#define __ARMCLIB_VERSION 5060044
 N
 N/*
 N * Depending on compiler version __int64 or __INT64_TYPE__ should be defined.
@@ -1223,7 +1223,7 @@ N/* end of stdio.h */
 N
 L 7 "..\App\src\c_language_regular.c" 2
 N#include <string.h>
-L 1 "C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h" 1
+L 1 "D:\keil_arm\ARM\ARMCC\Bin\..\include\string.h" 1
 N/* string.h: ANSI 'C' (X3J11 Oct 88) library header, section 4.11 */
 N/* Copyright (C) Codemist Ltd., 1988-1993.                        */
 N/* Copyright 1991-1993 ARM Limited. All rights reserved.          */
@@ -1245,7 +1245,7 @@ N */
 N
 N#ifndef __string_h
 N#define __string_h
-N#define __ARMCLIB_VERSION 5060037
+N#define __ARMCLIB_VERSION 5060044
 N
 N#define _ARMABI __declspec(__nothrow)
 N
@@ -1774,7 +1774,7 @@ N/* end of string.h */
 N
 L 8 "..\App\src\c_language_regular.c" 2
 N#include <stdlib.h>
-L 1 "C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h" 1
+L 1 "D:\keil_arm\ARM\ARMCC\Bin\..\include\stdlib.h" 1
 N/* stdlib.h: ANSI draft (X3J11 May 88) library header, section 4.10 */
 N/* Copyright (C) Codemist Ltd., 1988-1993.                          */
 N/* Copyright 1991-1998,2014 ARM Limited. All rights reserved.       */
@@ -1791,7 +1791,7 @@ N */
 N
 N#ifndef __stdlib_h
 N#define __stdlib_h
-N#define __ARMCLIB_VERSION 5060037
+N#define __ARMCLIB_VERSION 5060044
 N
 N#if defined(__clang__) || (defined(__ARMCC_VERSION) && !defined(__STRICT_ANSI__))
 X#if 0L || (1L && !0L)

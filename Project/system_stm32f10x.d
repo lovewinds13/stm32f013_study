@@ -1,7 +1,7 @@
 .\system_stm32f10x.o: ..\Libraries\CMSIS\Device\src\system_stm32f10x.c
 .\system_stm32f10x.o: ..\Libraries\CMSIS\Device\inc\stm32f10x.h
 .\system_stm32f10x.o: ..\Libraries\CMSIS\Core\inc\core_cm3.h
-.\system_stm32f10x.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\system_stm32f10x.o: D:\keil_arm\ARM\ARMCC\Bin\..\include\stdint.h
 .\system_stm32f10x.o: ..\Libraries\CMSIS\Device\inc\system_stm32f10x.h
 .\system_stm32f10x.o: ..\Libraries\CMSIS\Device\inc\stm32f10x_conf.h
 .\system_stm32f10x.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h

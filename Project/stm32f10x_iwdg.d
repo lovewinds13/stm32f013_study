@@ -2,7 +2,7 @@
 .\stm32f10x_iwdg.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_iwdg.h
 .\stm32f10x_iwdg.o: ..\Libraries\CMSIS\Device\inc\stm32f10x.h
 .\stm32f10x_iwdg.o: ..\Libraries\CMSIS\Core\inc\core_cm3.h
-.\stm32f10x_iwdg.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\stm32f10x_iwdg.o: D:\keil_arm\ARM\ARMCC\Bin\..\include\stdint.h
 .\stm32f10x_iwdg.o: ..\Libraries\CMSIS\Device\inc\system_stm32f10x.h
 .\stm32f10x_iwdg.o: ..\Libraries\CMSIS\Device\inc\stm32f10x_conf.h
 .\stm32f10x_iwdg.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h

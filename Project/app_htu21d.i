@@ -2,7 +2,7 @@
 
 
 
-#line 1 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
+#line 1 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
  
  
  
@@ -41,7 +41,7 @@
 
 
 
-#line 47 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
+#line 47 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
 
 
   
@@ -113,13 +113,13 @@ typedef struct __FILE FILE;
 
  
 
-#line 136 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
+#line 136 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
 
 
 extern FILE __stdin, __stdout, __stderr;
 extern FILE *__aeabi_stdin, *__aeabi_stdout, *__aeabi_stderr;
 
-#line 166 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
+#line 166 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
     
 
     
@@ -895,14 +895,14 @@ extern __declspec(__nothrow) void __use_no_semihosting(void);
 
 
 
-#line 1021 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
+#line 1021 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
 
 
 
  
 
 #line 5 "..\\App\\src\\app_htu21d.c"
-#line 1 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
+#line 1 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
 
 
 
@@ -950,9 +950,9 @@ extern __declspec(__nothrow) void __use_no_semihosting(void);
 
 
 
-#line 61 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
+#line 61 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
 
-#line 75 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
+#line 75 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
 
 
 
@@ -982,7 +982,7 @@ extern __declspec(__nothrow) void __use_no_semihosting(void);
 
 
  
-#line 112 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
+#line 112 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
 
 
 
@@ -1094,7 +1094,7 @@ static inline __declspec(__nothrow) __attribute__((__pcs__("aapcs"))) int __ARM_
 
 
 
-#line 230 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
+#line 230 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
 
 
 
@@ -1105,12 +1105,12 @@ static inline __declspec(__nothrow) __attribute__((__pcs__("aapcs"))) int __ARM_
    
   typedef float float_t;
   typedef double double_t;
-#line 251 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
+#line 251 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
 
 
 
 extern const int math_errhandling;
-#line 261 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
+#line 261 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
 
 extern __declspec(__nothrow) double acos(double  );
     
@@ -1321,7 +1321,7 @@ extern __declspec(__nothrow) double expm1(double  );
 
 
 
-#line 479 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
+#line 479 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
 
 
 extern __declspec(__nothrow) double hypot(double  , double  );
@@ -1637,7 +1637,7 @@ __declspec(__nothrow) long double exp2l(long double );
 extern __declspec(__nothrow) double fdim(double  , double  );
 extern __declspec(__nothrow) float fdimf(float  , float  );
 __declspec(__nothrow) long double fdiml(long double , long double );
-#line 803 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
+#line 803 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
 extern __declspec(__nothrow) double fma(double  , double  , double  );
 extern __declspec(__nothrow) float fmaf(float  , float  , float  );
 
@@ -1677,16 +1677,16 @@ extern __declspec(__nothrow) long long llroundf(float  );
 inline __declspec(__nothrow) long long llroundl(long double __x)     { return llround((double)__x); }
 
 
-extern __declspec(__nothrow) __attribute__((const)) double nan(const char * );
-extern __declspec(__nothrow) __attribute__((const)) float nanf(const char * );
+extern __declspec(__nothrow) __attribute__((const)) double nan(const char *  );
+extern __declspec(__nothrow) __attribute__((const)) float nanf(const char *  );
 
 inline __declspec(__nothrow) __attribute__((const)) long double nanl(const char *__t)     { return (long double)nan(__t); }
-#line 856 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
+#line 856 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
 extern __declspec(__nothrow) __attribute__((const)) double nearbyint(double  );
 extern __declspec(__nothrow) __attribute__((const)) float nearbyintf(float  );
 __declspec(__nothrow) long double nearbyintl(long double );
-extern  double remquo(double  , double  , int * );
-extern  float remquof(float  , float  , int * );
+extern  double remquo(double  , double  , int *  );
+extern  float remquof(float  , float  , int *  );
 
 inline long double remquol(long double __x, long double __y, int *__q)     { return (long double)remquo((double)__x, (double)__y, __q); }
 
@@ -1706,11 +1706,9 @@ __declspec(__nothrow) long double truncl(long double );
 
 
 
-#line 896 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
+#line 896 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
 
-#line 1087 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
-
-
+#line 1087 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
 
 
 
@@ -1720,7 +1718,9 @@ __declspec(__nothrow) long double truncl(long double );
 
 
 
-#line 1317 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
+
+
+#line 1317 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
 
 
 
@@ -2239,7 +2239,7 @@ typedef enum IRQn
 
 
 
-#line 1 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
+#line 1 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
  
  
 
@@ -2258,7 +2258,7 @@ typedef enum IRQn
 
 
      
-#line 27 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
+#line 27 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
      
 
 
@@ -2271,7 +2271,7 @@ typedef enum IRQn
 
 
 
-#line 46 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
+#line 46 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
 
 
 
@@ -2286,6 +2286,20 @@ typedef   signed          char int8_t;
 typedef   signed short     int int16_t;
 typedef   signed           int int32_t;
 typedef   signed       __int64 int64_t;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
      
 typedef unsigned          char uint8_t;
@@ -2435,7 +2449,7 @@ typedef unsigned     long long uintmax_t;
      
 
      
-#line 216 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
+#line 230 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
 
      
 
@@ -2454,7 +2468,7 @@ typedef unsigned     long long uintmax_t;
 
 
 
-#line 241 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
+#line 255 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
 
      
 
@@ -2487,7 +2501,7 @@ typedef unsigned     long long uintmax_t;
 
 
 
-#line 305 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
+#line 319 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
 
 
 

@@ -1010,7 +1010,7 @@ N
 N#define __CORTEX_M                (0x03)                                                       /*!< Cortex core                    */
 N
 N#include <stdint.h>                           /* Include standard types */
-L 1 "C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h" 1
+L 1 "D:\keil_arm\ARM\ARMCC\Bin\..\include\stdint.h" 1
 N/* Copyright (C) ARM Ltd., 1999,2014 */
 N/* All rights reserved */
 N
@@ -1022,7 +1022,7 @@ N */
 N
 N#ifndef __stdint_h
 N#define __stdint_h
-N#define __ARMCLIB_VERSION 5060037
+N#define __ARMCLIB_VERSION 5060044
 N
 N  #ifdef __INT64_TYPE__
 S    /* armclang predefines '__INT64_TYPE__' and '__INT64_C_SUFFIX__' */
@@ -1072,6 +1072,20 @@ Ntypedef   signed short     int int16_t;
 Ntypedef   signed           int int32_t;
 Ntypedef   signed       __INT64 int64_t;
 Xtypedef   signed       __int64 int64_t;
+N
+N//////////////////////////////////////////////////
+N//typedef unsigned char bool;
+N
+N//#define FALSE 0
+N//#define TRUE  1
+N
+N//#ifndef true
+N//#define true	1
+N//#endif
+N
+N//#ifndef false
+N//#define false	0
+N//////////////////////////////////////////////////
 N
 N    /* exact-width unsigned integer types */
 Ntypedef unsigned          char uint8_t;
@@ -2167,7 +2181,7 @@ Nextern int32_t __REVSH(int16_t value);
 N
 N
 N#if (__ARMCC_VERSION < 400000)
-X#if (5060750 < 400000)
+X#if (5060960 < 400000)
 S
 S/**
 S * @brief  Remove the exclusive lock created by ldrex
@@ -29548,7 +29562,7 @@ N
 N#endif	//__DRVEXTI_H__
 L 33 "..\User\src\Main.c" 2
 N#include <stdio.h>
-L 1 "C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h" 1
+L 1 "D:\keil_arm\ARM\ARMCC\Bin\..\include\stdio.h" 1
 N/* stdio.h: ANSI 'C' (X3J11 Oct 88) library header, section 4.9 */
 N/* Copyright (C) Codemist Ltd., 1988-1993                       */
 N/* Copyright 1991-1998 ARM Limited. All rights reserved.        */
@@ -29568,7 +29582,7 @@ N */
 N
 N#ifndef __stdio_h
 N#define __stdio_h
-N#define __ARMCLIB_VERSION 5060037
+N#define __ARMCLIB_VERSION 5060044
 N
 N/*
 N * Depending on compiler version __int64 or __INT64_TYPE__ should be defined.
@@ -30661,7 +30675,7 @@ N/* end of stdio.h */
 N
 L 34 "..\User\src\Main.c" 2
 N#include <stdlib.h>
-L 1 "C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h" 1
+L 1 "D:\keil_arm\ARM\ARMCC\Bin\..\include\stdlib.h" 1
 N/* stdlib.h: ANSI draft (X3J11 May 88) library header, section 4.10 */
 N/* Copyright (C) Codemist Ltd., 1988-1993.                          */
 N/* Copyright 1991-1998,2014 ARM Limited. All rights reserved.       */
@@ -30678,7 +30692,7 @@ N */
 N
 N#ifndef __stdlib_h
 N#define __stdlib_h
-N#define __ARMCLIB_VERSION 5060037
+N#define __ARMCLIB_VERSION 5060044
 N
 N#if defined(__clang__) || (defined(__ARMCC_VERSION) && !defined(__STRICT_ANSI__))
 X#if 0L || (1L && !0L)
@@ -31634,7 +31648,7 @@ N
 N/* end of stdlib.h */
 L 35 "..\User\src\Main.c" 2
 N#include <string.h>
-L 1 "C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h" 1
+L 1 "D:\keil_arm\ARM\ARMCC\Bin\..\include\string.h" 1
 N/* string.h: ANSI 'C' (X3J11 Oct 88) library header, section 4.11 */
 N/* Copyright (C) Codemist Ltd., 1988-1993.                        */
 N/* Copyright 1991-1993 ARM Limited. All rights reserved.          */
@@ -31656,7 +31670,7 @@ N */
 N
 N#ifndef __string_h
 N#define __string_h
-N#define __ARMCLIB_VERSION 5060037
+N#define __ARMCLIB_VERSION 5060044
 N
 N#define _ARMABI __declspec(__nothrow)
 N
@@ -32275,6 +32289,98 @@ N
 N
 N#endif	//__C_LANGUAGE_REGULAR_H__
 L 38 "..\User\src\Main.c" 2
+N#include "hcsr04.h"
+L 1 "..\Driver\src\hcsr04.h" 1
+N#ifndef __HCSR04_H__
+N#define __HCSR04_H__
+N
+N#include "sys.h" 
+L 1 "..\Driver\inc\sys.h" 1
+N#ifndef __SYS_H
+N#define __SYS_H	
+N
+N#include "stm32f10x.h"
+N
+N//////////////////////////////////////////////////////////////////////////////////	 
+N//本程序只供学习使用，未经作者许可，不得用于其它任何用途
+N//ALIENTEK STM32开发板		   
+N//正点原子@ALIENTEK
+N//技术论坛:www.openedv.com
+N//修改日期:2012/8/18
+N//版本：V1.7
+N//版权所有，盗版必究。
+N//Copyright(C) 广州市星翼电子科技有限公司 2009-2019
+N//All rights reserved
+N////////////////////////////////////////////////////////////////////////////////// 	 
+N
+N//0,不支持ucos
+N//1,支持ucos
+N#define SYSTEM_SUPPORT_OS		0		//定义系统文件夹是否支持UCOS
+N																	    
+N	 
+N//位带操作,实现51类似的GPIO控制功能
+N//具体实现思想,参考<<CM3权威指南>>第五章(87页~92页).
+N//IO口操作宏定义
+N#define BITBAND(addr, bitnum) ((addr & 0xF0000000)+0x2000000+((addr &0xFFFFF)<<5)+(bitnum<<2)) 
+N#define MEM_ADDR(addr)  *((volatile unsigned long  *)(addr)) 
+N#define BIT_ADDR(addr, bitnum)   MEM_ADDR(BITBAND(addr, bitnum)) 
+N//IO口地址映射
+N#define GPIOA_ODR_Addr    (GPIOA_BASE+12) //0x4001080C 
+N#define GPIOB_ODR_Addr    (GPIOB_BASE+12) //0x40010C0C 
+N#define GPIOC_ODR_Addr    (GPIOC_BASE+12) //0x4001100C 
+N#define GPIOD_ODR_Addr    (GPIOD_BASE+12) //0x4001140C 
+N#define GPIOE_ODR_Addr    (GPIOE_BASE+12) //0x4001180C 
+N#define GPIOF_ODR_Addr    (GPIOF_BASE+12) //0x40011A0C    
+N#define GPIOG_ODR_Addr    (GPIOG_BASE+12) //0x40011E0C    
+N
+N#define GPIOA_IDR_Addr    (GPIOA_BASE+8) //0x40010808 
+N#define GPIOB_IDR_Addr    (GPIOB_BASE+8) //0x40010C08 
+N#define GPIOC_IDR_Addr    (GPIOC_BASE+8) //0x40011008 
+N#define GPIOD_IDR_Addr    (GPIOD_BASE+8) //0x40011408 
+N#define GPIOE_IDR_Addr    (GPIOE_BASE+8) //0x40011808 
+N#define GPIOF_IDR_Addr    (GPIOF_BASE+8) //0x40011A08 
+N#define GPIOG_IDR_Addr    (GPIOG_BASE+8) //0x40011E08 
+N 
+N//IO口操作,只对单一的IO口!
+N//确保n的值小于16!
+N#define PAout(n)   BIT_ADDR(GPIOA_ODR_Addr,n)  //输出 
+N#define PAin(n)    BIT_ADDR(GPIOA_IDR_Addr,n)  //输入 
+N
+N#define PBout(n)   BIT_ADDR(GPIOB_ODR_Addr,n)  //输出 
+N#define PBin(n)    BIT_ADDR(GPIOB_IDR_Addr,n)  //输入 
+N
+N#define PCout(n)   BIT_ADDR(GPIOC_ODR_Addr,n)  //输出 
+N#define PCin(n)    BIT_ADDR(GPIOC_IDR_Addr,n)  //输入 
+N
+N#define PDout(n)   BIT_ADDR(GPIOD_ODR_Addr,n)  //输出 
+N#define PDin(n)    BIT_ADDR(GPIOD_IDR_Addr,n)  //输入 
+N
+N#define PEout(n)   BIT_ADDR(GPIOE_ODR_Addr,n)  //输出 
+N#define PEin(n)    BIT_ADDR(GPIOE_IDR_Addr,n)  //输入
+N
+N#define PFout(n)   BIT_ADDR(GPIOF_ODR_Addr,n)  //输出 
+N#define PFin(n)    BIT_ADDR(GPIOF_IDR_Addr,n)  //输入
+N
+N#define PGout(n)   BIT_ADDR(GPIOG_ODR_Addr,n)  //输出 
+N#define PGin(n)    BIT_ADDR(GPIOG_IDR_Addr,n)  //输入
+N
+N//以下为汇编函数
+Nvoid WFI_SET(void);		//执行WFI指令
+Nvoid INTX_DISABLE(void);//关闭所有中断
+Nvoid INTX_ENABLE(void);	//开启所有中断
+Nvoid MSR_MSP(u32 addr);	//设置堆栈地址
+N
+N#endif
+L 5 "..\Driver\src\hcsr04.h" 2
+N
+Nextern u32 g_cap_distance;
+N
+Nextern void timer4_cap_init(u16 timer_arr, u16 timer_psc);
+Nextern void hcsr04_read_distance(void);
+N
+N#endif
+L 39 "..\User\src\Main.c" 2
+N
 N
 N
 Nextern uint8_t g_WriteData[0x100];
@@ -32364,6 +32470,31 @@ N#ifdef I2C_HTU_TEST
 S	Htu_Init();
 S	ee_at24cxx_init();
 N#endif
+N}
+N
+N//超声波测试函数
+Nint main_hcr(void)
+N{
+N	delay_init();	    	 //延时函数初始化	
+N	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);// 设置中断优先级分组2
+X	NVIC_PriorityGroupConfig(((uint32_t)0x500));
+N	uart_init(1, 115200 * 8);	 //串口初始化为961200
+N	Bsp_LedInit();		  	 //初始化与LED连接的硬件接口 
+N	
+N	timer4_cap_init(0Xffff, 72 - 1);
+N	
+N	while (1)
+N	{
+N		hcsr04_read_distance();
+N		delay_ms(500);
+N		LED0 = 1;
+X		*((volatile unsigned long *)((((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) & 0xF0000000)+0x2000000+(((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) &0xFFFFF)<<5)+(8<<2)))) = 1;
+N		delay_ms(500);
+N		LED0 = 0;
+X		*((volatile unsigned long *)((((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) & 0xF0000000)+0x2000000+(((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) &0xFFFFF)<<5)+(8<<2)))) = 0;
+N		
+N		printf("g_cap_distance = %d \r\n", g_cap_distance);	//用串口1打印输出
+N	}
 N}
 N
 N

@@ -59,7 +59,7 @@ extern void strcmp_test(void);
 
 
 #line 6 "..\\App\\src\\logic_grammer.c"
-#line 1 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
+#line 1 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
  
  
  
@@ -98,7 +98,7 @@ extern void strcmp_test(void);
 
 
 
-#line 47 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
+#line 47 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
 
 
   
@@ -170,13 +170,13 @@ typedef struct __FILE FILE;
 
  
 
-#line 136 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
+#line 136 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
 
 
 extern FILE __stdin, __stdout, __stderr;
 extern FILE *__aeabi_stdin, *__aeabi_stdout, *__aeabi_stderr;
 
-#line 166 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
+#line 166 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
     
 
     
@@ -952,14 +952,14 @@ extern __declspec(__nothrow) void __use_no_semihosting(void);
 
 
 
-#line 1021 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
+#line 1021 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
 
 
 
  
 
 #line 7 "..\\App\\src\\logic_grammer.c"
-#line 1 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
+#line 1 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
  
  
  
@@ -990,7 +990,7 @@ extern __declspec(__nothrow) void __use_no_semihosting(void);
 
 
 
-#line 38 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
+#line 38 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
 
 
   
@@ -998,7 +998,7 @@ extern __declspec(__nothrow) void __use_no_semihosting(void);
 
 
     typedef unsigned int size_t;    
-#line 54 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
+#line 54 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
 
 
 
@@ -1132,7 +1132,7 @@ extern __declspec(__nothrow) size_t strxfrm(char * __restrict  , const char * __
  
 
 
-#line 193 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
+#line 193 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
 extern __declspec(__nothrow) void *memchr(const void *  , int  , size_t  ) __attribute__((__nonnull__(1)));
 
    
@@ -1143,7 +1143,7 @@ extern __declspec(__nothrow) void *memchr(const void *  , int  , size_t  ) __att
 
  
 
-#line 209 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
+#line 209 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
 extern __declspec(__nothrow) char *strchr(const char *  , int  ) __attribute__((__nonnull__(1)));
 
    
@@ -1161,7 +1161,7 @@ extern __declspec(__nothrow) size_t strcspn(const char *  , const char *  ) __at
 
  
 
-#line 232 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
+#line 232 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
 extern __declspec(__nothrow) char *strpbrk(const char *  , const char *  ) __attribute__((__nonnull__(1,2)));
 
    
@@ -1171,7 +1171,7 @@ extern __declspec(__nothrow) char *strpbrk(const char *  , const char *  ) __att
 
  
 
-#line 247 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
+#line 247 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
 extern __declspec(__nothrow) char *strrchr(const char *  , int  ) __attribute__((__nonnull__(1)));
 
    
@@ -1189,7 +1189,7 @@ extern __declspec(__nothrow) size_t strspn(const char *  , const char *  ) __att
 
  
 
-#line 270 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
+#line 270 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
 extern __declspec(__nothrow) char *strstr(const char *  , const char *  ) __attribute__((__nonnull__(1,2)));
 
    
@@ -1375,14 +1375,14 @@ extern __declspec(__nothrow) void _membitmovewb(void *  , const void *  , int  ,
 
 
 
-#line 502 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
+#line 502 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
 
 
 
  
 
 #line 8 "..\\App\\src\\logic_grammer.c"
-#line 1 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
+#line 1 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
  
  
  
@@ -1429,7 +1429,7 @@ extern __declspec(__nothrow) void _membitmovewb(void *  , const void *  , int  ,
 
 
 
-#line 54 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
+#line 54 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
 
 
   
@@ -1437,7 +1437,7 @@ extern __declspec(__nothrow) void _membitmovewb(void *  , const void *  , int  ,
 
 
     typedef unsigned int size_t;    
-#line 70 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
+#line 70 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
 
 
 
@@ -1449,7 +1449,7 @@ extern __declspec(__nothrow) void _membitmovewb(void *  , const void *  , int  ,
 
 
     typedef unsigned short wchar_t;  
-#line 91 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
+#line 91 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
 
 typedef struct div_t { int quot, rem; } div_t;
     
@@ -1460,7 +1460,7 @@ typedef struct lldiv_t { long long quot, rem; } lldiv_t;
     
 
 
-#line 112 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
+#line 112 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
    
 
 
@@ -1473,7 +1473,7 @@ typedef struct lldiv_t { long long quot, rem; } lldiv_t;
 
 
  
-#line 131 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
+#line 131 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
    
 
 
@@ -1766,7 +1766,7 @@ extern __declspec(__nothrow) int atexit(void (*  )(void)) __attribute__((__nonnu
 
 
  
-#line 436 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
+#line 436 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
 
 
 extern __declspec(__nothrow) __declspec(__noreturn) void exit(int  );
@@ -1839,7 +1839,7 @@ extern  void *bsearch(const void *  , const void *  ,
 
 
  
-#line 524 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
+#line 524 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
 
 
 extern  void qsort(void *  , size_t  , size_t  ,
@@ -1856,7 +1856,7 @@ extern  void qsort(void *  , size_t  , size_t  ,
 
  
 
-#line 553 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
+#line 553 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
 
 extern __declspec(__nothrow) __attribute__((const)) int abs(int  );
    
@@ -1932,7 +1932,7 @@ extern __declspec(__nothrow) __attribute__((const)) lldiv_t lldiv(long long  , l
 
 
  
-#line 634 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
+#line 634 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
 
 
 
@@ -2112,7 +2112,7 @@ extern __declspec(__nothrow) int __C_library_version_number(void);
 
 
 
-#line 892 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
+#line 892 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
 
 
 
@@ -2120,7 +2120,7 @@ extern __declspec(__nothrow) int __C_library_version_number(void);
 
  
 #line 9 "..\\App\\src\\logic_grammer.c"
-#line 1 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
+#line 1 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
 
 
 
@@ -2168,9 +2168,9 @@ extern __declspec(__nothrow) int __C_library_version_number(void);
 
 
 
-#line 61 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
+#line 61 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
 
-#line 75 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
+#line 75 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
 
 
 
@@ -2200,7 +2200,7 @@ extern __declspec(__nothrow) int __C_library_version_number(void);
 
 
  
-#line 112 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
+#line 112 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
 
 
 
@@ -2312,7 +2312,7 @@ static inline __declspec(__nothrow) __attribute__((__pcs__("aapcs"))) int __ARM_
 
 
 
-#line 230 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
+#line 230 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
 
 
 
@@ -2323,12 +2323,12 @@ static inline __declspec(__nothrow) __attribute__((__pcs__("aapcs"))) int __ARM_
    
   typedef float float_t;
   typedef double double_t;
-#line 251 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
+#line 251 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
 
 
 
 extern const int math_errhandling;
-#line 261 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
+#line 261 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
 
 extern __declspec(__nothrow) double acos(double  );
     
@@ -2539,7 +2539,7 @@ extern __declspec(__nothrow) double expm1(double  );
 
 
 
-#line 479 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
+#line 479 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
 
 
 extern __declspec(__nothrow) double hypot(double  , double  );
@@ -2855,7 +2855,7 @@ __declspec(__nothrow) long double exp2l(long double );
 extern __declspec(__nothrow) double fdim(double  , double  );
 extern __declspec(__nothrow) float fdimf(float  , float  );
 __declspec(__nothrow) long double fdiml(long double , long double );
-#line 803 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
+#line 803 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
 extern __declspec(__nothrow) double fma(double  , double  , double  );
 extern __declspec(__nothrow) float fmaf(float  , float  , float  );
 
@@ -2895,16 +2895,16 @@ extern __declspec(__nothrow) long long llroundf(float  );
 inline __declspec(__nothrow) long long llroundl(long double __x)     { return llround((double)__x); }
 
 
-extern __declspec(__nothrow) __attribute__((const)) double nan(const char * );
-extern __declspec(__nothrow) __attribute__((const)) float nanf(const char * );
+extern __declspec(__nothrow) __attribute__((const)) double nan(const char *  );
+extern __declspec(__nothrow) __attribute__((const)) float nanf(const char *  );
 
 inline __declspec(__nothrow) __attribute__((const)) long double nanl(const char *__t)     { return (long double)nan(__t); }
-#line 856 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
+#line 856 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
 extern __declspec(__nothrow) __attribute__((const)) double nearbyint(double  );
 extern __declspec(__nothrow) __attribute__((const)) float nearbyintf(float  );
 __declspec(__nothrow) long double nearbyintl(long double );
-extern  double remquo(double  , double  , int * );
-extern  float remquof(float  , float  , int * );
+extern  double remquo(double  , double  , int *  );
+extern  float remquof(float  , float  , int *  );
 
 inline long double remquol(long double __x, long double __y, int *__q)     { return (long double)remquo((double)__x, (double)__y, __q); }
 
@@ -2924,11 +2924,9 @@ __declspec(__nothrow) long double truncl(long double );
 
 
 
-#line 896 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
+#line 896 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
 
-#line 1087 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
-
-
+#line 1087 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
 
 
 
@@ -2938,7 +2936,9 @@ __declspec(__nothrow) long double truncl(long double );
 
 
 
-#line 1317 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
+
+
+#line 1317 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\math.h"
 
 
 

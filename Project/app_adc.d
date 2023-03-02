@@ -1,9 +1,9 @@
 .\app_adc.o: ..\App\src\app_adc.c
-.\app_adc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\app_adc.o: D:\keil_arm\ARM\ARMCC\Bin\..\include\stdio.h
 .\app_adc.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h
 .\app_adc.o: ..\Libraries\CMSIS\Device\inc\stm32f10x.h
 .\app_adc.o: ..\Libraries\CMSIS\Core\inc\core_cm3.h
-.\app_adc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\app_adc.o: D:\keil_arm\ARM\ARMCC\Bin\..\include\stdint.h
 .\app_adc.o: ..\Libraries\CMSIS\Device\inc\system_stm32f10x.h
 .\app_adc.o: ..\Libraries\CMSIS\Device\inc\stm32f10x_conf.h
 .\app_adc.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h

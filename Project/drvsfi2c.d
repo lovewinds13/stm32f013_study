@@ -2,7 +2,7 @@
 .\drvsfi2c.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h
 .\drvsfi2c.o: ..\Libraries\CMSIS\Device\inc\stm32f10x.h
 .\drvsfi2c.o: ..\Libraries\CMSIS\Core\inc\core_cm3.h
-.\drvsfi2c.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\drvsfi2c.o: D:\keil_arm\ARM\ARMCC\Bin\..\include\stdint.h
 .\drvsfi2c.o: ..\Libraries\CMSIS\Device\inc\system_stm32f10x.h
 .\drvsfi2c.o: ..\Libraries\CMSIS\Device\inc\stm32f10x_conf.h
 .\drvsfi2c.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h

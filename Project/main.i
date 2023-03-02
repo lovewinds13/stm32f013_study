@@ -684,7 +684,7 @@ typedef enum IRQn
 
 
 
-#line 1 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
+#line 1 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
  
  
 
@@ -703,7 +703,7 @@ typedef enum IRQn
 
 
      
-#line 27 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
+#line 27 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
      
 
 
@@ -716,7 +716,7 @@ typedef enum IRQn
 
 
 
-#line 46 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
+#line 46 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
 
 
 
@@ -731,6 +731,20 @@ typedef   signed          char int8_t;
 typedef   signed short     int int16_t;
 typedef   signed           int int32_t;
 typedef   signed       __int64 int64_t;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
      
 typedef unsigned          char uint8_t;
@@ -880,7 +894,7 @@ typedef unsigned     long long uintmax_t;
      
 
      
-#line 216 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
+#line 230 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
 
      
 
@@ -899,7 +913,7 @@ typedef unsigned     long long uintmax_t;
 
 
 
-#line 241 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
+#line 255 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
 
      
 
@@ -932,7 +946,7 @@ typedef unsigned     long long uintmax_t;
 
 
 
-#line 305 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
+#line 319 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
 
 
 
@@ -13955,7 +13969,7 @@ extern void timer_test(void);
 extern void exti_init(uint8_t exti_no);
 
 #line 33 "..\\User\\src\\Main.c"
-#line 1 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
+#line 1 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
  
  
  
@@ -13994,7 +14008,7 @@ extern void exti_init(uint8_t exti_no);
 
 
 
-#line 47 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
+#line 47 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
 
 
   
@@ -14066,13 +14080,13 @@ typedef struct __FILE FILE;
 
  
 
-#line 136 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
+#line 136 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
 
 
 extern FILE __stdin, __stdout, __stderr;
 extern FILE *__aeabi_stdin, *__aeabi_stdout, *__aeabi_stderr;
 
-#line 166 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
+#line 166 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
     
 
     
@@ -14848,14 +14862,14 @@ extern __declspec(__nothrow) void __use_no_semihosting(void);
 
 
 
-#line 1021 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
+#line 1021 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
 
 
 
  
 
 #line 34 "..\\User\\src\\Main.c"
-#line 1 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
+#line 1 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
  
  
  
@@ -14902,7 +14916,7 @@ extern __declspec(__nothrow) void __use_no_semihosting(void);
 
 
 
-#line 54 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
+#line 54 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
 
 
   
@@ -14910,7 +14924,7 @@ extern __declspec(__nothrow) void __use_no_semihosting(void);
 
 
     typedef unsigned int size_t;    
-#line 70 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
+#line 70 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
 
 
 
@@ -14922,7 +14936,7 @@ extern __declspec(__nothrow) void __use_no_semihosting(void);
 
 
     typedef unsigned short wchar_t;  
-#line 91 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
+#line 91 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
 
 typedef struct div_t { int quot, rem; } div_t;
     
@@ -14933,7 +14947,7 @@ typedef struct lldiv_t { long long quot, rem; } lldiv_t;
     
 
 
-#line 112 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
+#line 112 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
    
 
 
@@ -14946,7 +14960,7 @@ typedef struct lldiv_t { long long quot, rem; } lldiv_t;
 
 
  
-#line 131 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
+#line 131 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
    
 
 
@@ -15239,7 +15253,7 @@ extern __declspec(__nothrow) int atexit(void (*  )(void)) __attribute__((__nonnu
 
 
  
-#line 436 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
+#line 436 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
 
 
 extern __declspec(__nothrow) __declspec(__noreturn) void exit(int  );
@@ -15312,7 +15326,7 @@ extern  void *bsearch(const void *  , const void *  ,
 
 
  
-#line 524 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
+#line 524 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
 
 
 extern  void qsort(void *  , size_t  , size_t  ,
@@ -15329,7 +15343,7 @@ extern  void qsort(void *  , size_t  , size_t  ,
 
  
 
-#line 553 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
+#line 553 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
 
 extern __declspec(__nothrow) __attribute__((const)) int abs(int  );
    
@@ -15405,7 +15419,7 @@ extern __declspec(__nothrow) __attribute__((const)) lldiv_t lldiv(long long  , l
 
 
  
-#line 634 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
+#line 634 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
 
 
 
@@ -15585,7 +15599,7 @@ extern __declspec(__nothrow) int __C_library_version_number(void);
 
 
 
-#line 892 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
+#line 892 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
 
 
 
@@ -15593,7 +15607,7 @@ extern __declspec(__nothrow) int __C_library_version_number(void);
 
  
 #line 35 "..\\User\\src\\Main.c"
-#line 1 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
+#line 1 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
  
  
  
@@ -15624,7 +15638,7 @@ extern __declspec(__nothrow) int __C_library_version_number(void);
 
 
 
-#line 38 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
+#line 38 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
 
 
   
@@ -15632,7 +15646,7 @@ extern __declspec(__nothrow) int __C_library_version_number(void);
 
 
     typedef unsigned int size_t;    
-#line 54 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
+#line 54 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
 
 
 
@@ -15766,7 +15780,7 @@ extern __declspec(__nothrow) size_t strxfrm(char * __restrict  , const char * __
  
 
 
-#line 193 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
+#line 193 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
 extern __declspec(__nothrow) void *memchr(const void *  , int  , size_t  ) __attribute__((__nonnull__(1)));
 
    
@@ -15777,7 +15791,7 @@ extern __declspec(__nothrow) void *memchr(const void *  , int  , size_t  ) __att
 
  
 
-#line 209 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
+#line 209 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
 extern __declspec(__nothrow) char *strchr(const char *  , int  ) __attribute__((__nonnull__(1)));
 
    
@@ -15795,7 +15809,7 @@ extern __declspec(__nothrow) size_t strcspn(const char *  , const char *  ) __at
 
  
 
-#line 232 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
+#line 232 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
 extern __declspec(__nothrow) char *strpbrk(const char *  , const char *  ) __attribute__((__nonnull__(1,2)));
 
    
@@ -15805,7 +15819,7 @@ extern __declspec(__nothrow) char *strpbrk(const char *  , const char *  ) __att
 
  
 
-#line 247 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
+#line 247 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
 extern __declspec(__nothrow) char *strrchr(const char *  , int  ) __attribute__((__nonnull__(1)));
 
    
@@ -15823,7 +15837,7 @@ extern __declspec(__nothrow) size_t strspn(const char *  , const char *  ) __att
 
  
 
-#line 270 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
+#line 270 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
 extern __declspec(__nothrow) char *strstr(const char *  , const char *  ) __attribute__((__nonnull__(1,2)));
 
    
@@ -16009,7 +16023,7 @@ extern __declspec(__nothrow) void _membitmovewb(void *  , const void *  , int  ,
 
 
 
-#line 502 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
+#line 502 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
 
 
 
@@ -16102,6 +16116,82 @@ extern void heap_test(void);
 
 
 #line 38 "..\\User\\src\\Main.c"
+#line 1 "..\\Driver\\src\\hcsr04.h"
+
+
+
+#line 1 "..\\Driver\\inc\\sys.h"
+
+
+
+#line 5 "..\\Driver\\inc\\sys.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+																	    
+	 
+
+
+
+
+
+
+
+#line 37 "..\\Driver\\inc\\sys.h"
+
+#line 45 "..\\Driver\\inc\\sys.h"
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void WFI_SET(void);		
+void INTX_DISABLE(void);
+void INTX_ENABLE(void);	
+void MSR_MSP(u32 addr);	
+
+#line 5 "..\\Driver\\src\\hcsr04.h"
+
+extern u32 g_cap_distance;
+
+extern void timer4_cap_init(u16 timer_arr, u16 timer_psc);
+extern void hcsr04_read_distance(void);
+
+#line 39 "..\\User\\src\\Main.c"
+
 
 
 extern uint8_t g_WriteData[0x100];
@@ -16171,12 +16261,34 @@ void Hardware_AllInit(void)
 	printf("Hard --1 spi flash val is 0x%0X \r\n", ulFlashIdVal);
 	ulFlashIdVal = spi_flash_read_id();
 	printf("Hard --2 Spi flash val is 0x%0X \r\n", ulFlashIdVal);
-#line 120 "..\\User\\src\\Main.c"
+#line 122 "..\\User\\src\\Main.c"
 
 
 
 
 
+}
+
+
+int main_hcr(void)
+{
+	delay_init();	    	 
+	NVIC_PriorityGroupConfig(((uint32_t)0x500));
+	uart_init(1, 115200 * 8);	 
+	Bsp_LedInit();		  	 
+	
+	timer4_cap_init(0Xffff, 72 - 1);
+	
+	while (1)
+	{
+		hcsr04_read_distance();
+		delay_ms(500);
+		*((volatile unsigned long *)((((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) & 0xF0000000)+0x2000000+(((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) &0xFFFFF)<<5)+(8<<2)))) = 1;
+		delay_ms(500);
+		*((volatile unsigned long *)((((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) & 0xF0000000)+0x2000000+(((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) &0xFFFFF)<<5)+(8<<2)))) = 0;
+		
+		printf("g_cap_distance = %d \r\n", g_cap_distance);	
+	}
 }
 
 
@@ -16208,7 +16320,7 @@ int main(void)
 		printf(" hard spi flash val is 0x%0X \r\n", ulFlashIdVal);
 		W25_WriteReadBytes();
 
-#line 165 "..\\User\\src\\Main.c"
+#line 189 "..\\User\\src\\Main.c"
 
 
 

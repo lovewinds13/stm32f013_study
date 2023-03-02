@@ -2,7 +2,7 @@
 .\usart.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h
 .\usart.o: ..\Libraries\CMSIS\Device\inc\stm32f10x.h
 .\usart.o: ..\Libraries\CMSIS\Core\inc\core_cm3.h
-.\usart.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\usart.o: D:\keil_arm\ARM\ARMCC\Bin\..\include\stdint.h
 .\usart.o: ..\Libraries\CMSIS\Device\inc\system_stm32f10x.h
 .\usart.o: ..\Libraries\CMSIS\Device\inc\stm32f10x_conf.h
 .\usart.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h
@@ -30,4 +30,4 @@
 .\usart.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_wwdg.h
 .\usart.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h
 .\usart.o: ..\Driver\inc\usart.h
-.\usart.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\usart.o: D:\keil_arm\ARM\ARMCC\Bin\..\include\stdio.h

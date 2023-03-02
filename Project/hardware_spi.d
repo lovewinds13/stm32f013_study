@@ -11,7 +11,7 @@
 .\hardware_spi.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h
 .\hardware_spi.o: ..\Libraries\CMSIS\Device\inc\stm32f10x.h
 .\hardware_spi.o: ..\Libraries\CMSIS\Core\inc\core_cm3.h
-.\hardware_spi.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\hardware_spi.o: D:\keil_arm\ARM\ARMCC\Bin\..\include\stdint.h
 .\hardware_spi.o: ..\Libraries\CMSIS\Device\inc\system_stm32f10x.h
 .\hardware_spi.o: ..\Libraries\CMSIS\Device\inc\stm32f10x_conf.h
 .\hardware_spi.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h
@@ -36,4 +36,4 @@
 .\hardware_spi.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h
 .\hardware_spi.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_wwdg.h
 .\hardware_spi.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h
-.\hardware_spi.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\hardware_spi.o: D:\keil_arm\ARM\ARMCC\Bin\..\include\stdio.h

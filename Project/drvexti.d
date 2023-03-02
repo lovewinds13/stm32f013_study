@@ -5,7 +5,7 @@
 .\drvexti.o: ..\Driver\inc\delay.h
 .\drvexti.o: ..\Libraries\CMSIS\Device\inc\stm32f10x.h
 .\drvexti.o: ..\Libraries\CMSIS\Core\inc\core_cm3.h
-.\drvexti.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\drvexti.o: D:\keil_arm\ARM\ARMCC\Bin\..\include\stdint.h
 .\drvexti.o: ..\Libraries\CMSIS\Device\inc\system_stm32f10x.h
 .\drvexti.o: ..\Libraries\CMSIS\Device\inc\stm32f10x_conf.h
 .\drvexti.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h

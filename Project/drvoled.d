@@ -3,7 +3,7 @@
 .\drvoled.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h
 .\drvoled.o: ..\Libraries\CMSIS\Device\inc\stm32f10x.h
 .\drvoled.o: ..\Libraries\CMSIS\Core\inc\core_cm3.h
-.\drvoled.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\drvoled.o: D:\keil_arm\ARM\ARMCC\Bin\..\include\stdint.h
 .\drvoled.o: ..\Libraries\CMSIS\Device\inc\system_stm32f10x.h
 .\drvoled.o: ..\Libraries\CMSIS\Device\inc\stm32f10x_conf.h
 .\drvoled.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h

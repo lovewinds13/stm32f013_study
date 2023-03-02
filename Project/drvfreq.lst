@@ -684,7 +684,7 @@ N
 N#define __CORTEX_M                (0x03)                                                       /*!< Cortex core                    */
 N
 N#include <stdint.h>                           /* Include standard types */
-L 1 "C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h" 1
+L 1 "D:\keil_arm\ARM\ARMCC\Bin\..\include\stdint.h" 1
 N/* Copyright (C) ARM Ltd., 1999,2014 */
 N/* All rights reserved */
 N
@@ -696,7 +696,7 @@ N */
 N
 N#ifndef __stdint_h
 N#define __stdint_h
-N#define __ARMCLIB_VERSION 5060037
+N#define __ARMCLIB_VERSION 5060044
 N
 N  #ifdef __INT64_TYPE__
 S    /* armclang predefines '__INT64_TYPE__' and '__INT64_C_SUFFIX__' */
@@ -746,6 +746,20 @@ Ntypedef   signed short     int int16_t;
 Ntypedef   signed           int int32_t;
 Ntypedef   signed       __INT64 int64_t;
 Xtypedef   signed       __int64 int64_t;
+N
+N//////////////////////////////////////////////////
+N//typedef unsigned char bool;
+N
+N//#define FALSE 0
+N//#define TRUE  1
+N
+N//#ifndef true
+N//#define true	1
+N//#endif
+N
+N//#ifndef false
+N//#define false	0
+N//////////////////////////////////////////////////
 N
 N    /* exact-width unsigned integer types */
 Ntypedef unsigned          char uint8_t;
@@ -1841,7 +1855,7 @@ Nextern int32_t __REVSH(int16_t value);
 N
 N
 N#if (__ARMCC_VERSION < 400000)
-X#if (5060750 < 400000)
+X#if (5060960 < 400000)
 S
 S/**
 S * @brief  Remove the exclusive lock created by ldrex
@@ -20730,7 +20744,7 @@ N#endif	//__DRVUART_H__
 N
 L 7 "..\Driver\src\drvfreq.c" 2
 N#include "stdio.h"
-L 1 "C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h" 1
+L 1 "D:\keil_arm\ARM\ARMCC\Bin\..\include\stdio.h" 1
 N/* stdio.h: ANSI 'C' (X3J11 Oct 88) library header, section 4.9 */
 N/* Copyright (C) Codemist Ltd., 1988-1993                       */
 N/* Copyright 1991-1998 ARM Limited. All rights reserved.        */
@@ -20750,7 +20764,7 @@ N */
 N
 N#ifndef __stdio_h
 N#define __stdio_h
-N#define __ARMCLIB_VERSION 5060037
+N#define __ARMCLIB_VERSION 5060044
 N
 N/*
 N * Depending on compiler version __int64 or __INT64_TYPE__ should be defined.

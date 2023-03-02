@@ -63,7 +63,7 @@ N#endif
 N
 L 6 "..\App\src\logic_grammer.c" 2
 N#include <stdio.h>
-L 1 "C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h" 1
+L 1 "D:\keil_arm\ARM\ARMCC\Bin\..\include\stdio.h" 1
 N/* stdio.h: ANSI 'C' (X3J11 Oct 88) library header, section 4.9 */
 N/* Copyright (C) Codemist Ltd., 1988-1993                       */
 N/* Copyright 1991-1998 ARM Limited. All rights reserved.        */
@@ -83,7 +83,7 @@ N */
 N
 N#ifndef __stdio_h
 N#define __stdio_h
-N#define __ARMCLIB_VERSION 5060037
+N#define __ARMCLIB_VERSION 5060044
 N
 N/*
 N * Depending on compiler version __int64 or __INT64_TYPE__ should be defined.
@@ -1176,7 +1176,7 @@ N/* end of stdio.h */
 N
 L 7 "..\App\src\logic_grammer.c" 2
 N#include <string.h>
-L 1 "C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h" 1
+L 1 "D:\keil_arm\ARM\ARMCC\Bin\..\include\string.h" 1
 N/* string.h: ANSI 'C' (X3J11 Oct 88) library header, section 4.11 */
 N/* Copyright (C) Codemist Ltd., 1988-1993.                        */
 N/* Copyright 1991-1993 ARM Limited. All rights reserved.          */
@@ -1198,7 +1198,7 @@ N */
 N
 N#ifndef __string_h
 N#define __string_h
-N#define __ARMCLIB_VERSION 5060037
+N#define __ARMCLIB_VERSION 5060044
 N
 N#define _ARMABI __declspec(__nothrow)
 N
@@ -1727,7 +1727,7 @@ N/* end of string.h */
 N
 L 8 "..\App\src\logic_grammer.c" 2
 N#include <stdlib.h>
-L 1 "C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h" 1
+L 1 "D:\keil_arm\ARM\ARMCC\Bin\..\include\stdlib.h" 1
 N/* stdlib.h: ANSI draft (X3J11 May 88) library header, section 4.10 */
 N/* Copyright (C) Codemist Ltd., 1988-1993.                          */
 N/* Copyright 1991-1998,2014 ARM Limited. All rights reserved.       */
@@ -1744,7 +1744,7 @@ N */
 N
 N#ifndef __stdlib_h
 N#define __stdlib_h
-N#define __ARMCLIB_VERSION 5060037
+N#define __ARMCLIB_VERSION 5060044
 N
 N#if defined(__clang__) || (defined(__ARMCC_VERSION) && !defined(__STRICT_ANSI__))
 X#if 0L || (1L && !0L)
@@ -2700,7 +2700,7 @@ N
 N/* end of stdlib.h */
 L 9 "..\App\src\logic_grammer.c" 2
 N#include <math.h>
-L 1 "C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h" 1
+L 1 "D:\keil_arm\ARM\ARMCC\Bin\..\include\math.h" 1
 N/*
 N * math.h: ANSI 'C' (X3J11 Oct 88) library header, section 4.5
 N * Copyright (C) Codemist Ltd., 1988
@@ -2728,7 +2728,7 @@ N */
 N
 N#ifndef __math_h
 N#define __math_h
-N#define __ARMCLIB_VERSION 5060037
+N#define __ARMCLIB_VERSION 5060044
 N
 N#if defined(__clang__) || (defined(__ARMCC_VERSION) && !defined(__STRICT_ANSI__))
 X#if 0L || (1L && !0L)
@@ -3757,10 +3757,10 @@ N_ARMABI_INLINE _ARMABI __LONGLONG llroundl(long double __x) \
 N    { return llround((double)__x); }
 Xinline __declspec(__nothrow) long long llroundl(long double __x)     { return llround((double)__x); }
 N#endif
-Nextern _ARMABI_PURE double nan(const char */*tagp*/);
-Xextern __declspec(__nothrow) __attribute__((const)) double nan(const char * );
-Nextern _ARMABI_PURE float nanf(const char */*tagp*/);
-Xextern __declspec(__nothrow) __attribute__((const)) float nanf(const char * );
+Nextern _ARMABI_PURE double nan(const char * /*tagp*/);
+Xextern __declspec(__nothrow) __attribute__((const)) double nan(const char *  );
+Nextern _ARMABI_PURE float nanf(const char * /*tagp*/);
+Xextern __declspec(__nothrow) __attribute__((const)) float nanf(const char *  );
 N#ifdef __HAVE_LONGDOUBLE
 N_ARMABI_INLINE _ARMABI_PURE long double nanl(const char *__t) \
 N    { return (long double)nan(__t); }
@@ -3768,8 +3768,8 @@ Xinline __declspec(__nothrow) __attribute__((const)) long double nanl(const char
 N#endif
 N#if defined(_WANT_SNAN) && defined(__SUPPORT_SNAN__)
 X#if 0L && 0L
-Sextern _ARMABI_PURE double nans(const char */*tagp*/);
-Sextern _ARMABI_PURE float nansf(const char */*tagp*/);
+Sextern _ARMABI_PURE double nans(const char * /*tagp*/);
+Sextern _ARMABI_PURE float nansf(const char * /*tagp*/);
 S#ifdef __HAVE_LONGDOUBLE
 S_ARMABI_INLINE _ARMABI_FPEXCEPT long double nansl(const char *__t) \
 S    { return (long double)nans(__t); }
@@ -3782,8 +3782,8 @@ Nextern _ARMABI_FPEXCEPT float nearbyintf(float /*x*/);
 Xextern __declspec(__nothrow) __attribute__((const)) float nearbyintf(float  );
 N_ARMDEFLD1(nearbyint);
 X__declspec(__nothrow) long double nearbyintl(long double );
-Nextern  double remquo(double /*x*/, double /*y*/, int */*quo*/);
-Nextern  float remquof(float /*x*/, float /*y*/, int */*quo*/);
+Nextern  double remquo(double /*x*/, double /*y*/, int * /*quo*/);
+Nextern  float remquof(float /*x*/, float /*y*/, int * /*quo*/);
 N#ifdef __HAVE_LONGDOUBLE
 N_ARMABI_INLINE long double remquol(long double __x, long double __y, int *__q) \
 N    { return (long double)remquo((double)__x, (double)__y, __q); }

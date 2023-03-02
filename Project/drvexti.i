@@ -395,7 +395,7 @@ typedef enum IRQn
 
 
 
-#line 1 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
+#line 1 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
  
  
 
@@ -414,7 +414,7 @@ typedef enum IRQn
 
 
      
-#line 27 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
+#line 27 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
      
 
 
@@ -427,7 +427,7 @@ typedef enum IRQn
 
 
 
-#line 46 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
+#line 46 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
 
 
 
@@ -442,6 +442,20 @@ typedef   signed          char int8_t;
 typedef   signed short     int int16_t;
 typedef   signed           int int32_t;
 typedef   signed       __int64 int64_t;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
      
 typedef unsigned          char uint8_t;
@@ -591,7 +605,7 @@ typedef unsigned     long long uintmax_t;
      
 
      
-#line 216 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
+#line 230 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
 
      
 
@@ -610,7 +624,7 @@ typedef unsigned     long long uintmax_t;
 
 
 
-#line 241 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
+#line 255 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
 
      
 
@@ -643,7 +657,7 @@ typedef unsigned     long long uintmax_t;
 
 
 
-#line 305 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
+#line 319 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
 
 
 

@@ -1,5 +1,5 @@
 .\app_at24cxx.o: ..\App\src\app_at24cxx.c
-.\app_at24cxx.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\app_at24cxx.o: D:\keil_arm\ARM\ARMCC\Bin\..\include\stdio.h
 .\app_at24cxx.o: ..\User\inc\declares.h
 .\app_at24cxx.o: ..\User\inc\Typedef.h
 .\app_at24cxx.o: ..\Driver\inc\drvsfi2c.h
@@ -7,7 +7,7 @@
 .\app_at24cxx.o: ..\Driver\inc\delay.h
 .\app_at24cxx.o: ..\Libraries\CMSIS\Device\inc\stm32f10x.h
 .\app_at24cxx.o: ..\Libraries\CMSIS\Core\inc\core_cm3.h
-.\app_at24cxx.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\app_at24cxx.o: D:\keil_arm\ARM\ARMCC\Bin\..\include\stdint.h
 .\app_at24cxx.o: ..\Libraries\CMSIS\Device\inc\system_stm32f10x.h
 .\app_at24cxx.o: ..\Libraries\CMSIS\Device\inc\stm32f10x_conf.h
 .\app_at24cxx.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h
