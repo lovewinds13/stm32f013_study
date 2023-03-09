@@ -1,5 +1,5 @@
 .\hcsr04.o: ..\Driver\src\hcsr04.c
-.\hcsr04.o: ..\Driver\src\hcsr04.h
+.\hcsr04.o: ..\Driver\inc\hcsr04.h
 .\hcsr04.o: ..\Driver\inc\sys.h
 .\hcsr04.o: ..\Libraries\CMSIS\Device\inc\stm32f10x.h
 .\hcsr04.o: ..\Libraries\CMSIS\Core\inc\core_cm3.h

@@ -1,47 +1,7 @@
-#line 1 "..\\Driver\\src\\drvfreq.c"
+#line 1 "..\\Driver\\src\\drvrtc.c"
 
 
 
-#line 1 "..\\Driver\\inc\\drvfreq.h"
-
-
-
-#line 1 "..\\User\\inc\\Typedef.h"
-
-
-
-typedef unsigned char bool;
-
-typedef unsigned char uint8_t;
-typedef unsigned short uint16_t;
-typedef unsigned int uint32_t;
-typedef unsigned long ULONG;
-
-typedef signed char  	int8_t;
-typedef signed short 	int16_t;
-typedef signed int 		int32_t;
-typedef signed long 	LONG;
-
-	
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-#line 5 "..\\Driver\\inc\\drvfreq.h"
 #line 1 "..\\Libraries\\CMSIS\\Device\\inc\\stm32f10x_conf.h"
 
 
@@ -13378,33 +13338,177 @@ void SysTick_CLKSourceConfig(uint32_t SysTick_CLKSource);
 
 
  
-#line 6 "..\\Driver\\inc\\drvfreq.h"
+#line 5 "..\\Driver\\src\\drvrtc.c"
+#line 1 "..\\User\\inc\\typedef.h"
+
+
+
+typedef unsigned char bool;
+
+typedef unsigned char uint8_t;
+typedef unsigned short uint16_t;
+typedef unsigned int uint32_t;
+typedef unsigned long ULONG;
+
+typedef signed char  	int8_t;
+typedef signed short 	int16_t;
+typedef signed int 		int32_t;
+typedef signed long 	LONG;
+
+	
 
 
 
 
-#line 5 "..\\Driver\\src\\drvfreq.c"
-#line 1 "..\\App\\inc\\logic_grammer.h"
 
 
 
-extern unsigned int My_Strlen(const char *str);
-extern char *My_Strcpy(char *dest, const char *src);
-extern int My_Memcmp(void *str1, void *str2, int count);
-extern void *My_Memset(void *dest, int n, unsigned int len);
-extern void *My_Memcpy(void *dest, const void *src, unsigned int count);
-extern int My_Strcmp(const char *str1, const char *str2);
-extern void cpu_mem_endian(void);
-extern uint16_t Crc_B16(uint8_t *Indata, uint16_t len, uint16_t wCrcTmp);
-extern void bubble_sort(uint32_t *pbdata, uint16_t length);
-
-extern void sprintf_test(void);
-extern void strcpy_test(void);
-extern void memcmp_test(void);
-extern void strcmp_test(void);
 
 
-#line 6 "..\\Driver\\src\\drvfreq.c"
+
+	
+
+
+
+
+
+
+
+#line 6 "..\\Driver\\src\\drvrtc.c"
+#line 1 "..\\Driver\\inc\\drvrtc.h"
+
+
+
+
+typedef struct 
+{
+	u8 hour;
+	u8 min;
+	u8 sec;	
+	
+	
+	u16 w_year;
+	u8  w_month;
+	u8  w_date;
+	u8  week;		 
+}_calendar;					 
+extern _calendar calendar;	
+
+struct SET_ALARM
+{
+	s8 hour;
+	s8 minute;
+	u8 week;
+};
+
+extern u8 hour_x;
+extern u8 min_x;
+extern u8 sec_x;	
+
+extern u16 w_year_x;
+extern u8  w_month_x;
+extern u8  w_date_x;
+extern u8  week_x;	
+extern u8  g_time_flag;
+    
+u8 RTC_Init_LSI(void);
+u8 RTC_Init_LSE(void);
+u8 Is_Leap_Year(u16 year);
+u8 RTC_Alarm_Set(u16 syear,u8 smon,u8 sday,u8 hour,u8 min,u8 sec);
+u8 RTC_Get(void);         
+u8 RTC_Get_Week(u16 year,u8 month,u8 day);
+u8 RTC_Set(u16 syear,u8 smon,u8 sday,u8 hour,u8 min,u8 sec);
+void  get_time(void);
+
+
+
+#line 7 "..\\Driver\\src\\drvrtc.c"
+#line 1 "..\\Driver\\inc\\delay.h"
+
+
+
+
+
+
+#line 8 "..\\Driver\\inc\\delay.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	 
+extern void Sys_DelayUs(volatile uint32_t _ulDelayTimes);
+void delay_init(void);
+void delay_ms(u16 nms);
+void delay_us(u32 nus);
+extern void Sys_delay_us(volatile uint32_t _ulTmies);
+extern void Sys_delay_ms(volatile uint32_t _ulTmies);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 8 "..\\Driver\\src\\drvrtc.c"
 #line 1 "..\\Driver\\inc\\drvuart.h"
 
 
@@ -13459,7 +13563,7 @@ extern void uart_test(void);
 
 
 
-#line 7 "..\\Driver\\src\\drvfreq.c"
+#line 9 "..\\Driver\\src\\drvrtc.c"
 #line 1 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\stdio.h"
  
  
@@ -14359,26 +14463,17 @@ extern __declspec(__nothrow) void __use_no_semihosting(void);
 
  
 
-#line 8 "..\\Driver\\src\\drvfreq.c"
+#line 10 "..\\Driver\\src\\drvrtc.c"
+#line 1 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
+ 
+ 
+ 
+ 
 
 
 
 
-uint32_t g_over_time =0;	
-
-uint32_t g_cnt_value = 0;	
-
-uint32_t g_timer_cap_value = 0;	
-
-uint16_t g_cap_value1 = 0, g_cap_value2 = 0;	
-
-uint8_t TIM_CAP_STA = 0;	
-
-uint8_t g_freq_flag = 0;	
-
-uint8_t g_cap_cnt = 0;	
-
-uint32_t g_freq_buff[10] = {0};
+ 
 
 
 
@@ -14387,24 +14482,444 @@ uint32_t g_freq_buff[10] = {0};
 
 
 
+ 
 
 
-void freq_gpio_input_config(void)
-{
-	GPIO_InitTypeDef gpio_config;
-	
-	RCC_APB2PeriphClockCmd(((uint32_t)0x00000004), ENABLE);	
-	
-	gpio_config.GPIO_Pin	= (((uint16_t)0x0001));	
-	gpio_config.GPIO_Mode	= GPIO_Mode_IPD;	
-	
-	GPIO_Init((((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800))), &gpio_config);	
-	
-	GPIO_ResetBits((((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800))), (((uint16_t)0x0001)));	
-	
-	return;
+
+
+
+
+
+
+
+
+
+
+#line 38 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
+
+
+  
+
+
+
+    typedef unsigned int size_t;    
+#line 54 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
+
+
+
+
+extern __declspec(__nothrow) void *memcpy(void * __restrict  ,
+                    const void * __restrict  , size_t  ) __attribute__((__nonnull__(1,2)));
+   
+
+
+
+
+ 
+extern __declspec(__nothrow) void *memmove(void *  ,
+                    const void *  , size_t  ) __attribute__((__nonnull__(1,2)));
+   
+
+
+
+
+
+
+
+ 
+extern __declspec(__nothrow) char *strcpy(char * __restrict  , const char * __restrict  ) __attribute__((__nonnull__(1,2)));
+   
+
+
+
+
+ 
+extern __declspec(__nothrow) char *strncpy(char * __restrict  , const char * __restrict  , size_t  ) __attribute__((__nonnull__(1,2)));
+   
+
+
+
+
+
+ 
+
+extern __declspec(__nothrow) char *strcat(char * __restrict  , const char * __restrict  ) __attribute__((__nonnull__(1,2)));
+   
+
+
+
+
+ 
+extern __declspec(__nothrow) char *strncat(char * __restrict  , const char * __restrict  , size_t  ) __attribute__((__nonnull__(1,2)));
+   
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+ 
+
+extern __declspec(__nothrow) int memcmp(const void *  , const void *  , size_t  ) __attribute__((__nonnull__(1,2)));
+   
+
+
+
+
+
+ 
+extern __declspec(__nothrow) int strcmp(const char *  , const char *  ) __attribute__((__nonnull__(1,2)));
+   
+
+
+
+
+ 
+extern __declspec(__nothrow) int strncmp(const char *  , const char *  , size_t  ) __attribute__((__nonnull__(1,2)));
+   
+
+
+
+
+
+
+ 
+extern __declspec(__nothrow) int strcasecmp(const char *  , const char *  ) __attribute__((__nonnull__(1,2)));
+   
+
+
+
+
+
+ 
+extern __declspec(__nothrow) int strncasecmp(const char *  , const char *  , size_t  ) __attribute__((__nonnull__(1,2)));
+   
+
+
+
+
+
+
+ 
+extern __declspec(__nothrow) int strcoll(const char *  , const char *  ) __attribute__((__nonnull__(1,2)));
+   
+
+
+
+
+
+
+
+ 
+
+extern __declspec(__nothrow) size_t strxfrm(char * __restrict  , const char * __restrict  , size_t  ) __attribute__((__nonnull__(2)));
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+#line 193 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
+extern __declspec(__nothrow) void *memchr(const void *  , int  , size_t  ) __attribute__((__nonnull__(1)));
+
+   
+
+
+
+
+
+ 
+
+#line 209 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
+extern __declspec(__nothrow) char *strchr(const char *  , int  ) __attribute__((__nonnull__(1)));
+
+   
+
+
+
+
+ 
+
+extern __declspec(__nothrow) size_t strcspn(const char *  , const char *  ) __attribute__((__nonnull__(1,2)));
+   
+
+
+
+
+ 
+
+#line 232 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
+extern __declspec(__nothrow) char *strpbrk(const char *  , const char *  ) __attribute__((__nonnull__(1,2)));
+
+   
+
+
+
+
+ 
+
+#line 247 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
+extern __declspec(__nothrow) char *strrchr(const char *  , int  ) __attribute__((__nonnull__(1)));
+
+   
+
+
+
+
+
+ 
+
+extern __declspec(__nothrow) size_t strspn(const char *  , const char *  ) __attribute__((__nonnull__(1,2)));
+   
+
+
+
+ 
+
+#line 270 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
+extern __declspec(__nothrow) char *strstr(const char *  , const char *  ) __attribute__((__nonnull__(1,2)));
+
+   
+
+
+
+
+
+ 
+
+extern __declspec(__nothrow) char *strtok(char * __restrict  , const char * __restrict  ) __attribute__((__nonnull__(2)));
+extern __declspec(__nothrow) char *_strtok_r(char *  , const char *  , char **  ) __attribute__((__nonnull__(2,3)));
+
+extern __declspec(__nothrow) char *strtok_r(char *  , const char *  , char **  ) __attribute__((__nonnull__(2,3)));
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+extern __declspec(__nothrow) void *memset(void *  , int  , size_t  ) __attribute__((__nonnull__(1)));
+   
+
+
+
+ 
+extern __declspec(__nothrow) char *strerror(int  );
+   
+
+
+
+
+
+ 
+extern __declspec(__nothrow) size_t strlen(const char *  ) __attribute__((__nonnull__(1)));
+   
+
+
+
+ 
+
+extern __declspec(__nothrow) size_t strlcpy(char *  , const char *  , size_t  ) __attribute__((__nonnull__(1,2)));
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+extern __declspec(__nothrow) size_t strlcat(char *  , const char *  , size_t  ) __attribute__((__nonnull__(1,2)));
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+extern __declspec(__nothrow) void _membitcpybl(void *  , const void *  , int  , int  , size_t  ) __attribute__((__nonnull__(1,2)));
+extern __declspec(__nothrow) void _membitcpybb(void *  , const void *  , int  , int  , size_t  ) __attribute__((__nonnull__(1,2)));
+extern __declspec(__nothrow) void _membitcpyhl(void *  , const void *  , int  , int  , size_t  ) __attribute__((__nonnull__(1,2)));
+extern __declspec(__nothrow) void _membitcpyhb(void *  , const void *  , int  , int  , size_t  ) __attribute__((__nonnull__(1,2)));
+extern __declspec(__nothrow) void _membitcpywl(void *  , const void *  , int  , int  , size_t  ) __attribute__((__nonnull__(1,2)));
+extern __declspec(__nothrow) void _membitcpywb(void *  , const void *  , int  , int  , size_t  ) __attribute__((__nonnull__(1,2)));
+extern __declspec(__nothrow) void _membitmovebl(void *  , const void *  , int  , int  , size_t  ) __attribute__((__nonnull__(1,2)));
+extern __declspec(__nothrow) void _membitmovebb(void *  , const void *  , int  , int  , size_t  ) __attribute__((__nonnull__(1,2)));
+extern __declspec(__nothrow) void _membitmovehl(void *  , const void *  , int  , int  , size_t  ) __attribute__((__nonnull__(1,2)));
+extern __declspec(__nothrow) void _membitmovehb(void *  , const void *  , int  , int  , size_t  ) __attribute__((__nonnull__(1,2)));
+extern __declspec(__nothrow) void _membitmovewl(void *  , const void *  , int  , int  , size_t  ) __attribute__((__nonnull__(1,2)));
+extern __declspec(__nothrow) void _membitmovewb(void *  , const void *  , int  , int  , size_t  ) __attribute__((__nonnull__(1,2)));
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+#line 502 "D:\\keil_arm\\ARM\\ARMCC\\Bin\\..\\include\\string.h"
+
+
+
+ 
+
+#line 11 "..\\Driver\\src\\drvrtc.c"
+
+
+
+const char *pt = "22:50:03";  
+const char *pd = "Mar  9 2023";  
+
+u8 hour_x;
+u8 min_x;
+u8 sec_x;	
+
+u16 w_year_x;
+u8  w_month_x;
+u8  w_date_x;
+u8  week_x;	
+u8  g_time_flag = 0;	
+
+
+char *g_month_buf[13] = {"NUL","Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+
+struct SET_ALARM alarm;
+
+_calendar calendar;
+
+
+static void RTC_NVIC_Config(void)
+{	
+	NVIC_InitTypeDef NVIC_InitStructure;
+	NVIC_InitStructure.NVIC_IRQChannel = RTC_IRQn;		
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;	
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;	
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;		
+	NVIC_Init(&NVIC_InitStructure);		
 }
-	
 
 
 
@@ -14415,80 +14930,50 @@ void freq_gpio_input_config(void)
 
 
 
-
-void timer_counter_config(uint8_t timer_no, uint16_t timer_arr, uint16_t timer_psc)
+ 
+u8 RTC_Init_LSI(void)
 {
-	uint8_t temp_value = timer_no;
 	
-	TIM_TimeBaseInitTypeDef timer_init;
-	
-	switch (temp_value)
+	u8 temp=0;
+	RCC_APB1PeriphClockCmd(((uint32_t)0x10000000) | ((uint32_t)0x08000000), ENABLE); 
+	PWR_BackupAccessCmd(ENABLE); 
+	RCC_LSICmd(ENABLE); 
+	if (BKP_ReadBackupRegister(((uint16_t)0x0004)) != 0x5050) 
 	{
-		case 0:
-			break;
-		case 1:
-			break;
-		case 2:
+		BKP_DeInit(); 
+		while (RCC_GetFlagStatus(((uint8_t)0x61)) == RESET&& temp < 250) 
 		{
-			RCC_APB1PeriphClockCmd(((uint32_t)0x00000001), ENABLE);	
-			
-			TIM_DeInit(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0000)));	
-			
-			timer_init.TIM_Period			= timer_arr;	
-			timer_init.TIM_Prescaler		= timer_psc;	
-			timer_init.TIM_ClockDivision	= ((uint16_t)0x0000);	
-			timer_init.TIM_CounterMode		= ((uint16_t)0x0000);	
-			
-			TIM_TimeBaseInit(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0000)), &timer_init);	
-			
-			TIM_ETRClockMode2Config(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0000)), ((uint16_t)0x0000), ((uint16_t)0x0000), 0);	
-			TIM_SelectInputTrigger(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0000)), ((uint16_t)0x0070));	
-			TIM_SetCounter(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0000)), 0);	
-			
-			TIM_ITConfig(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0000)), ((uint16_t)0x0001), ENABLE);	
-			
-			TIM_Cmd(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0000)), ENABLE);	
+			temp++;
+			delay_ms(10);
 		}
-		break;
-		case 3:
-		{
-			RCC_APB1PeriphClockCmd(((uint32_t)0x00000002), ENABLE);	
-			
-			TIM_DeInit(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)));	
-			
-			timer_init.TIM_Period			= timer_arr;	
-			timer_init.TIM_Prescaler		= timer_psc;	
-			timer_init.TIM_ClockDivision	= ((uint16_t)0x0000);	
-			timer_init.TIM_CounterMode		= ((uint16_t)0x0000);	
-			
-			TIM_TimeBaseInit(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)), &timer_init);	
-			
-#line 118 "..\\Driver\\src\\drvfreq.c"
-			TIM_Cmd(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)), ENABLE);	
-		}
-		case 5:
-		{
-			RCC_APB1PeriphClockCmd(((uint32_t)0x00000008), ENABLE);	
-			
-			timer_init.TIM_Period			= timer_arr;	
-			timer_init.TIM_Prescaler		= timer_psc;	
-			timer_init.TIM_ClockDivision	= ((uint16_t)0x0000);	
-			timer_init.TIM_CounterMode		= ((uint16_t)0x0000);	
-			
-			TIM_TimeBaseInit(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0C00)), &timer_init);	
-			
-			TIM_ITConfig(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0C00)), ((uint16_t)0x0001) | ((uint16_t)0x0002), ENABLE);	
-			
-
-
-
-		}
-		break;
+		if(temp>=250)return 1;
+		RCC_RTCCLKConfig(((uint32_t)0x00000200)); 
+		RCC_RTCCLKCmd(ENABLE); 
+		RTC_WaitForLastTask(); 
+		RTC_WaitForSynchro(); 
+		RTC_ITConfig(((uint16_t)0x0001)|((uint16_t)0x0002), ENABLE); 
+		RTC_WaitForLastTask(); 
+		RTC_EnterConfigMode();
 		
-		default:
-			break;
+		RTC_SetPrescaler(40000); 
+		RTC_WaitForLastTask(); 
+
+		
+		get_time();  
+		RTC_Set(calendar.w_year+2000-1 ,calendar.w_month,calendar.w_date,calendar.hour,calendar.min,calendar.sec);  
+		
+		RTC_ExitConfigMode(); 
+		BKP_WriteBackupRegister(((uint16_t)0x0004), 0X5050); 
 	}
-	return;
+	else
+	{
+		RTC_WaitForSynchro(); 
+		RTC_ITConfig(((uint16_t)0x0001)|((uint16_t)0x0002), ENABLE); 
+		RTC_WaitForLastTask(); 
+	}
+	RTC_NVIC_Config();
+	RTC_Get();
+	return 0; 
 }
 
 
@@ -14499,239 +14984,278 @@ void timer_counter_config(uint8_t timer_no, uint16_t timer_arr, uint16_t timer_p
 
 
 
+ 
 
-void timer_counter_nvic_config(uint8_t timer_no)
+u8 RTC_Init_LSE(void)
 {
-	uint8_t temp_value = timer_no;
 	
-	NVIC_InitTypeDef nvic_config;
-	
-	if (temp_value == 2)
-	{
-		nvic_config.NVIC_IRQChannel						= TIM2_IRQn;	
-		nvic_config.NVIC_IRQChannelPreemptionPriority	= 0;	
-		nvic_config.NVIC_IRQChannelSubPriority			= 0;	
-		nvic_config.NVIC_IRQChannelCmd					= ENABLE;	
+	u8 temp=0;
+	RCC_APB1PeriphClockCmd(((uint32_t)0x10000000) | ((uint32_t)0x08000000), ENABLE); 
+	PWR_BackupAccessCmd(ENABLE); 
 		
-		NVIC_Init(&nvic_config);	
-	}
-	else if (temp_value == 3)
+	if (BKP_ReadBackupRegister(((uint16_t)0x0004)) != 0x5080) 
 	{
-		nvic_config.NVIC_IRQChannel						= TIM3_IRQn;	
-		nvic_config.NVIC_IRQChannelPreemptionPriority	= 0;	
-		nvic_config.NVIC_IRQChannelSubPriority			= 1;	
-		nvic_config.NVIC_IRQChannelCmd					= ENABLE;	
+		BKP_DeInit(); 
+		RCC_LSEConfig(((uint8_t)0x01));	
+		while (RCC_GetFlagStatus(((uint8_t)0x41)) == RESET&& temp < 250) 
+		{
+			temp++;
+			delay_ms(10);
+		}
+		if(temp>=250)return 1;
+		RCC_RTCCLKConfig(((uint32_t)0x00000100)); 
+		RCC_RTCCLKCmd(ENABLE); 
+		RTC_WaitForLastTask(); 
+		RTC_WaitForSynchro(); 
+		RTC_ITConfig(((uint16_t)0x0001)|((uint16_t)0x0002), ENABLE); 
+		RTC_WaitForLastTask(); 
+		RTC_EnterConfigMode();
+		 RTC_SetPrescaler(32767); 
+		RTC_WaitForLastTask(); 
+
 		
-		NVIC_Init(&nvic_config);	
+		get_time();  
+		RTC_Set(calendar.w_year+2000-1 ,calendar.w_month,calendar.w_date,calendar.hour,calendar.min,calendar.sec);  
+		
+		RTC_ExitConfigMode(); 
+		BKP_WriteBackupRegister(((uint16_t)0x0004), 0X5080); 
 	}
-	else if (temp_value == 5)
+	else
 	{
-		nvic_config.NVIC_IRQChannel						= TIM5_IRQn;	
-		nvic_config.NVIC_IRQChannelPreemptionPriority	= 2;	
-		nvic_config.NVIC_IRQChannelSubPriority			= 0;	
-		nvic_config.NVIC_IRQChannelCmd					= ENABLE;	
-		
-		NVIC_Init(&nvic_config);	
+		RTC_WaitForSynchro(); 
+		RTC_ITConfig(((uint16_t)0x0001)|((uint16_t)0x0002), ENABLE); 
+		RTC_WaitForLastTask(); 
 	}
-	
-	return;
+	RTC_NVIC_Config();
+	RTC_Get();
+	return 0; 
 }
 
 
 
+void RTC_IRQHandler(void)
+{		 
+	if (RTC_GetITStatus(((uint16_t)0x0001)) != RESET)
+	{							
+		RTC_Get();
+		g_time_flag= 1;
+		hour_x=calendar.hour;
+		min_x=calendar.min;
+		sec_x=calendar.sec;	
+		w_year_x=calendar.w_year;;
+		w_month_x=calendar.w_month;
+		w_date_x=calendar.w_date;	
 
-
-
-
-
-
-
-void timer_capture_config(uint8_t timer_no)
-{
-	uint8_t temp_value = timer_no;
-	
-	TIM_ICInitTypeDef	timer_ic_init;
-	
-	switch (temp_value)
-	{
-		case 0:
-			break;
-		case 1:
-			break;
-		case 2:
-			break;
-		case 3:
-		{
-		
-		}
-		break;
-		case 4:
-			break;
-		case 5:
-		{
-			timer_ic_init.TIM_Channel		= ((uint16_t)0x0000);	
-			timer_ic_init.TIM_ICPolarity	= ((uint16_t)0x0000);	
-			timer_ic_init.TIM_ICSelection	= ((uint16_t)0x0001);	
-			timer_ic_init.TIM_ICPrescaler	= ((uint16_t)0x0000);	
-			timer_ic_init.TIM_ICFilter		= 0x00;	
-			
-			TIM_ICInit(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0C00)), &timer_ic_init);	
-		}
-		break;
-		default:
-			break;
-	}
-	
-	return;
-}
-
-void TIM2_IRQHandler(void)
-{
-	if (TIM_GetITStatus(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0000)), ((uint16_t)0x0001)) != RESET)	
-	{
-		TIM_ClearITPendingBit(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0000)), ((uint16_t)0x0001));	
-		g_over_time++;	
-	}
-}
-
-#line 258 "..\\Driver\\src\\drvfreq.c"
-
-
-
-
-
-
-
-
-
-
-void TIM5_IRQHandler(void)
-{
-	if ((TIM_CAP_STA & 0x80) == 0)
-	{
-		if (TIM_GetITStatus(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0C00)), ((uint16_t)0x0001)) != RESET)	
-		{
-			if (TIM_CAP_STA & 0x40)	
-			{
-				if ((TIM_CAP_STA & 0x3F) == 0x3F)	
-				{
-					TIM_CAP_STA = 0x80;	
-					g_timer_cap_value = 0;
-				}
-				else 	
-				{
-					TIM_CAP_STA++;
-				}
-			}
-		}
-		
-		if (TIM_GetITStatus(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0C00)), ((uint16_t)0x0002)) != RESET)	
-		{
-			if (TIM_CAP_STA & 0x40)	
-			{
-				g_cap_value2 = TIM_GetCapture1(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0C00)));
 				
-				if ((g_cap_value2 > g_cap_value1) && (TIM_CAP_STA != 0x3F))	
-				{
-					g_timer_cap_value = g_cap_value2 - g_cap_value1;
-				}
-				else	
-				{
-					g_timer_cap_value = 0xFFFF - g_cap_value1 + g_cap_value2;
-				}
-				
-				TIM_CAP_STA |= 0x80;	
-				g_cap_cnt++;	
-			}
-			else 	
-			{
-				g_cap_value1 = TIM_GetCapture1(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0C00)));
-				TIM_CAP_STA |= 0x40;	
-				g_timer_cap_value = 0;
-			}
-		}
-	}
-	
-	TIM_ClearITPendingBit(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0C00)), ((uint16_t)0x0001) | ((uint16_t)0x0002));	
+ 	}
+	if(RTC_GetITStatus(((uint16_t)0x0002))!= RESET)
+	{
+		RTC_ClearITPendingBit(((uint16_t)0x0002));		
+		RTC_Get();				
+		printf("Alarm Time:%d-%d-%d %d:%d:%d\r\n",calendar.w_year,calendar.w_month,calendar.w_date,calendar.hour,calendar.min,calendar.sec);
+		
+  	} 				  								 
+	RTC_ClearITPendingBit(((uint16_t)0x0001)|((uint16_t)0x0004));		
+	RTC_WaitForLastTask();	  	    						 	   	 
 }
 
-void freq_get_value(uint8_t freq_rank)
-{
-	uint8_t temp_value = freq_rank;
 
-	uint8_t i = 0;
-	float freq_value = 0.0;
-	
-	if (temp_value == 0)
+
+
+
+
+u8 Is_Leap_Year(u16 year)
+{			  
+	if(year%4==0) 
+	{ 
+		if(year%100==0) 
+		{ 
+			if(year%400==0)return 1;
+			else return 0;   
+		}else return 1;   
+	}else return 0;	
+}	 			   
+
+
+u8 const table_week[12]={0,3,3,6,1,4,6,2,5,0,3,5}; 
+
+const u8 mon_table[12]={31,28,31,30,31,30,31,31,30,31,30,31};
+
+
+
+
+
+
+
+
+
+ 
+u8 RTC_Set(u16 syear,u8 smon,u8 sday,u8 hour,u8 min,u8 sec)
+{
+	u16 t;
+	u32 seccount=0;
+	if(syear<1970||syear>2099)return 1;	   
+	for(t=1970;t<syear;t++)	
 	{
-		TIM_ITConfig(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0000)), ((uint16_t)0x0001), DISABLE);
-		TIM_Cmd(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0000)), DISABLE);
-		
-		TIM_ITConfig(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)), ((uint16_t)0x0001), DISABLE);
-		TIM_Cmd(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)), DISABLE);
-		
-		freq_gpio_input_config();
-		timer_counter_config(5, 0xFFFF, 17);	
-		timer_counter_nvic_config(5);
-		timer_capture_config(5);
-		TIM_Cmd(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0C00)), ENABLE);	
-		
-		if (TIM_CAP_STA & 0x80)
-		{
-			if (g_cap_cnt < 10)	
+		if(Is_Leap_Year(t))seccount+=31622400;
+		else seccount+=31536000;			  
+	}
+	smon-=1;
+	for(t=0;t<smon;t++)	   
+	{
+		seccount+=(u32)mon_table[t]*86400;
+		if(Is_Leap_Year(syear)&&t==1)seccount+=86400;
+	}
+	seccount+=(u32)(sday-1)*86400;
+	seccount+=(u32)hour*3600;
+    seccount+=(u32)min*60;	 
+	seccount+=sec;
+
+	RCC_APB1PeriphClockCmd(((uint32_t)0x10000000) | ((uint32_t)0x08000000), ENABLE);	
+	PWR_BackupAccessCmd(ENABLE);	
+	RTC_SetCounter(seccount);	
+
+	RTC_WaitForLastTask();	
+	return 0;	    
+}
+
+
+
+
+
+
+u8 RTC_Alarm_Set(u16 syear,u8 smon,u8 sday,u8 hour,u8 min,u8 sec)
+{
+	u16 t;
+	u32 seccount=0;
+	if(syear<1970||syear>2099)return 1;	   
+	for(t=1970;t<syear;t++)	
+	{
+		if(Is_Leap_Year(t))seccount+=31622400;
+		else seccount+=31536000;			  
+	}
+	smon-=1;
+	for(t=0;t<smon;t++)	   
+	{
+		seccount+=(u32)mon_table[t]*86400;
+		if(Is_Leap_Year(syear)&&t==1)seccount+=86400;
+	}
+	seccount+=(u32)(sday-1)*86400;
+	seccount+=(u32)hour*3600;
+    seccount+=(u32)min*60;	 
+	seccount+=sec;
+	
+	RCC_APB1PeriphClockCmd(((uint32_t)0x10000000) | ((uint32_t)0x08000000), ENABLE);	
+	PWR_BackupAccessCmd(ENABLE);	
+	
+	RTC_SetAlarm(seccount);
+	RTC_WaitForLastTask();	
+	
+	return 0;	    
+}
+
+
+
+u8 RTC_Get(void)
+{
+	static u16 daycnt=0;
+	u32 timecount=0; 
+	u32 temp=0;
+	u16 temp1=0;	  
+    timecount=RTC_GetCounter();	 
+ 	temp=timecount/86400;   
+	if(daycnt!=temp)
+	{	  
+		daycnt=temp;
+		temp1=1970;	
+		while(temp>=365)
+		{				 
+			if(Is_Leap_Year(temp1))
 			{
-				if ((g_cap_value2 > g_cap_value1) && (TIM_CAP_STA & 0x3F) != 0x3F)
-				{
-					g_freq_buff[g_cap_cnt] = g_cap_value2 - g_cap_value1;	
-				}
-				else 
-				{
-					g_freq_buff[g_cap_cnt] = 65536 * ((TIM_CAP_STA & 0x3F) - 1) + (65536 - g_cap_value1 + g_cap_value2);
-				}
+				if(temp>=366)temp-=366;
+				else {temp1++;break;}  
+			}
+			else temp-=365;	  
+			temp1++;  
+		}   
+		calendar.w_year=temp1;
+		temp1=0;
+		while(temp>=28)
+		{
+			if(Is_Leap_Year(calendar.w_year)&&temp1==1)
+			{
+				if(temp>=29)temp-=29;
+				else break; 
 			}
 			else 
 			{
-				bubble_sort(g_freq_buff, 10);	
-			
-				for (i = 0; i < 8; i++)
-				{
-					g_freq_buff[0] += g_freq_buff[i+1];	
-				}
-				
-				freq_value = g_freq_buff[0] / 8;	
-				
-				freq_value = 1 / (freq_value / 4000000);	
-				
-				
-				
-				
-				TIM_CAP_STA = 0;	
-				g_cap_cnt = 0;
-				g_cap_value1 = 0;
-				g_cap_value2 = 0;
-				g_timer_cap_value = 0;
+				if(temp>=mon_table[temp1])temp-=mon_table[temp1];
+				else break;
 			}
+			temp1++;  
 		}
+		calendar.w_month=temp1+1;	
+		calendar.w_date=temp+1;  	
 	}
-	else if (freq_rank == 1)
-	{
-		freq_value = g_cnt_value + g_over_time * 65536;
-		
-		TIM_Cmd(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)), DISABLE);
-		TIM_ITConfig(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)), ((uint16_t)0x0001), DISABLE);
-		
-		TIM_Cmd(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0000)), DISABLE);
-		TIM_ITConfig(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0000)), ((uint16_t)0x0001), DISABLE);
-		TIM_SetCounter(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0000)), 0);
-		
-		TIM_Cmd(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)), ENABLE);
-		TIM_ITConfig(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)), ((uint16_t)0x0001), ENABLE);
-		
-		TIM_Cmd(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0000)), ENABLE);
-		TIM_ITConfig(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0000)), ((uint16_t)0x0001), ENABLE);
-		
-		
-		
-	}
-}
+	temp=timecount%86400;     		
+	calendar.hour=temp/3600;     	
+	calendar.min=(temp%3600)/60; 	
+	calendar.sec=(temp%3600)%60; 	
+	calendar.week=RTC_Get_Week(calendar.w_year,calendar.w_month,calendar.w_date);
+	return 0;
+}	
 
+
+
+
+
+u8 RTC_Get_Week(u16 year,u8 month,u8 day)
+{	
+	u16 temp2;
+	u8 yearH,yearL;
+	
+	yearH=year/100;	yearL=year%100; 
+	
+	if (yearH>19)yearL+=100;
+	
+	temp2=yearL+yearL/4;
+	temp2=temp2%7; 
+	temp2=temp2+day+table_week[month-1];
+	if (yearL%4==0&&month<3)temp2--;
+	return(temp2%7);
+}			  
+
+void get_time(void)
+{
+	u8 i;
+	u8 tmp_str[4] = "   ";
+	
+	if( pd[4] == ' ' )
+	{
+		calendar.w_date = pd[5]-'0';
+	}
+	else   
+	{
+		calendar.w_date= (pd[4]-'0')*10 + (pd[5]-'0');
+	}
+	
+	calendar.w_year = (pd[9]-'0')*10 + (pd[10]-'0');
+	
+	tmp_str[0] = pd[0];
+	tmp_str[1] = pd[1];
+	tmp_str[2] = pd[2];
+	for(i = 1; i <= 12; i++)
+	{
+		if(strcmp((const char *)tmp_str, (char *)g_month_buf[i]) == 0)
+		{
+			break;	
+		}
+
+
+	}
+	calendar.w_month = i;
+
+	calendar.hour = (pt[0]-'0')*10 + (pt[1]-'0');
+	calendar.min = (pt[3]-'0')*10 + (pt[4]-'0');
+	calendar.sec = (pt[6]-'0')*10 + (pt[7]-'0');
+}

@@ -9,120 +9,120 @@
                           REQUIRE _printf_x
                           REQUIRE _printf_longlong_hex
                   Hardware_AllInit PROC
-;;;45     
-;;;46     void Hardware_AllInit(void)
+;;;46     
+;;;47     void Hardware_AllInit(void)
 000000  b510              PUSH     {r4,lr}
-;;;47     {
-;;;48     	
-;;;49     	Bsp_LedInit();
+;;;48     {
+;;;49     	
+;;;50     	Bsp_LedInit();
 000002  f7fffffe          BL       Bsp_LedInit
-;;;50     	
-;;;51     
-;;;52     	
+;;;51     	
+;;;52     
 ;;;53     	
 ;;;54     	
-;;;55     	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);	// 设置中断优先级分组2
+;;;55     	
+;;;56     	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);	// 设置中断优先级分组2
 000006  f44f60a0          MOV      r0,#0x500
 00000a  f7fffffe          BL       NVIC_PriorityGroupConfig
-;;;56     	delay_init();	    	 		//延时函数初始化	  
+;;;57     	delay_init();	    	 		//延时函数初始化	  
 00000e  f7fffffe          BL       delay_init
-;;;57     			  			//初始化与LED连接的硬件接口
-;;;58     //	Usart_Init(USART1, 9600);		//串口1初始化,用于调试信息输出
-;;;59     	uart_init(1, 9600);
+;;;58     			  			//初始化与LED连接的硬件接口
+;;;59     //	Usart_Init(USART1, 9600);		//串口1初始化,用于调试信息输出
+;;;60     	uart_init(1, 9600);
 000012  f44f5116          MOV      r1,#0x2580
 000016  2001              MOVS     r0,#1
 000018  f7fffffe          BL       uart_init
-;;;60     //	printf (" \r\n mcu enter main \r\n");
-;;;61     	
-;;;62     //	stack_test();
-;;;63     //	heap_test();
-;;;64     //	pack_test();
-;;;65     //	macro_define_test();
-;;;66     //	cpu_mem_endian();
-;;;67     	
+;;;61     //	printf (" \r\n mcu enter main \r\n");
+;;;62     	
+;;;63     //	stack_test();
+;;;64     //	heap_test();
+;;;65     //	pack_test();
+;;;66     //	macro_define_test();
+;;;67     //	cpu_mem_endian();
 ;;;68     	
-;;;69     #ifdef ADC_FUNC_TEST
-;;;70     	Adc_Init();
-;;;71     	App_AdcTest();
-;;;72     	
-;;;73     #endif	//ADC_FUNC_TEST
-;;;74     	
-;;;75     #ifdef TIMER_FUNC_TEST
-;;;76     	timer_init(3);
-;;;77     #endif
-;;;78     
-;;;79     #ifdef EXTI_FUNC_TEST
-;;;80     	exti_init(0);
+;;;69     	
+;;;70     #ifdef ADC_FUNC_TEST
+;;;71     	Adc_Init();
+;;;72     	App_AdcTest();
+;;;73     	
+;;;74     #endif	//ADC_FUNC_TEST
+;;;75     	
+;;;76     #ifdef TIMER_FUNC_TEST
+;;;77     	timer_init(3);
+;;;78     #endif
+;;;79     
+;;;80     #ifdef EXTI_FUNC_TEST
+;;;81     	exti_init(0);
 00001c  2000              MOVS     r0,#0
 00001e  f7fffffe          BL       exti_init
-;;;81     #endif	//EXTI_FUNC_TEST
-;;;82     
-;;;83     #if SPI_COMM_MODE
-;;;84     	#ifdef HARD_SPI_COMM
-;;;85     	spi_master_init(1);
+;;;82     #endif	//EXTI_FUNC_TEST
+;;;83     
+;;;84     #if SPI_COMM_MODE
+;;;85     	#ifdef HARD_SPI_COMM
+;;;86     	spi_master_init(1);
 000022  2001              MOVS     r0,#1
 000024  f7fffffe          BL       spi_master_init
-;;;86     	#ifdef OLED_FUNC_TEST
-;;;87     	oled_init();
+;;;87     	#ifdef OLED_FUNC_TEST
+;;;88     	oled_init();
 000028  f7fffffe          BL       oled_init
-;;;88     	oled_dis_logo();
+;;;89     	oled_dis_logo();
 00002c  f7fffffe          BL       oled_dis_logo
-;;;89     //	oled_dis_picture(0, 0, 128, 7, bmp_buff);
-;;;90     //	oled_dis_num(60, 4, 1314, 4, 16);
-;;;91     //	oled_dis_one_char(5, 2, 'A');
-;;;92     //	oled_dis_one_char(12, 2, 'B');
-;;;93     //	oled_dis_one_char(129, 2, 'B');
-;;;94     //	oled_dis_chinese(33,1,0);
-;;;95     //	oled_dis_chinese(53,1,1);
-;;;96     //	oled_dis_chinese(73,1,2);
-;;;97     //	oled_dis_chinese(93,1,3);
-;;;98     //	oled_dis_chinese(33,5,4);
-;;;99     //	oled_dis_chinese(53,5,5);
-;;;100    //	oled_dis_chinese(73,5,6);
-;;;101    //	oled_dis_chinese(50, 3, 8);
-;;;102    //	oled_dis_chinese(80, 3, 9);
-;;;103    	#endif
-;;;104    	Flash_TestDataInit();
+;;;90     //	oled_dis_picture(0, 0, 128, 7, bmp_buff);
+;;;91     //	oled_dis_num(60, 4, 1314, 4, 16);
+;;;92     //	oled_dis_one_char(5, 2, 'A');
+;;;93     //	oled_dis_one_char(12, 2, 'B');
+;;;94     //	oled_dis_one_char(129, 2, 'B');
+;;;95     //	oled_dis_chinese(33,1,0);
+;;;96     //	oled_dis_chinese(53,1,1);
+;;;97     //	oled_dis_chinese(73,1,2);
+;;;98     //	oled_dis_chinese(93,1,3);
+;;;99     //	oled_dis_chinese(33,5,4);
+;;;100    //	oled_dis_chinese(53,5,5);
+;;;101    //	oled_dis_chinese(73,5,6);
+;;;102    //	oled_dis_chinese(50, 3, 8);
+;;;103    //	oled_dis_chinese(80, 3, 9);
+;;;104    	#endif
+;;;105    	Flash_TestDataInit();
 000030  f7fffffe          BL       Flash_TestDataInit
-;;;105    	ulFlashIdVal = spi_flash_read_id();
+;;;106    	ulFlashIdVal = spi_flash_read_id();
 000034  f7fffffe          BL       spi_flash_read_id
 000038  4908              LDR      r1,|L1.92|
 00003a  6008              STR      r0,[r1,#0]  ; ulFlashIdVal
-;;;106    	printf("Hard --1 spi flash val is 0x%0X \r\n", ulFlashIdVal);
+;;;107    	printf("Hard --1 spi flash val is 0x%0X \r\n", ulFlashIdVal);
 00003c  4608              MOV      r0,r1
 00003e  6801              LDR      r1,[r0,#0]  ; ulFlashIdVal
 000040  a007              ADR      r0,|L1.96|
 000042  f7fffffe          BL       __2printf
-;;;107    	ulFlashIdVal = spi_flash_read_id();
+;;;108    	ulFlashIdVal = spi_flash_read_id();
 000046  f7fffffe          BL       spi_flash_read_id
 00004a  4904              LDR      r1,|L1.92|
 00004c  6008              STR      r0,[r1,#0]  ; ulFlashIdVal
-;;;108    	printf("Hard --2 Spi flash val is 0x%0X \r\n", ulFlashIdVal);
+;;;109    	printf("Hard --2 Spi flash val is 0x%0X \r\n", ulFlashIdVal);
 00004e  4608              MOV      r0,r1
 000050  6801              LDR      r1,[r0,#0]  ; ulFlashIdVal
 000052  a00c              ADR      r0,|L1.132|
 000054  f7fffffe          BL       __2printf
-;;;109    	#endif	//HARD_SPI_COMM
-;;;110    #else
-;;;111    	#ifdef SOFT_SPI_COMM
-;;;112    	Spi_GpioInit();
-;;;113    	Flash_TestDataInit();
-;;;114    	
-;;;115    	ulFlashIdVal = Flash_ReadJEDECID();
-;;;116    	printf("Spi flash val is 0x%0X \r\n", ulFlashIdVal);
-;;;117    	
-;;;118    //	W25_WriteReadBytes();
-;;;119    //	W25_CircleWriteRead(0x01, 0x00, g_WriteData, g_DataTmpBuffer, 256);	//flash循环读写测试
-;;;120    	#endif	//SOFT_SPI_COMM
-;;;121    #endif	//SPI_COMM_MODE	
-;;;122    
-;;;123    #ifdef I2C_HTU_TEST
-;;;124    	Htu_Init();
-;;;125    	ee_at24cxx_init();
-;;;126    #endif
-;;;127    }
+;;;110    	#endif	//HARD_SPI_COMM
+;;;111    #else
+;;;112    	#ifdef SOFT_SPI_COMM
+;;;113    	Spi_GpioInit();
+;;;114    	Flash_TestDataInit();
+;;;115    	
+;;;116    	ulFlashIdVal = Flash_ReadJEDECID();
+;;;117    	printf("Spi flash val is 0x%0X \r\n", ulFlashIdVal);
+;;;118    	
+;;;119    //	W25_WriteReadBytes();
+;;;120    //	W25_CircleWriteRead(0x01, 0x00, g_WriteData, g_DataTmpBuffer, 256);	//flash循环读写测试
+;;;121    	#endif	//SOFT_SPI_COMM
+;;;122    #endif	//SPI_COMM_MODE	
+;;;123    
+;;;124    #ifdef I2C_HTU_TEST
+;;;125    	Htu_Init();
+;;;126    	ee_at24cxx_init();
+;;;127    #endif
+;;;128    }
 000058  bd10              POP      {r4,pc}
-;;;128    
+;;;129    
                           ENDP
 
 00005a  0000              DCW      0x0000
@@ -151,115 +151,129 @@
 0000a4  0d0a00  
 0000a7  00                DCB      0
 
-                          AREA ||i.main||, CODE, READONLY, ALIGN=2
+                          AREA ||i.main||, CODE, READONLY, ALIGN=1
+
+                  main PROC
+;;;282    
+;;;283    int main(void)
+000000  f7fffffe          BL       main_timer
+;;;284    {
+;;;285    //	main_rtc();
+;;;286    	main_timer();
+;;;287    }
+;;;288    
+                          ENDP
+
+
+                          AREA ||i.mainX||, CODE, READONLY, ALIGN=2
 
                           REQUIRE _printf_percent
                           REQUIRE _printf_flags
                           REQUIRE _printf_x
                           REQUIRE _printf_longlong_hex
-                  main PROC
-;;;151    
-;;;152    int main(void)
+                  mainX PROC
+;;;132    
+;;;133    int mainX(void)
 000000  f7fffffe          BL       Hardware_AllInit
-;;;153    {	
-;;;154    	Hardware_AllInit();
-;;;155    	
-;;;156    #ifdef DEBUG_ENABLE
-;;;157    	printk("Using Usart1 Output Debuging Infomation\r\n");
-000004  a013              ADR      r0,|L2.84|
+;;;134    {	
+;;;135    	Hardware_AllInit();
+;;;136    	
+;;;137    #ifdef DEBUG_ENABLE
+;;;138    	printk("Using Usart1 Output Debuging Infomation\r\n");
+000004  a013              ADR      r0,|L3.84|
 000006  f7fffffe          BL       __2printf
-;;;158    #endif
-;;;159    	
-;;;160    	while(1)
-00000a  e021              B        |L2.80|
-                  |L2.12|
-;;;161    	{
-;;;162    		Sys_DelayUs(1000);
+;;;139    #endif
+;;;140    	
+;;;141    	while(1)
+00000a  e021              B        |L3.80|
+                  |L3.12|
+;;;142    	{
+;;;143    		Sys_DelayUs(1000);
 00000c  f44f707a          MOV      r0,#0x3e8
 000010  f7fffffe          BL       Sys_DelayUs
-;;;163    		Sys_DelayUs(1000);
+;;;144    		Sys_DelayUs(1000);
 000014  f44f707a          MOV      r0,#0x3e8
 000018  f7fffffe          BL       Sys_DelayUs
-;;;164    		Sys_DelayUs(1000);
+;;;145    		Sys_DelayUs(1000);
 00001c  f44f707a          MOV      r0,#0x3e8
 000020  f7fffffe          BL       Sys_DelayUs
-;;;165    		Sys_DelayUs(1000);
+;;;146    		Sys_DelayUs(1000);
 000024  f44f707a          MOV      r0,#0x3e8
 000028  f7fffffe          BL       Sys_DelayUs
-;;;166    //		Bsp_LedTest(500);
-;;;167    		
-;;;168    	#ifdef ADC_FUNC_TEST
-;;;169    		Adc_Init();
-;;;170    		App_AdcTest();
-;;;171    		
-;;;172    	#endif	//ADC_FUNC_TEST
-;;;173    
-;;;174    #if SPI_COMM_MODE		
-;;;175    	#ifdef 	HARD_SPI_COMM
-;;;176    		ulFlashIdVal = Flash_ReadJEDECID();
+;;;147    //		Bsp_LedTest(500);
+;;;148    		
+;;;149    	#ifdef ADC_FUNC_TEST
+;;;150    		Adc_Init();
+;;;151    		App_AdcTest();
+;;;152    		
+;;;153    	#endif	//ADC_FUNC_TEST
+;;;154    
+;;;155    #if SPI_COMM_MODE		
+;;;156    	#ifdef 	HARD_SPI_COMM
+;;;157    		ulFlashIdVal = Flash_ReadJEDECID();
 00002c  f7fffffe          BL       Flash_ReadJEDECID
-000030  4913              LDR      r1,|L2.128|
+000030  4913              LDR      r1,|L3.128|
 000032  6008              STR      r0,[r1,#0]  ; ulFlashIdVal
-;;;177    		printf(" hard spi flash val is 0x%0X \r\n", ulFlashIdVal);
+;;;158    		printf(" hard spi flash val is 0x%0X \r\n", ulFlashIdVal);
 000034  4608              MOV      r0,r1
 000036  6801              LDR      r1,[r0,#0]  ; ulFlashIdVal
-000038  a012              ADR      r0,|L2.132|
+000038  a012              ADR      r0,|L3.132|
 00003a  f7fffffe          BL       __2printf
-;;;178    		W25_WriteReadBytes();
+;;;159    		W25_WriteReadBytes();
 00003e  f7fffffe          BL       W25_WriteReadBytes
+;;;160    
+;;;161    	#endif	//HARD_SPI_COMM	
+;;;162    #else	
+;;;163    	#ifdef SOFT_SPI_COMM	
+;;;164    		ulFlashIdVal = Flash_ReadJEDECID();
+;;;165    		printf(" soft spi flash val is 0x%0X \r\n", ulFlashIdVal);
+;;;166    		W25_WriteReadBytes();
+;;;167    	#endif	//SOFT_SPI_COM
+;;;168    	
+;;;169    #endif	//SPI_COMM_MODE
+;;;170    
+;;;171    #ifdef I2C_HTU_TEST
+;;;172    	Htu_Display();
+;;;173    	ee_at24cxx_test();
+;;;174    #endif
+;;;175    
+;;;176    #ifdef UART_FUNC_TEST
+;;;177    //	uart_test();
+;;;178    #endif
 ;;;179    
-;;;180    	#endif	//HARD_SPI_COMM	
-;;;181    #else	
-;;;182    	#ifdef SOFT_SPI_COMM	
-;;;183    		ulFlashIdVal = Flash_ReadJEDECID();
-;;;184    		printf(" soft spi flash val is 0x%0X \r\n", ulFlashIdVal);
-;;;185    		W25_WriteReadBytes();
-;;;186    	#endif	//SOFT_SPI_COM
-;;;187    	
-;;;188    #endif	//SPI_COMM_MODE
-;;;189    
-;;;190    #ifdef I2C_HTU_TEST
-;;;191    	Htu_Display();
-;;;192    	ee_at24cxx_test();
-;;;193    #endif
-;;;194    
-;;;195    #ifdef UART_FUNC_TEST
-;;;196    //	uart_test();
-;;;197    #endif
-;;;198    
-;;;199    #ifdef TIMER_FUNC_TEST
-;;;200    	timer_test();
-;;;201    #endif
-;;;202    
-;;;203    	printf("Main is ruinning\r\n");
-000042  a018              ADR      r0,|L2.164|
+;;;180    #ifdef TIMER_FUNC_TEST
+;;;181    	timer_test();
+;;;182    #endif
+;;;183    
+;;;184    	printf("Main is ruinning\r\n");
+000042  a018              ADR      r0,|L3.164|
 000044  f7fffffe          BL       __2printf
-;;;204    //	Bsp_LedTest(300);
-;;;205    //	sprintf_test();	
-;;;206    //	strcpy_test();
-;;;207    //	memcmp_test();
-;;;208    //  strcmp_test();
-;;;209    
-;;;210    		delay_ms(500);
+;;;185    //	Bsp_LedTest(300);
+;;;186    //	sprintf_test();	
+;;;187    //	strcpy_test();
+;;;188    //	memcmp_test();
+;;;189    //  strcmp_test();
+;;;190    
+;;;191    		delay_ms(500);
 000048  f44f70fa          MOV      r0,#0x1f4
 00004c  f7fffffe          BL       delay_ms
-                  |L2.80|
-000050  e7dc              B        |L2.12|
-;;;211    		
-;;;212    //	if (USART_RX_STA)
-;;;213    //	{
-;;;214    //		printf("mcu will soft reset\r\n");
-;;;215    //		NVIC_SystemReset();
-;;;216    //		printf("mcu reset ok\r\n");
-;;;217    //	}
-;;;218    		
-;;;219    	}
-;;;220    }
-;;;221    
+                  |L3.80|
+000050  e7dc              B        |L3.12|
+;;;192    		
+;;;193    //	if (USART_RX_STA)
+;;;194    //	{
+;;;195    //		printf("mcu will soft reset\r\n");
+;;;196    //		NVIC_SystemReset();
+;;;197    //		printf("mcu reset ok\r\n");
+;;;198    //	}
+;;;199    		
+;;;200    	}
+;;;201    }
+;;;202    
                           ENDP
 
 000052  0000              DCW      0x0000
-                  |L2.84|
+                  |L3.84|
 000054  5573696e          DCB      "Using Usart1 Output Debuging Infomation\r\n",0
 000058  67205573
 00005c  61727431
@@ -273,9 +287,9 @@
 00007c  0a00    
 00007e  00                DCB      0
 00007f  00                DCB      0
-                  |L2.128|
+                  |L3.128|
                           DCD      ulFlashIdVal
-                  |L2.132|
+                  |L3.132|
 000084  20686172          DCB      " hard spi flash val is 0x%0X \r\n",0
 000088  64207370
 00008c  6920666c
@@ -284,7 +298,7 @@
 000098  69732030
 00009c  78253058
 0000a0  200d0a00
-                  |L2.164|
+                  |L3.164|
 0000a4  4d61696e          DCB      "Main is ruinning\r\n",0
 0000a8  20697320
 0000ac  7275696e
@@ -298,66 +312,66 @@
                           REQUIRE _printf_d
                           REQUIRE _printf_int_dec
                   main_hcr PROC
-;;;129    //超声波测试函数
-;;;130    int main_hcr(void)
+;;;203    //超声波测试函数
+;;;204    int main_hcr(void)
 000000  f7fffffe          BL       delay_init
-;;;131    {
-;;;132    	delay_init();	    	 //延时函数初始化	
-;;;133    	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);// 设置中断优先级分组2
+;;;205    {
+;;;206    	delay_init();	    	 //延时函数初始化	
+;;;207    	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);// 设置中断优先级分组2
 000004  f44f60a0          MOV      r0,#0x500
 000008  f7fffffe          BL       NVIC_PriorityGroupConfig
-;;;134    	uart_init(1, 115200 * 8);	 //串口初始化为961200
+;;;208    	uart_init(1, 115200 * 8);	 //串口初始化为961200
 00000c  f44f2161          MOV      r1,#0xe1000
 000010  2001              MOVS     r0,#1
 000012  f7fffffe          BL       uart_init
-;;;135    	Bsp_LedInit();		  	 //初始化与LED连接的硬件接口 
+;;;209    	Bsp_LedInit();		  	 //初始化与LED连接的硬件接口 
 000016  f7fffffe          BL       Bsp_LedInit
-;;;136    	
-;;;137    	timer4_cap_init(0Xffff, 72 - 1);
+;;;210    	
+;;;211    	timer4_cap_init(0Xffff, 72 - 1);
 00001a  2147              MOVS     r1,#0x47
 00001c  f64f70ff          MOV      r0,#0xffff
 000020  f7fffffe          BL       timer4_cap_init
-;;;138    	
-;;;139    	while (1)
-000024  e015              B        |L3.82|
-                  |L3.38|
-;;;140    	{
-;;;141    		hcsr04_read_distance();
+;;;212    	
+;;;213    	while (1)
+000024  e015              B        |L4.82|
+                  |L4.38|
+;;;214    	{
+;;;215    		hcsr04_read_distance();
 000026  f7fffffe          BL       hcsr04_read_distance
-;;;142    		delay_ms(500);
+;;;216    		delay_ms(500);
 00002a  f44f70fa          MOV      r0,#0x1f4
 00002e  f7fffffe          BL       delay_ms
-;;;143    		LED0 = 1;
+;;;217    		LED0 = 1;
 000032  2001              MOVS     r0,#1
-000034  4907              LDR      r1,|L3.84|
+000034  4907              LDR      r1,|L4.84|
 000036  6008              STR      r0,[r1,#0]
-;;;144    		delay_ms(500);
+;;;218    		delay_ms(500);
 000038  f44f70fa          MOV      r0,#0x1f4
 00003c  f7fffffe          BL       delay_ms
-;;;145    		LED0 = 0;
+;;;219    		LED0 = 0;
 000040  2000              MOVS     r0,#0
-000042  4905              LDR      r1,|L3.88|
+000042  4905              LDR      r1,|L4.88|
 000044  f8c101a0          STR      r0,[r1,#0x1a0]
-;;;146    		
-;;;147    		printf("g_cap_distance = %d \r\n", g_cap_distance);	//用串口1打印输出
-000048  4804              LDR      r0,|L3.92|
+;;;220    		
+;;;221    		printf("g_cap_distance = %d \r\n", g_cap_distance);	//用串口1打印输出
+000048  4804              LDR      r0,|L4.92|
 00004a  6801              LDR      r1,[r0,#0]  ; g_cap_distance
-00004c  a004              ADR      r0,|L3.96|
+00004c  a004              ADR      r0,|L4.96|
 00004e  f7fffffe          BL       __2printf
-                  |L3.82|
-000052  e7e8              B        |L3.38|
-;;;148    	}
-;;;149    }
-;;;150    
+                  |L4.82|
+000052  e7e8              B        |L4.38|
+;;;222    	}
+;;;223    }
+;;;224    
                           ENDP
 
-                  |L3.84|
+                  |L4.84|
                           DCD      0x422101a0
-                  |L3.88|
+                  |L4.88|
                           DCD      0x42210000
-                  |L3.92|
+                  |L4.92|
                           DCD      g_cap_distance
-                  |L3.96|
+                  |L4.96|
 000060  675f6361          DCB      "g_cap_distance = %d \r\n",0
 000064  705f6469
 000068  7374616e
@@ -365,6 +379,261 @@
 000070  20256420
 000074  0d0a00  
 000077  00                DCB      0
+
+                          AREA ||i.main_rtc||, CODE, READONLY, ALIGN=2
+
+                          REQUIRE _printf_percent
+                          REQUIRE _printf_d
+                          REQUIRE _printf_int_dec
+                  main_rtc PROC
+;;;225    //RTC测试函数
+;;;226    int main_rtc(void)
+000000  b50e              PUSH     {r1-r3,lr}
+;;;227    {
+;;;228    	u8 i = 0;
+000002  2400              MOVS     r4,#0
+;;;229    	
+;;;230    	delay_init();	    	 //延时函数初始化	
+000004  f7fffffe          BL       delay_init
+;;;231    	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);// 设置中断优先级分组2
+000008  f44f60a0          MOV      r0,#0x500
+00000c  f7fffffe          BL       NVIC_PriorityGroupConfig
+;;;232    	uart_init(1, 115200 * 8);	 //串口初始化为961200
+000010  f44f2161          MOV      r1,#0xe1000
+000014  2001              MOVS     r0,#1
+000016  f7fffffe          BL       uart_init
+;;;233    	Bsp_LedInit();		  	 //初始化与LED连接的硬件接口 
+00001a  f7fffffe          BL       Bsp_LedInit
+;;;234    
+;;;235    	RTC_Init_LSI(); //内部低速时钟
+00001e  f7fffffe          BL       RTC_Init_LSI
+;;;236    	while (1)
+000022  e02c              B        |L5.126|
+                  |L5.36|
+;;;237    	{
+;;;238    		get_time();
+000024  f7fffffe          BL       get_time
+;;;239    		i++;
+000028  1c60              ADDS     r0,r4,#1
+00002a  b2c4              UXTB     r4,r0
+;;;240    		if(i%100==0)
+00002c  2064              MOVS     r0,#0x64
+00002e  fb94f1f0          SDIV     r1,r4,r0
+000032  fb004011          MLS      r0,r0,r1,r4
+000036  b938              CBNZ     r0,|L5.72|
+;;;241    		{
+;;;242    			LED0 = !LED0;
+000038  4811              LDR      r0,|L5.128|
+00003a  6800              LDR      r0,[r0,#0]
+00003c  b908              CBNZ     r0,|L5.66|
+00003e  2001              MOVS     r0,#1
+000040  e000              B        |L5.68|
+                  |L5.66|
+000042  2000              MOVS     r0,#0
+                  |L5.68|
+000044  490e              LDR      r1,|L5.128|
+000046  6008              STR      r0,[r1,#0]
+                  |L5.72|
+;;;243    		}
+;;;244    		delay_ms(10);
+000048  200a              MOVS     r0,#0xa
+00004a  f7fffffe          BL       delay_ms
+;;;245    		if (g_time_flag)
+00004e  480d              LDR      r0,|L5.132|
+000050  7800              LDRB     r0,[r0,#0]  ; g_time_flag
+000052  b1a0              CBZ      r0,|L5.126|
+;;;246    		{
+;;;247    			g_time_flag = 0;
+000054  2000              MOVS     r0,#0
+000056  490b              LDR      r1,|L5.132|
+000058  7008              STRB     r0,[r1,#0]
+;;;248    			printf("RTC Time:20%d-%d-%d %d:%d:%d\r\n",w_year_x, w_month_x, w_date_x, hour_x, min_x, sec_x);//输出时间	
+00005a  480b              LDR      r0,|L5.136|
+00005c  7801              LDRB     r1,[r0,#0]  ; sec_x
+00005e  480b              LDR      r0,|L5.140|
+000060  7800              LDRB     r0,[r0,#0]  ; min_x
+000062  4a0b              LDR      r2,|L5.144|
+000064  7812              LDRB     r2,[r2,#0]  ; hour_x
+000066  e9cd2000          STRD     r2,r0,[sp,#0]
+00006a  9102              STR      r1,[sp,#8]
+00006c  4809              LDR      r0,|L5.148|
+00006e  7803              LDRB     r3,[r0,#0]  ; w_date_x
+000070  4809              LDR      r0,|L5.152|
+000072  7802              LDRB     r2,[r0,#0]  ; w_month_x
+000074  4809              LDR      r0,|L5.156|
+000076  8801              LDRH     r1,[r0,#0]  ; w_year_x
+000078  a009              ADR      r0,|L5.160|
+00007a  f7fffffe          BL       __2printf
+                  |L5.126|
+00007e  e7d1              B        |L5.36|
+;;;249    		}
+;;;250    	}
+;;;251    }
+;;;252    
+                          ENDP
+
+                  |L5.128|
+                          DCD      0x422101a0
+                  |L5.132|
+                          DCD      g_time_flag
+                  |L5.136|
+                          DCD      sec_x
+                  |L5.140|
+                          DCD      min_x
+                  |L5.144|
+                          DCD      hour_x
+                  |L5.148|
+                          DCD      w_date_x
+                  |L5.152|
+                          DCD      w_month_x
+                  |L5.156|
+                          DCD      w_year_x
+                  |L5.160|
+0000a0  52544320          DCB      "RTC Time:20%d-%d-%d %d:%d:%d\r\n",0
+0000a4  54696d65
+0000a8  3a323025
+0000ac  642d2564
+0000b0  2d256420
+0000b4  25643a25
+0000b8  643a2564
+0000bc  0d0a00  
+0000bf  00                DCB      0
+
+                          AREA ||i.main_timer||, CODE, READONLY, ALIGN=2
+
+                          REQUIRE _printf_percent
+                          REQUIRE _printf_d
+                          REQUIRE _printf_int_dec
+                  main_timer PROC
+;;;253    //超声波测试函数
+;;;254    int main_timer(void)
+000000  b50e              PUSH     {r1-r3,lr}
+;;;255    {
+;;;256    	u8 i = 0;
+000002  2400              MOVS     r4,#0
+;;;257    	
+;;;258    	delay_init();	    	 //延时函数初始化	
+000004  f7fffffe          BL       delay_init
+;;;259    	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);// 设置中断优先级分组2
+000008  f44f60a0          MOV      r0,#0x500
+00000c  f7fffffe          BL       NVIC_PriorityGroupConfig
+;;;260    	uart_init(1, 115200 * 8);	 //串口初始化为961200
+000010  f44f2161          MOV      r1,#0xe1000
+000014  2001              MOVS     r0,#1
+000016  f7fffffe          BL       uart_init
+;;;261    	Bsp_LedInit();		  	 //初始化与LED连接的硬件接口 
+00001a  f7fffffe          BL       Bsp_LedInit
+;;;262    
+;;;263    	RTC_Init_LSI(); //内部低速时钟
+00001e  f7fffffe          BL       RTC_Init_LSI
+;;;264    	timer_init(3); //内部低速时钟
+000022  2003              MOVS     r0,#3
+000024  f7fffffe          BL       timer_init
+;;;265    	while (1)
+000028  e035              B        |L6.150|
+                  |L6.42|
+;;;266    	{
+;;;267    		get_time();
+00002a  f7fffffe          BL       get_time
+;;;268    		i++;
+00002e  1c60              ADDS     r0,r4,#1
+000030  b2c4              UXTB     r4,r0
+;;;269    		if(i%100==0)
+000032  2064              MOVS     r0,#0x64
+000034  fb94f1f0          SDIV     r1,r4,r0
+000038  fb004011          MLS      r0,r0,r1,r4
+00003c  b938              CBNZ     r0,|L6.78|
+;;;270    		{
+;;;271    			LED0 = !LED0;
+00003e  4816              LDR      r0,|L6.152|
+000040  6800              LDR      r0,[r0,#0]
+000042  b908              CBNZ     r0,|L6.72|
+000044  2001              MOVS     r0,#1
+000046  e000              B        |L6.74|
+                  |L6.72|
+000048  2000              MOVS     r0,#0
+                  |L6.74|
+00004a  4913              LDR      r1,|L6.152|
+00004c  6008              STR      r0,[r1,#0]
+                  |L6.78|
+;;;272    		}
+;;;273    		delay_ms(10);
+00004e  200a              MOVS     r0,#0xa
+000050  f7fffffe          BL       delay_ms
+;;;274    		if (g_timer3_tick == 10)	//5秒输出一次
+000054  4811              LDR      r0,|L6.156|
+000056  8800              LDRH     r0,[r0,#0]  ; g_timer3_tick
+000058  280a              CMP      r0,#0xa
+00005a  d11c              BNE      |L6.150|
+;;;275    		{
+;;;276    			g_timer3_tick = 0;
+00005c  2000              MOVS     r0,#0
+00005e  490f              LDR      r1,|L6.156|
+000060  8008              STRH     r0,[r1,#0]
+;;;277    			LED1 = !LED1;
+000062  480f              LDR      r0,|L6.160|
+000064  6800              LDR      r0,[r0,#0]
+000066  b908              CBNZ     r0,|L6.108|
+000068  2001              MOVS     r0,#1
+00006a  e000              B        |L6.110|
+                  |L6.108|
+00006c  2000              MOVS     r0,#0
+                  |L6.110|
+00006e  490c              LDR      r1,|L6.160|
+000070  6008              STR      r0,[r1,#0]
+;;;278    			printf("RTC Time:20%d-%d-%d %d:%d:%d\r\n",w_year_x, w_month_x, w_date_x, hour_x, min_x, sec_x);//输出时间	
+000072  480c              LDR      r0,|L6.164|
+000074  7800              LDRB     r0,[r0,#0]  ; sec_x
+000076  490c              LDR      r1,|L6.168|
+000078  7809              LDRB     r1,[r1,#0]  ; min_x
+00007a  4a0c              LDR      r2,|L6.172|
+00007c  7812              LDRB     r2,[r2,#0]  ; hour_x
+00007e  e9cd2100          STRD     r2,r1,[sp,#0]
+000082  9002              STR      r0,[sp,#8]
+000084  480a              LDR      r0,|L6.176|
+000086  7803              LDRB     r3,[r0,#0]  ; w_date_x
+000088  480a              LDR      r0,|L6.180|
+00008a  7802              LDRB     r2,[r0,#0]  ; w_month_x
+00008c  480a              LDR      r0,|L6.184|
+00008e  8801              LDRH     r1,[r0,#0]  ; w_year_x
+000090  a00a              ADR      r0,|L6.188|
+000092  f7fffffe          BL       __2printf
+                  |L6.150|
+000096  e7c8              B        |L6.42|
+;;;279    		}
+;;;280    	}
+;;;281    }
+;;;282    
+                          ENDP
+
+                  |L6.152|
+                          DCD      0x422101a0
+                  |L6.156|
+                          DCD      g_timer3_tick
+                  |L6.160|
+                          DCD      0x42228188
+                  |L6.164|
+                          DCD      sec_x
+                  |L6.168|
+                          DCD      min_x
+                  |L6.172|
+                          DCD      hour_x
+                  |L6.176|
+                          DCD      w_date_x
+                  |L6.180|
+                          DCD      w_month_x
+                  |L6.184|
+                          DCD      w_year_x
+                  |L6.188|
+0000bc  52544320          DCB      "RTC Time:20%d-%d-%d %d:%d:%d\r\n",0
+0000c0  54696d65
+0000c4  3a323025
+0000c8  642d2564
+0000cc  2d256420
+0000d0  25643a25
+0000d4  643a2564
+0000d8  0d0a00  
+0000db  00                DCB      0
 
                           AREA ||.data||, DATA, ALIGN=2
 

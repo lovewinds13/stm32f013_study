@@ -2,6 +2,46 @@
 ; commandline ArmCC [--c99 --list --split_sections --debug -c --asm --interleave -o.\drvtimer.o --asm_dir=.\ --list_dir=.\ --depend=.\drvtimer.d --cpu=Cortex-M3 --apcs=interwork -O0 --diag_suppress=9931 -I..\App\inc -I..\Driver\inc -I..\Libraries\CMSIS\Core\inc -I..\Libraries\CMSIS\Device\inc -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\HalIterface\inc -I..\User\inc -I..\Driver\src -ID:\KEIL_ARM_PACK\Keil\STM32F1xx_DFP\2.3.0\Device\Include -ID:\keil_arm\ARM\CMSIS\Include -D__MICROLIB -D__UVISION_VERSION=533 -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER --omf_browse=.\drvtimer.crf ..\Driver\src\drvtimer.c]
                           THUMB
 
+                          AREA ||i.TIM3_IRQHandler||, CODE, READONLY, ALIGN=2
+
+                  TIM3_IRQHandler PROC
+;;;95     #if 1
+;;;96     void TIM3_IRQHandler(void)
+000000  b510              PUSH     {r4,lr}
+;;;97     {
+;;;98     	if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET)
+000002  2101              MOVS     r1,#1
+000004  4806              LDR      r0,|L1.32|
+000006  f7fffffe          BL       TIM_GetITStatus
+00000a  b140              CBZ      r0,|L1.30|
+;;;99     	{
+;;;100    		TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
+00000c  2101              MOVS     r1,#1
+00000e  4804              LDR      r0,|L1.32|
+000010  f7fffffe          BL       TIM_ClearITPendingBit
+;;;101    		
+;;;102    		g_timer3_tick++;
+000014  4803              LDR      r0,|L1.36|
+000016  8800              LDRH     r0,[r0,#0]  ; g_timer3_tick
+000018  1c40              ADDS     r0,r0,#1
+00001a  4902              LDR      r1,|L1.36|
+00001c  8008              STRH     r0,[r1,#0]
+                  |L1.30|
+;;;103    //		if ((g_timer3_tick % 20) == 0)
+;;;104    //		{
+;;;105    //		//	printf("the t vale is %d\n",t);		
+;;;106    //		}
+;;;107    	}
+;;;108    }
+00001e  bd10              POP      {r4,pc}
+;;;109    #endif
+                          ENDP
+
+                  |L1.32|
+                          DCD      0x40000400
+                  |L1.36|
+                          DCD      g_timer3_tick
+
                           AREA ||i.timer_config||, CODE, READONLY, ALIGN=2
 
                   timer_config PROC
@@ -16,7 +56,7 @@
 ;;;24     	
 ;;;25     	if (timer_no == 3)
 000008  2e03              CMP      r6,#3
-00000a  d110              BNE      |L1.46|
+00000a  d110              BNE      |L2.46|
 ;;;26     	{
 ;;;27     		RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
 00000c  2101              MOVS     r1,#1
@@ -35,16 +75,16 @@
 ;;;33     		//timer_init_config.TIM_RepetitionCounter 	= 0x0000;//高级定时器使用
 ;;;34     		TIM_TimeBaseInit(TIM3, &timer_init_config);
 000026  4669              MOV      r1,sp
-000028  4801              LDR      r0,|L1.48|
+000028  4801              LDR      r0,|L2.48|
 00002a  f7fffffe          BL       TIM_TimeBaseInit
-                  |L1.46|
+                  |L2.46|
 ;;;35     	}
 ;;;36     }
 00002e  bdfe              POP      {r1-r7,pc}
 ;;;37     
                           ENDP
 
-                  |L1.48|
+                  |L2.48|
                           DCD      0x40000400
 
                           AREA ||i.timer_init||, CODE, READONLY, ALIGN=2
@@ -57,7 +97,7 @@
 000002  4604              MOV      r4,r0
 ;;;75     	if (timer_no == 3)
 000004  2c03              CMP      r4,#3
-000006  d10d              BNE      |L2.36|
+000006  d10d              BNE      |L3.36|
 ;;;76     	{
 ;;;77     		timer_config(timer_no, 4999, 7199);//计数满载5000 = 500ms;计数频率:72M/7200=10KHz
 000008  f641421f          MOV      r2,#0x1c1f
@@ -70,23 +110,23 @@
 ;;;79     		
 ;;;80     		TIM_Cmd(TIM3, ENABLE);//开启定时器
 00001c  2101              MOVS     r1,#1
-00001e  4803              LDR      r0,|L2.44|
+00001e  4803              LDR      r0,|L3.44|
 000020  f7fffffe          BL       TIM_Cmd
-                  |L2.36|
+                  |L3.36|
 ;;;81     	}
 ;;;82     	
 ;;;83     	g_timer3_tick = 0;
 000024  2000              MOVS     r0,#0
-000026  4902              LDR      r1,|L2.48|
+000026  4902              LDR      r1,|L3.48|
 000028  8008              STRH     r0,[r1,#0]
 ;;;84     }
 00002a  bd10              POP      {r4,pc}
 ;;;85     
                           ENDP
 
-                  |L2.44|
+                  |L3.44|
                           DCD      0x40000400
-                  |L2.48|
+                  |L3.48|
                           DCD      g_timer3_tick
 
                           AREA ||i.timer_nvic_config||, CODE, READONLY, ALIGN=2
@@ -101,7 +141,7 @@
 ;;;50     	
 ;;;51     	if (timer_no == 3)
 000004  2c03              CMP      r4,#3
-000006  d113              BNE      |L3.48|
+000006  d113              BNE      |L4.48|
 ;;;52     	{
 ;;;53     		//中断优先级 NVIC 设置
 ;;;54     		nvic_init_config.NVIC_IRQChannel 						= TIM3_IRQn; //TIM3 中断
@@ -123,9 +163,9 @@
 ;;;60     		TIM_ITConfig(TIM3, TIM_IT_Update, ENABLE);//允许更新中断
 000026  2201              MOVS     r2,#1
 000028  4611              MOV      r1,r2
-00002a  4802              LDR      r0,|L3.52|
+00002a  4802              LDR      r0,|L4.52|
 00002c  f7fffffe          BL       TIM_ITConfig
-                  |L3.48|
+                  |L4.48|
 ;;;61     	}
 ;;;62     }	
 000030  bd38              POP      {r3-r5,pc}
@@ -133,7 +173,7 @@
                           ENDP
 
 000032  0000              DCW      0x0000
-                  |L3.52|
+                  |L4.52|
                           DCD      0x40000400
 
                           AREA ||i.timer_test||, CODE, READONLY, ALIGN=2
@@ -144,13 +184,13 @@
 000000  b510              PUSH     {r4,lr}
 ;;;112    {
 ;;;113    	if (g_timer3_tick /= 2)
-000002  490f              LDR      r1,|L4.64|
+000002  490f              LDR      r1,|L5.64|
 000004  8808              LDRH     r0,[r1,#0]  ; g_timer3_tick
 000006  eb0071d0          ADD      r1,r0,r0,LSR #31
 00000a  1049              ASRS     r1,r1,#1
-00000c  4a0c              LDR      r2,|L4.64|
+00000c  4a0c              LDR      r2,|L5.64|
 00000e  8011              STRH     r1,[r2,#0]
-000010  b131              CBZ      r1,|L4.32|
+000010  b131              CBZ      r1,|L5.32|
 ;;;114    	{
 ;;;115    		Bsp_LedOn(0);
 000012  2000              MOVS     r0,#0
@@ -158,8 +198,8 @@
 ;;;116    		Bsp_LedOff(1);
 000018  2001              MOVS     r0,#1
 00001a  f7fffffe          BL       Bsp_LedOff
-00001e  e005              B        |L4.44|
-                  |L4.32|
+00001e  e005              B        |L5.44|
+                  |L5.32|
 ;;;117    	}
 ;;;118    	else 
 ;;;119    	{
@@ -169,25 +209,25 @@
 ;;;121    		Bsp_LedOff(0);
 000026  2000              MOVS     r0,#0
 000028  f7fffffe          BL       Bsp_LedOff
-                  |L4.44|
+                  |L5.44|
 ;;;122    	}
 ;;;123    	if (g_timer3_tick > 60000)
-00002c  4804              LDR      r0,|L4.64|
+00002c  4804              LDR      r0,|L5.64|
 00002e  8800              LDRH     r0,[r0,#0]  ; g_timer3_tick
 000030  f64e2160          MOV      r1,#0xea60
 000034  4288              CMP      r0,r1
-000036  dd02              BLE      |L4.62|
+000036  dd02              BLE      |L5.62|
 ;;;124    	{
 ;;;125    		g_timer3_tick = 0;
 000038  2000              MOVS     r0,#0
-00003a  4901              LDR      r1,|L4.64|
+00003a  4901              LDR      r1,|L5.64|
 00003c  8008              STRH     r0,[r1,#0]
-                  |L4.62|
+                  |L5.62|
 ;;;126    	}
 ;;;127    }
 00003e  bd10              POP      {r4,pc}
 ;;;128    
                           ENDP
 
-                  |L4.64|
+                  |L5.64|
                           DCD      g_timer3_tick

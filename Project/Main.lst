@@ -32290,7 +32290,7 @@ N
 N#endif	//__C_LANGUAGE_REGULAR_H__
 L 38 "..\User\src\Main.c" 2
 N#include "hcsr04.h"
-L 1 "..\Driver\src\hcsr04.h" 1
+L 1 "..\Driver\inc\hcsr04.h" 1
 N#ifndef __HCSR04_H__
 N#define __HCSR04_H__
 N
@@ -32371,7 +32371,7 @@ Nvoid INTX_ENABLE(void);	//开启所有中断
 Nvoid MSR_MSP(u32 addr);	//设置堆栈地址
 N
 N#endif
-L 5 "..\Driver\src\hcsr04.h" 2
+L 5 "..\Driver\inc\hcsr04.h" 2
 N
 Nextern u32 g_cap_distance;
 N
@@ -32380,6 +32380,55 @@ Nextern void hcsr04_read_distance(void);
 N
 N#endif
 L 39 "..\User\src\Main.c" 2
+N#include "drvrtc.h"
+L 1 "..\Driver\inc\drvrtc.h" 1
+N#ifndef __DRVRTC_H__
+N#define __DRVRTC_H__
+N
+N//时间结构体
+Ntypedef struct 
+N{
+N	u8 hour;
+N	u8 min;
+N	u8 sec;	
+N	
+N	//公历日月年周
+N	u16 w_year;
+N	u8  w_month;
+N	u8  w_date;
+N	u8  week;		 
+N}_calendar;					 
+Nextern _calendar calendar;	//日历结构体
+N
+Nstruct SET_ALARM
+N{
+N	s8 hour;
+N	s8 minute;
+N	u8 week;
+N};
+N
+Nextern u8 hour_x;
+Nextern u8 min_x;
+Nextern u8 sec_x;	
+N//公历日月年周
+Nextern u16 w_year_x;
+Nextern u8  w_month_x;
+Nextern u8  w_date_x;
+Nextern u8  week_x;	
+Nextern u8  g_time_flag;
+N    
+Nu8 RTC_Init_LSI(void);//初始化RTC,返回0,失败;1,成功;
+Nu8 RTC_Init_LSE(void);
+Nu8 Is_Leap_Year(u16 year);//平年,闰年判断
+Nu8 RTC_Alarm_Set(u16 syear,u8 smon,u8 sday,u8 hour,u8 min,u8 sec);
+Nu8 RTC_Get(void);         //更新时间   
+Nu8 RTC_Get_Week(u16 year,u8 month,u8 day);
+Nu8 RTC_Set(u16 syear,u8 smon,u8 sday,u8 hour,u8 min,u8 sec);//设置时间	
+Nvoid  get_time(void);
+N
+N#endif
+N
+L 40 "..\User\src\Main.c" 2
 N
 N
 N
@@ -32472,33 +32521,10 @@ S	ee_at24cxx_init();
 N#endif
 N}
 N
-N//超声波测试函数
-Nint main_hcr(void)
-N{
-N	delay_init();	    	 //延时函数初始化	
-N	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);// 设置中断优先级分组2
-X	NVIC_PriorityGroupConfig(((uint32_t)0x500));
-N	uart_init(1, 115200 * 8);	 //串口初始化为961200
-N	Bsp_LedInit();		  	 //初始化与LED连接的硬件接口 
-N	
-N	timer4_cap_init(0Xffff, 72 - 1);
-N	
-N	while (1)
-N	{
-N		hcsr04_read_distance();
-N		delay_ms(500);
-N		LED0 = 1;
-X		*((volatile unsigned long *)((((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) & 0xF0000000)+0x2000000+(((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) &0xFFFFF)<<5)+(8<<2)))) = 1;
-N		delay_ms(500);
-N		LED0 = 0;
-X		*((volatile unsigned long *)((((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) & 0xF0000000)+0x2000000+(((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) &0xFFFFF)<<5)+(8<<2)))) = 0;
-N		
-N		printf("g_cap_distance = %d \r\n", g_cap_distance);	//用串口1打印输出
-N	}
-N}
 N
 N
-Nint main(void)
+N
+Nint mainX(void)
 N{	
 N	Hardware_AllInit();
 N	
@@ -32568,6 +32594,100 @@ N//		printf("mcu reset ok\r\n");
 N//	}
 N		
 N	}
+N}
+N
+N//超声波测试函数
+Nint main_hcr(void)
+N{
+N	delay_init();	    	 //延时函数初始化	
+N	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);// 设置中断优先级分组2
+X	NVIC_PriorityGroupConfig(((uint32_t)0x500));
+N	uart_init(1, 115200 * 8);	 //串口初始化为961200
+N	Bsp_LedInit();		  	 //初始化与LED连接的硬件接口 
+N	
+N	timer4_cap_init(0Xffff, 72 - 1);
+N	
+N	while (1)
+N	{
+N		hcsr04_read_distance();
+N		delay_ms(500);
+N		LED0 = 1;
+X		*((volatile unsigned long *)((((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) & 0xF0000000)+0x2000000+(((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) &0xFFFFF)<<5)+(8<<2)))) = 1;
+N		delay_ms(500);
+N		LED0 = 0;
+X		*((volatile unsigned long *)((((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) & 0xF0000000)+0x2000000+(((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) &0xFFFFF)<<5)+(8<<2)))) = 0;
+N		
+N		printf("g_cap_distance = %d \r\n", g_cap_distance);	//用串口1打印输出
+N	}
+N}
+N
+N//RTC测试函数
+Nint main_rtc(void)
+N{
+N	u8 i = 0;
+N	
+N	delay_init();	    	 //延时函数初始化	
+N	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);// 设置中断优先级分组2
+X	NVIC_PriorityGroupConfig(((uint32_t)0x500));
+N	uart_init(1, 115200 * 8);	 //串口初始化为961200
+N	Bsp_LedInit();		  	 //初始化与LED连接的硬件接口 
+N
+N	RTC_Init_LSI(); //内部低速时钟
+N	while (1)
+N	{
+N		get_time();
+N		i++;
+N		if(i%100==0)
+N		{
+N			LED0 = !LED0;
+X			*((volatile unsigned long *)((((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) & 0xF0000000)+0x2000000+(((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) &0xFFFFF)<<5)+(8<<2)))) = ! *((volatile unsigned long *)((((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) & 0xF0000000)+0x2000000+(((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) &0xFFFFF)<<5)+(8<<2))));
+N		}
+N		delay_ms(10);
+N		if (g_time_flag)
+N		{
+N			g_time_flag = 0;
+N			printf("RTC Time:20%d-%d-%d %d:%d:%d\r\n",w_year_x, w_month_x, w_date_x, hour_x, min_x, sec_x);//输出时间	
+N		}
+N	}
+N}
+N
+N//超声波测试函数
+Nint main_timer(void)
+N{
+N	u8 i = 0;
+N	
+N	delay_init();	    	 //延时函数初始化	
+N	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);// 设置中断优先级分组2
+X	NVIC_PriorityGroupConfig(((uint32_t)0x500));
+N	uart_init(1, 115200 * 8);	 //串口初始化为961200
+N	Bsp_LedInit();		  	 //初始化与LED连接的硬件接口 
+N
+N	RTC_Init_LSI(); //内部低速时钟
+N	timer_init(3); //内部低速时钟
+N	while (1)
+N	{
+N		get_time();
+N		i++;
+N		if(i%100==0)
+N		{
+N			LED0 = !LED0;
+X			*((volatile unsigned long *)((((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) & 0xF0000000)+0x2000000+(((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) &0xFFFFF)<<5)+(8<<2)))) = ! *((volatile unsigned long *)((((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) & 0xF0000000)+0x2000000+(((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) &0xFFFFF)<<5)+(8<<2))));
+N		}
+N		delay_ms(10);
+N		if (g_timer3_tick == 10)	//5秒输出一次
+N		{
+N			g_timer3_tick = 0;
+N			LED1 = !LED1;
+X			*((volatile unsigned long *)((((((((uint32_t)0x40000000) + 0x10000) + 0x1400)+12) & 0xF0000000)+0x2000000+(((((((uint32_t)0x40000000) + 0x10000) + 0x1400)+12) &0xFFFFF)<<5)+(2<<2)))) = ! *((volatile unsigned long *)((((((((uint32_t)0x40000000) + 0x10000) + 0x1400)+12) & 0xF0000000)+0x2000000+(((((((uint32_t)0x40000000) + 0x10000) + 0x1400)+12) &0xFFFFF)<<5)+(2<<2))));
+N			printf("RTC Time:20%d-%d-%d %d:%d:%d\r\n",w_year_x, w_month_x, w_date_x, hour_x, min_x, sec_x);//输出时间	
+N		}
+N	}
+N}
+N
+Nint main(void)
+N{
+N//	main_rtc();
+N	main_timer();
 N}
 N
 N

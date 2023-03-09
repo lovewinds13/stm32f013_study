@@ -51,5 +51,6 @@
 .\main.o: D:\keil_arm\ARM\ARMCC\Bin\..\include\string.h
 .\main.o: ..\App\inc\logic_grammer.h
 .\main.o: ..\App\inc\c_language_regular.h
-.\main.o: ..\Driver\src\hcsr04.h
+.\main.o: ..\Driver\inc\hcsr04.h
 .\main.o: ..\Driver\inc\sys.h
+.\main.o: ..\Driver\inc\drvrtc.h

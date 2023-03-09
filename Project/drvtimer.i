@@ -13508,7 +13508,21 @@ void timer_init(uint8_t timer_no)
 
 
 
-#line 110 "..\\Driver\\src\\drvtimer.c"
+
+void TIM3_IRQHandler(void)
+{
+	if (TIM_GetITStatus(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)), ((uint16_t)0x0001)) != RESET)
+	{
+		TIM_ClearITPendingBit(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)), ((uint16_t)0x0001));
+		
+		g_timer3_tick++;
+
+
+
+
+	}
+}
+
 
 void timer_test(void)
 {

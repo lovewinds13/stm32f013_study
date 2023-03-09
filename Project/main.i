@@ -16116,7 +16116,7 @@ extern void heap_test(void);
 
 
 #line 38 "..\\User\\src\\Main.c"
-#line 1 "..\\Driver\\src\\hcsr04.h"
+#line 1 "..\\Driver\\inc\\hcsr04.h"
 
 
 
@@ -16183,7 +16183,7 @@ void INTX_DISABLE(void);
 void INTX_ENABLE(void);	
 void MSR_MSP(u32 addr);	
 
-#line 5 "..\\Driver\\src\\hcsr04.h"
+#line 5 "..\\Driver\\inc\\hcsr04.h"
 
 extern u32 g_cap_distance;
 
@@ -16191,6 +16191,54 @@ extern void timer4_cap_init(u16 timer_arr, u16 timer_psc);
 extern void hcsr04_read_distance(void);
 
 #line 39 "..\\User\\src\\Main.c"
+#line 1 "..\\Driver\\inc\\drvrtc.h"
+
+
+
+
+typedef struct 
+{
+	u8 hour;
+	u8 min;
+	u8 sec;	
+	
+	
+	u16 w_year;
+	u8  w_month;
+	u8  w_date;
+	u8  week;		 
+}_calendar;					 
+extern _calendar calendar;	
+
+struct SET_ALARM
+{
+	s8 hour;
+	s8 minute;
+	u8 week;
+};
+
+extern u8 hour_x;
+extern u8 min_x;
+extern u8 sec_x;	
+
+extern u16 w_year_x;
+extern u8  w_month_x;
+extern u8  w_date_x;
+extern u8  week_x;	
+extern u8  g_time_flag;
+    
+u8 RTC_Init_LSI(void);
+u8 RTC_Init_LSE(void);
+u8 Is_Leap_Year(u16 year);
+u8 RTC_Alarm_Set(u16 syear,u8 smon,u8 sday,u8 hour,u8 min,u8 sec);
+u8 RTC_Get(void);         
+u8 RTC_Get_Week(u16 year,u8 month,u8 day);
+u8 RTC_Set(u16 syear,u8 smon,u8 sday,u8 hour,u8 min,u8 sec);
+void  get_time(void);
+
+
+
+#line 40 "..\\User\\src\\Main.c"
 
 
 
@@ -16261,7 +16309,7 @@ void Hardware_AllInit(void)
 	printf("Hard --1 spi flash val is 0x%0X \r\n", ulFlashIdVal);
 	ulFlashIdVal = spi_flash_read_id();
 	printf("Hard --2 Spi flash val is 0x%0X \r\n", ulFlashIdVal);
-#line 122 "..\\User\\src\\Main.c"
+#line 123 "..\\User\\src\\Main.c"
 
 
 
@@ -16270,29 +16318,9 @@ void Hardware_AllInit(void)
 }
 
 
-int main_hcr(void)
-{
-	delay_init();	    	 
-	NVIC_PriorityGroupConfig(((uint32_t)0x500));
-	uart_init(1, 115200 * 8);	 
-	Bsp_LedInit();		  	 
-	
-	timer4_cap_init(0Xffff, 72 - 1);
-	
-	while (1)
-	{
-		hcsr04_read_distance();
-		delay_ms(500);
-		*((volatile unsigned long *)((((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) & 0xF0000000)+0x2000000+(((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) &0xFFFFF)<<5)+(8<<2)))) = 1;
-		delay_ms(500);
-		*((volatile unsigned long *)((((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) & 0xF0000000)+0x2000000+(((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) &0xFFFFF)<<5)+(8<<2)))) = 0;
-		
-		printf("g_cap_distance = %d \r\n", g_cap_distance);	
-	}
-}
 
 
-int main(void)
+int mainX(void)
 {	
 	Hardware_AllInit();
 	
@@ -16320,7 +16348,7 @@ int main(void)
 		printf(" hard spi flash val is 0x%0X \r\n", ulFlashIdVal);
 		W25_WriteReadBytes();
 
-#line 189 "..\\User\\src\\Main.c"
+#line 170 "..\\User\\src\\Main.c"
 
 
 
@@ -16352,6 +16380,92 @@ int main(void)
 
 		
 	}
+}
+
+
+int main_hcr(void)
+{
+	delay_init();	    	 
+	NVIC_PriorityGroupConfig(((uint32_t)0x500));
+	uart_init(1, 115200 * 8);	 
+	Bsp_LedInit();		  	 
+	
+	timer4_cap_init(0Xffff, 72 - 1);
+	
+	while (1)
+	{
+		hcsr04_read_distance();
+		delay_ms(500);
+		*((volatile unsigned long *)((((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) & 0xF0000000)+0x2000000+(((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) &0xFFFFF)<<5)+(8<<2)))) = 1;
+		delay_ms(500);
+		*((volatile unsigned long *)((((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) & 0xF0000000)+0x2000000+(((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) &0xFFFFF)<<5)+(8<<2)))) = 0;
+		
+		printf("g_cap_distance = %d \r\n", g_cap_distance);	
+	}
+}
+
+
+int main_rtc(void)
+{
+	u8 i = 0;
+	
+	delay_init();	    	 
+	NVIC_PriorityGroupConfig(((uint32_t)0x500));
+	uart_init(1, 115200 * 8);	 
+	Bsp_LedInit();		  	 
+
+	RTC_Init_LSI(); 
+	while (1)
+	{
+		get_time();
+		i++;
+		if(i%100==0)
+		{
+			*((volatile unsigned long *)((((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) & 0xF0000000)+0x2000000+(((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) &0xFFFFF)<<5)+(8<<2)))) = ! *((volatile unsigned long *)((((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) & 0xF0000000)+0x2000000+(((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) &0xFFFFF)<<5)+(8<<2))));
+		}
+		delay_ms(10);
+		if (g_time_flag)
+		{
+			g_time_flag = 0;
+			printf("RTC Time:20%d-%d-%d %d:%d:%d\r\n",w_year_x, w_month_x, w_date_x, hour_x, min_x, sec_x);
+		}
+	}
+}
+
+
+int main_timer(void)
+{
+	u8 i = 0;
+	
+	delay_init();	    	 
+	NVIC_PriorityGroupConfig(((uint32_t)0x500));
+	uart_init(1, 115200 * 8);	 
+	Bsp_LedInit();		  	 
+
+	RTC_Init_LSI(); 
+	timer_init(3); 
+	while (1)
+	{
+		get_time();
+		i++;
+		if(i%100==0)
+		{
+			*((volatile unsigned long *)((((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) & 0xF0000000)+0x2000000+(((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) &0xFFFFF)<<5)+(8<<2)))) = ! *((volatile unsigned long *)((((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) & 0xF0000000)+0x2000000+(((((((uint32_t)0x40000000) + 0x10000) + 0x0800)+12) &0xFFFFF)<<5)+(8<<2))));
+		}
+		delay_ms(10);
+		if (g_timer3_tick == 10)	
+		{
+			g_timer3_tick = 0;
+			*((volatile unsigned long *)((((((((uint32_t)0x40000000) + 0x10000) + 0x1400)+12) & 0xF0000000)+0x2000000+(((((((uint32_t)0x40000000) + 0x10000) + 0x1400)+12) &0xFFFFF)<<5)+(2<<2)))) = ! *((volatile unsigned long *)((((((((uint32_t)0x40000000) + 0x10000) + 0x1400)+12) & 0xF0000000)+0x2000000+(((((((uint32_t)0x40000000) + 0x10000) + 0x1400)+12) &0xFFFFF)<<5)+(2<<2))));
+			printf("RTC Time:20%d-%d-%d %d:%d:%d\r\n",w_year_x, w_month_x, w_date_x, hour_x, min_x, sec_x);
+		}
+	}
+}
+
+int main(void)
+{
+
+	main_timer();
 }
 
 

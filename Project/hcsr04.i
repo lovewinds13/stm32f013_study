@@ -1,5 +1,5 @@
 #line 1 "..\\Driver\\src\\hcsr04.c"
-#line 1 "..\\Driver\\src\\hcsr04.h"
+#line 1 "..\\Driver\\inc\\hcsr04.h"
 
 
 
@@ -13437,7 +13437,7 @@ void INTX_DISABLE(void);
 void INTX_ENABLE(void);	
 void MSR_MSP(u32 addr);	
 
-#line 5 "..\\Driver\\src\\hcsr04.h"
+#line 5 "..\\Driver\\inc\\hcsr04.h"
 
 extern u32 g_cap_distance;
 

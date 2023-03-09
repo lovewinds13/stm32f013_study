@@ -36,6 +36,7 @@
 #include "logic_grammer.h"
 #include "c_language_regular.h"
 #include "hcsr04.h"
+#include "drvrtc.h"
 
 
 
@@ -126,30 +127,10 @@ void Hardware_AllInit(void)
 #endif
 }
 
-//超声波测试函数
-int main_hcr(void)
-{
-	delay_init();	    	 //延时函数初始化	
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);// 设置中断优先级分组2
-	uart_init(1, 115200 * 8);	 //串口初始化为961200
-	Bsp_LedInit();		  	 //初始化与LED连接的硬件接口 
-	
-	timer4_cap_init(0Xffff, 72 - 1);
-	
-	while (1)
-	{
-		hcsr04_read_distance();
-		delay_ms(500);
-		LED0 = 1;
-		delay_ms(500);
-		LED0 = 0;
-		
-		printf("g_cap_distance = %d \r\n", g_cap_distance);	//用串口1打印输出
-	}
-}
 
 
-int main(void)
+
+int mainX(void)
 {	
 	Hardware_AllInit();
 	
@@ -217,6 +198,92 @@ int main(void)
 //	}
 		
 	}
+}
+
+//超声波测试函数
+int main_hcr(void)
+{
+	delay_init();	    	 //延时函数初始化	
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);// 设置中断优先级分组2
+	uart_init(1, 115200 * 8);	 //串口初始化为961200
+	Bsp_LedInit();		  	 //初始化与LED连接的硬件接口 
+	
+	timer4_cap_init(0Xffff, 72 - 1);
+	
+	while (1)
+	{
+		hcsr04_read_distance();
+		delay_ms(500);
+		LED0 = 1;
+		delay_ms(500);
+		LED0 = 0;
+		
+		printf("g_cap_distance = %d \r\n", g_cap_distance);	//用串口1打印输出
+	}
+}
+
+//RTC测试函数
+int main_rtc(void)
+{
+	u8 i = 0;
+	
+	delay_init();	    	 //延时函数初始化	
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);// 设置中断优先级分组2
+	uart_init(1, 115200 * 8);	 //串口初始化为961200
+	Bsp_LedInit();		  	 //初始化与LED连接的硬件接口 
+
+	RTC_Init_LSI(); //内部低速时钟
+	while (1)
+	{
+		get_time();
+		i++;
+		if(i%100==0)
+		{
+			LED0 = !LED0;
+		}
+		delay_ms(10);
+		if (g_time_flag)
+		{
+			g_time_flag = 0;
+			printf("RTC Time:20%d-%d-%d %d:%d:%d\r\n",w_year_x, w_month_x, w_date_x, hour_x, min_x, sec_x);//输出时间	
+		}
+	}
+}
+
+//超声波测试函数
+int main_timer(void)
+{
+	u8 i = 0;
+	
+	delay_init();	    	 //延时函数初始化	
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);// 设置中断优先级分组2
+	uart_init(1, 115200 * 8);	 //串口初始化为961200
+	Bsp_LedInit();		  	 //初始化与LED连接的硬件接口 
+
+	RTC_Init_LSI(); //内部低速时钟
+	timer_init(3); //内部低速时钟
+	while (1)
+	{
+		get_time();
+		i++;
+		if(i%100==0)
+		{
+			LED0 = !LED0;
+		}
+		delay_ms(10);
+		if (g_timer3_tick == 10)	//5秒输出一次
+		{
+			g_timer3_tick = 0;
+			LED1 = !LED1;
+			printf("RTC Time:20%d-%d-%d %d:%d:%d\r\n",w_year_x, w_month_x, w_date_x, hour_x, min_x, sec_x);//输出时间	
+		}
+	}
+}
+
+int main(void)
+{
+//	main_rtc();
+	main_timer();
 }
 
 

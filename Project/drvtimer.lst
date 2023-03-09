@@ -20799,20 +20799,22 @@ N//	日    期: 2020-04-14
 N//  备    注: 
 N//	作    者: by 霁风AI
 N//---------------------------------------------------------------------------------------------------------------------------------------------
-N#if 0
-Svoid TIM3_IRQHandler(void)
-S{
-S	if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET)
-S	{
-S		TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
-S		
-S		g_timer3_tick++;
-S//		if ((g_timer3_tick % 20) == 0)
-S//		{
-S//		//	printf("the t vale is %d\n",t);		
-S//		}
-S	}
-S}
+N#if 1
+Nvoid TIM3_IRQHandler(void)
+N{
+N	if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET)
+X	if (TIM_GetITStatus(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)), ((uint16_t)0x0001)) != RESET)
+N	{
+N		TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
+X		TIM_ClearITPendingBit(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)), ((uint16_t)0x0001));
+N		
+N		g_timer3_tick++;
+N//		if ((g_timer3_tick % 20) == 0)
+N//		{
+N//		//	printf("the t vale is %d\n",t);		
+N//		}
+N	}
+N}
 N#endif
 N
 Nvoid timer_test(void)

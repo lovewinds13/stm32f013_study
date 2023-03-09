@@ -35,349 +35,314 @@
                   |L1.32|
                           DCD      g_over_time
 
-                          AREA ||i.TIM3_IRQHandler||, CODE, READONLY, ALIGN=2
-
-                  TIM3_IRQHandler PROC
-;;;247    
-;;;248    void TIM3_IRQHandler(void)
-000000  b510              PUSH     {r4,lr}
-;;;249    {
-;;;250    	if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET)	//TIM3更新中断
-000002  2101              MOVS     r1,#1
-000004  4807              LDR      r0,|L2.36|
-000006  f7fffffe          BL       TIM_GetITStatus
-00000a  b148              CBZ      r0,|L2.32|
-;;;251    	{
-;;;252    		TIM_ClearITPendingBit(TIM3, TIM_IT_Update);	//清除TIM3中断标志
-00000c  2101              MOVS     r1,#1
-00000e  4805              LDR      r0,|L2.36|
-000010  f7fffffe          BL       TIM_ClearITPendingBit
-;;;253    		g_cnt_value = TIM_GetCounter(TIM2);	//捕获计数值(捕获时刻TIMx_CNT的值,未计满65536的数值)
-000014  f04f4080          MOV      r0,#0x40000000
-000018  f7fffffe          BL       TIM_GetCounter
-00001c  4902              LDR      r1,|L2.40|
-00001e  6008              STR      r0,[r1,#0]  ; g_cnt_value
-                  |L2.32|
-;;;254    	}
-;;;255    }
-000020  bd10              POP      {r4,pc}
-;;;256    
-                          ENDP
-
-000022  0000              DCW      0x0000
-                  |L2.36|
-                          DCD      0x40000400
-                  |L2.40|
-                          DCD      g_cnt_value
-
                           AREA ||i.TIM5_IRQHandler||, CODE, READONLY, ALIGN=2
 
                   TIM5_IRQHandler PROC
-;;;265    //---------------------------------------------------------------------------------------------------------------------------------------------
-;;;266    void TIM5_IRQHandler(void)
+;;;267    //---------------------------------------------------------------------------------------------------------------------------------------------
+;;;268    void TIM5_IRQHandler(void)
 000000  b510              PUSH     {r4,lr}
-;;;267    {
-;;;268    	if ((TIM_CAP_STA & 0x80) == 0)
-000002  4836              LDR      r0,|L3.220|
+;;;269    {
+;;;270    	if ((TIM_CAP_STA & 0x80) == 0)
+000002  4836              LDR      r0,|L2.220|
 000004  7800              LDRB     r0,[r0,#0]  ; TIM_CAP_STA
 000006  f0000080          AND      r0,r0,#0x80
 00000a  2800              CMP      r0,#0
-00000c  d161              BNE      |L3.210|
-;;;269    	{
-;;;270    		if (TIM_GetITStatus(TIM5, TIM_IT_Update) != RESET)	//定时器中断
+00000c  d161              BNE      |L2.210|
+;;;271    	{
+;;;272    		if (TIM_GetITStatus(TIM5, TIM_IT_Update) != RESET)	//定时器中断
 00000e  2101              MOVS     r1,#1
-000010  4833              LDR      r0,|L3.224|
+000010  4833              LDR      r0,|L2.224|
 000012  f7fffffe          BL       TIM_GetITStatus
-000016  b1b0              CBZ      r0,|L3.70|
-;;;271    		{
-;;;272    			if (TIM_CAP_STA & 0x40)	
-000018  4830              LDR      r0,|L3.220|
+000016  b1b0              CBZ      r0,|L2.70|
+;;;273    		{
+;;;274    			if (TIM_CAP_STA & 0x40)	
+000018  4830              LDR      r0,|L2.220|
 00001a  7800              LDRB     r0,[r0,#0]  ; TIM_CAP_STA
 00001c  f0000040          AND      r0,r0,#0x40
-000020  b188              CBZ      r0,|L3.70|
-;;;273    			{
-;;;274    				if ((TIM_CAP_STA & 0x3F) == 0x3F)	//高电平时间太长了,已经超出设计的范围(0x3F)
-000022  482e              LDR      r0,|L3.220|
+000020  b188              CBZ      r0,|L2.70|
+;;;275    			{
+;;;276    				if ((TIM_CAP_STA & 0x3F) == 0x3F)	//高电平时间太长了,已经超出设计的范围(0x3F)
+000022  482e              LDR      r0,|L2.220|
 000024  7800              LDRB     r0,[r0,#0]  ; TIM_CAP_STA
 000026  f000003f          AND      r0,r0,#0x3f
 00002a  283f              CMP      r0,#0x3f
-00002c  d106              BNE      |L3.60|
-;;;275    				{
-;;;276    					TIM_CAP_STA = 0x80;	//停止捕获
+00002c  d106              BNE      |L2.60|
+;;;277    				{
+;;;278    					TIM_CAP_STA = 0x80;	//停止捕获
 00002e  2080              MOVS     r0,#0x80
-000030  492a              LDR      r1,|L3.220|
+000030  492a              LDR      r1,|L2.220|
 000032  7008              STRB     r0,[r1,#0]
-;;;277    					g_timer_cap_value = 0;
+;;;279    					g_timer_cap_value = 0;
 000034  2000              MOVS     r0,#0
-000036  492b              LDR      r1,|L3.228|
+000036  492b              LDR      r1,|L2.228|
 000038  6008              STR      r0,[r1,#0]  ; g_timer_cap_value
-00003a  e004              B        |L3.70|
-                  |L3.60|
-;;;278    				}
-;;;279    				else 	//第一个上升沿已经捕获,但是第二个还未捕获
-;;;280    				{
-;;;281    					TIM_CAP_STA++;
-00003c  4827              LDR      r0,|L3.220|
+00003a  e004              B        |L2.70|
+                  |L2.60|
+;;;280    				}
+;;;281    				else 	//第一个上升沿已经捕获,但是第二个还未捕获
+;;;282    				{
+;;;283    					TIM_CAP_STA++;
+00003c  4827              LDR      r0,|L2.220|
 00003e  7800              LDRB     r0,[r0,#0]  ; TIM_CAP_STA
 000040  1c40              ADDS     r0,r0,#1
-000042  4926              LDR      r1,|L3.220|
+000042  4926              LDR      r1,|L2.220|
 000044  7008              STRB     r0,[r1,#0]
-                  |L3.70|
-;;;282    				}
-;;;283    			}
-;;;284    		}
-;;;285    		
-;;;286    		if (TIM_GetITStatus(TIM5, TIM_IT_CC1) != RESET)	//捕获中断
+                  |L2.70|
+;;;284    				}
+;;;285    			}
+;;;286    		}
+;;;287    		
+;;;288    		if (TIM_GetITStatus(TIM5, TIM_IT_CC1) != RESET)	//捕获中断
 000046  2102              MOVS     r1,#2
-000048  4825              LDR      r0,|L3.224|
+000048  4825              LDR      r0,|L2.224|
 00004a  f7fffffe          BL       TIM_GetITStatus
 00004e  2800              CMP      r0,#0
-000050  d03f              BEQ      |L3.210|
-;;;287    		{
-;;;288    			if (TIM_CAP_STA & 0x40)	//第二次上升沿捕获
-000052  4822              LDR      r0,|L3.220|
+000050  d03f              BEQ      |L2.210|
+;;;289    		{
+;;;290    			if (TIM_CAP_STA & 0x40)	//第二次上升沿捕获
+000052  4822              LDR      r0,|L2.220|
 000054  7800              LDRB     r0,[r0,#0]  ; TIM_CAP_STA
 000056  f0000040          AND      r0,r0,#0x40
-00005a  b360              CBZ      r0,|L3.182|
-;;;289    			{
-;;;290    				g_cap_value2 = TIM_GetCapture1(TIM5);
-00005c  4820              LDR      r0,|L3.224|
+00005a  b360              CBZ      r0,|L2.182|
+;;;291    			{
+;;;292    				g_cap_value2 = TIM_GetCapture1(TIM5);
+00005c  4820              LDR      r0,|L2.224|
 00005e  f7fffffe          BL       TIM_GetCapture1
-000062  4921              LDR      r1,|L3.232|
+000062  4921              LDR      r1,|L2.232|
 000064  8008              STRH     r0,[r1,#0]
-;;;291    				
-;;;292    				if ((g_cap_value2 > g_cap_value1) && (TIM_CAP_STA != 0x3F))	//高电平时长在0x3F的范围内
+;;;293    				
+;;;294    				if ((g_cap_value2 > g_cap_value1) && (TIM_CAP_STA != 0x3F))	//高电平时长在0x3F的范围内
 000066  4608              MOV      r0,r1
 000068  8800              LDRH     r0,[r0,#0]  ; g_cap_value2
-00006a  4920              LDR      r1,|L3.236|
+00006a  4920              LDR      r1,|L2.236|
 00006c  8809              LDRH     r1,[r1,#0]  ; g_cap_value1
 00006e  4288              CMP      r0,r1
-000070  dd0b              BLE      |L3.138|
-000072  481a              LDR      r0,|L3.220|
+000070  dd0b              BLE      |L2.138|
+000072  481a              LDR      r0,|L2.220|
 000074  7800              LDRB     r0,[r0,#0]  ; TIM_CAP_STA
 000076  283f              CMP      r0,#0x3f
-000078  d007              BEQ      |L3.138|
-;;;293    				{
-;;;294    					g_timer_cap_value = g_cap_value2 - g_cap_value1;
-00007a  481b              LDR      r0,|L3.232|
+000078  d007              BEQ      |L2.138|
+;;;295    				{
+;;;296    					g_timer_cap_value = g_cap_value2 - g_cap_value1;
+00007a  481b              LDR      r0,|L2.232|
 00007c  8800              LDRH     r0,[r0,#0]  ; g_cap_value2
-00007e  491b              LDR      r1,|L3.236|
+00007e  491b              LDR      r1,|L2.236|
 000080  8809              LDRH     r1,[r1,#0]  ; g_cap_value1
 000082  1a40              SUBS     r0,r0,r1
-000084  4917              LDR      r1,|L3.228|
+000084  4917              LDR      r1,|L2.228|
 000086  6008              STR      r0,[r1,#0]  ; g_timer_cap_value
-000088  e009              B        |L3.158|
-                  |L3.138|
-;;;295    				}
-;;;296    				else	//定时器溢出了,重新开始了计数
-;;;297    				{
-;;;298    					g_timer_cap_value = 0xFFFF - g_cap_value1 + g_cap_value2;
-00008a  4818              LDR      r0,|L3.236|
+000088  e009              B        |L2.158|
+                  |L2.138|
+;;;297    				}
+;;;298    				else	//定时器溢出了,重新开始了计数
+;;;299    				{
+;;;300    					g_timer_cap_value = 0xFFFF - g_cap_value1 + g_cap_value2;
+00008a  4818              LDR      r0,|L2.236|
 00008c  8800              LDRH     r0,[r0,#0]  ; g_cap_value1
 00008e  f64f71ff          MOV      r1,#0xffff
 000092  1a08              SUBS     r0,r1,r0
-000094  4914              LDR      r1,|L3.232|
+000094  4914              LDR      r1,|L2.232|
 000096  8809              LDRH     r1,[r1,#0]  ; g_cap_value2
 000098  4408              ADD      r0,r0,r1
-00009a  4912              LDR      r1,|L3.228|
+00009a  4912              LDR      r1,|L2.228|
 00009c  6008              STR      r0,[r1,#0]  ; g_timer_cap_value
-                  |L3.158|
-;;;299    				}
-;;;300    				
-;;;301    				TIM_CAP_STA |= 0x80;	//两次捕获完成
-00009e  480f              LDR      r0,|L3.220|
+                  |L2.158|
+;;;301    				}
+;;;302    				
+;;;303    				TIM_CAP_STA |= 0x80;	//两次捕获完成
+00009e  480f              LDR      r0,|L2.220|
 0000a0  7800              LDRB     r0,[r0,#0]  ; TIM_CAP_STA
 0000a2  f0400080          ORR      r0,r0,#0x80
-0000a6  490d              LDR      r1,|L3.220|
+0000a6  490d              LDR      r1,|L2.220|
 0000a8  7008              STRB     r0,[r1,#0]
-;;;302    				g_cap_cnt++;	//成功捕获的次数
-0000aa  4811              LDR      r0,|L3.240|
+;;;304    				g_cap_cnt++;	//成功捕获的次数
+0000aa  4811              LDR      r0,|L2.240|
 0000ac  7800              LDRB     r0,[r0,#0]  ; g_cap_cnt
 0000ae  1c40              ADDS     r0,r0,#1
-0000b0  490f              LDR      r1,|L3.240|
+0000b0  490f              LDR      r1,|L2.240|
 0000b2  7008              STRB     r0,[r1,#0]
-0000b4  e00d              B        |L3.210|
-                  |L3.182|
-;;;303    			}
-;;;304    			else 	//第一次上升沿捕获
-;;;305    			{
-;;;306    				g_cap_value1 = TIM_GetCapture1(TIM5);
-0000b6  480a              LDR      r0,|L3.224|
+0000b4  e00d              B        |L2.210|
+                  |L2.182|
+;;;305    			}
+;;;306    			else 	//第一次上升沿捕获
+;;;307    			{
+;;;308    				g_cap_value1 = TIM_GetCapture1(TIM5);
+0000b6  480a              LDR      r0,|L2.224|
 0000b8  f7fffffe          BL       TIM_GetCapture1
-0000bc  490b              LDR      r1,|L3.236|
+0000bc  490b              LDR      r1,|L2.236|
 0000be  8008              STRH     r0,[r1,#0]
-;;;307    				TIM_CAP_STA |= 0x40;	//捕获到第一个上升沿了
-0000c0  4806              LDR      r0,|L3.220|
+;;;309    				TIM_CAP_STA |= 0x40;	//捕获到第一个上升沿了
+0000c0  4806              LDR      r0,|L2.220|
 0000c2  7800              LDRB     r0,[r0,#0]  ; TIM_CAP_STA
 0000c4  f0400040          ORR      r0,r0,#0x40
-0000c8  4904              LDR      r1,|L3.220|
+0000c8  4904              LDR      r1,|L2.220|
 0000ca  7008              STRB     r0,[r1,#0]
-;;;308    				g_timer_cap_value = 0;
+;;;310    				g_timer_cap_value = 0;
 0000cc  2000              MOVS     r0,#0
-0000ce  4905              LDR      r1,|L3.228|
+0000ce  4905              LDR      r1,|L2.228|
 0000d0  6008              STR      r0,[r1,#0]  ; g_timer_cap_value
-                  |L3.210|
-;;;309    			}
-;;;310    		}
-;;;311    	}
-;;;312    	
-;;;313    	TIM_ClearITPendingBit(TIM5, TIM_IT_Update | TIM_IT_CC1);	//清除对应的中断标志位
+                  |L2.210|
+;;;311    			}
+;;;312    		}
+;;;313    	}
+;;;314    	
+;;;315    	TIM_ClearITPendingBit(TIM5, TIM_IT_Update | TIM_IT_CC1);	//清除对应的中断标志位
 0000d2  2103              MOVS     r1,#3
-0000d4  4802              LDR      r0,|L3.224|
+0000d4  4802              LDR      r0,|L2.224|
 0000d6  f7fffffe          BL       TIM_ClearITPendingBit
-;;;314    }
+;;;316    }
 0000da  bd10              POP      {r4,pc}
-;;;315    
+;;;317    
                           ENDP
 
-                  |L3.220|
+                  |L2.220|
                           DCD      TIM_CAP_STA
-                  |L3.224|
+                  |L2.224|
                           DCD      0x40000c00
-                  |L3.228|
+                  |L2.228|
                           DCD      g_timer_cap_value
-                  |L3.232|
+                  |L2.232|
                           DCD      g_cap_value2
-                  |L3.236|
+                  |L2.236|
                           DCD      g_cap_value1
-                  |L3.240|
+                  |L2.240|
                           DCD      g_cap_cnt
 
                           AREA ||i.freq_get_value||, CODE, READONLY, ALIGN=2
 
                   freq_get_value PROC
-;;;315    
-;;;316    void freq_get_value(uint8_t freq_rank)
+;;;317    
+;;;318    void freq_get_value(uint8_t freq_rank)
 000000  e92d41f0          PUSH     {r4-r8,lr}
-;;;317    {
+;;;319    {
 000004  4604              MOV      r4,r0
-;;;318    	uint8_t temp_value = freq_rank;
+;;;320    	uint8_t temp_value = freq_rank;
 000006  4626              MOV      r6,r4
-;;;319    //	uint32_t freq_buff[10] = {0};
-;;;320    	uint8_t i = 0;
+;;;321    //	uint32_t freq_buff[10] = {0};
+;;;322    	uint8_t i = 0;
 000008  2500              MOVS     r5,#0
-;;;321    	float freq_value = 0.0;
+;;;323    	float freq_value = 0.0;
 00000a  2700              MOVS     r7,#0
-;;;322    	
-;;;323    	if (temp_value == 0)
+;;;324    	
+;;;325    	if (temp_value == 0)
 00000c  2e00              CMP      r6,#0
-00000e  d17d              BNE      |L4.268|
-;;;324    	{
-;;;325    		TIM_ITConfig(TIM2, TIM_IT_Update, DISABLE);
+00000e  d17d              BNE      |L3.268|
+;;;326    	{
+;;;327    		TIM_ITConfig(TIM2, TIM_IT_Update, DISABLE);
 000010  2200              MOVS     r2,#0
 000012  2101              MOVS     r1,#1
 000014  0788              LSLS     r0,r1,#30
 000016  f7fffffe          BL       TIM_ITConfig
-;;;326    		TIM_Cmd(TIM2, DISABLE);
+;;;328    		TIM_Cmd(TIM2, DISABLE);
 00001a  2100              MOVS     r1,#0
 00001c  f04f4080          MOV      r0,#0x40000000
 000020  f7fffffe          BL       TIM_Cmd
-;;;327    		
-;;;328    		TIM_ITConfig(TIM3, TIM_IT_Update, DISABLE);
+;;;329    		
+;;;330    		TIM_ITConfig(TIM3, TIM_IT_Update, DISABLE);
 000024  2200              MOVS     r2,#0
 000026  2101              MOVS     r1,#1
-000028  485b              LDR      r0,|L4.408|
+000028  485b              LDR      r0,|L3.408|
 00002a  f7fffffe          BL       TIM_ITConfig
-;;;329    		TIM_Cmd(TIM3, DISABLE);
+;;;331    		TIM_Cmd(TIM3, DISABLE);
 00002e  2100              MOVS     r1,#0
-000030  4859              LDR      r0,|L4.408|
+000030  4859              LDR      r0,|L3.408|
 000032  f7fffffe          BL       TIM_Cmd
-;;;330    		
-;;;331    		freq_gpio_input_config();
+;;;332    		
+;;;333    		freq_gpio_input_config();
 000036  f7fffffe          BL       freq_gpio_input_config
-;;;332    		timer_counter_config(5, 0xFFFF, 17);	//计数频率 = 72/17 = 4MHz
+;;;334    		timer_counter_config(5, 0xFFFF, 17);	//计数频率 = 72/17 = 4MHz
 00003a  2211              MOVS     r2,#0x11
 00003c  f64f71ff          MOV      r1,#0xffff
 000040  2005              MOVS     r0,#5
 000042  f7fffffe          BL       timer_counter_config
-;;;333    		timer_counter_nvic_config(5);
+;;;335    		timer_counter_nvic_config(5);
 000046  2005              MOVS     r0,#5
 000048  f7fffffe          BL       timer_counter_nvic_config
-;;;334    		timer_capture_config(5);
+;;;336    		timer_capture_config(5);
 00004c  2005              MOVS     r0,#5
 00004e  f7fffffe          BL       timer_capture_config
-;;;335    		TIM_Cmd(TIM5, ENABLE);	//定时器使能
+;;;337    		TIM_Cmd(TIM5, ENABLE);	//定时器使能
 000052  2101              MOVS     r1,#1
-000054  4851              LDR      r0,|L4.412|
+000054  4851              LDR      r0,|L3.412|
 000056  f7fffffe          BL       TIM_Cmd
-;;;336    		
-;;;337    		if (TIM_CAP_STA & 0x80)
-00005a  4851              LDR      r0,|L4.416|
+;;;338    		
+;;;339    		if (TIM_CAP_STA & 0x80)
+00005a  4851              LDR      r0,|L3.416|
 00005c  7800              LDRB     r0,[r0,#0]  ; TIM_CAP_STA
 00005e  f0000080          AND      r0,r0,#0x80
 000062  2800              CMP      r0,#0
-000064  d019              BEQ      |L4.154|
-;;;338    		{
-;;;339    			if (g_cap_cnt < 10)	//捕获10次,减少误差
-000066  484f              LDR      r0,|L4.420|
+000064  d019              BEQ      |L3.154|
+;;;340    		{
+;;;341    			if (g_cap_cnt < 10)	//捕获10次,减少误差
+000066  484f              LDR      r0,|L3.420|
 000068  7800              LDRB     r0,[r0,#0]  ; g_cap_cnt
 00006a  280a              CMP      r0,#0xa
-00006c  da2c              BGE      |L4.200|
-;;;340    			{
-;;;341    				if ((g_cap_value2 > g_cap_value1) && (TIM_CAP_STA & 0x3F) != 0x3F)
-00006e  484e              LDR      r0,|L4.424|
+00006c  da2c              BGE      |L3.200|
+;;;342    			{
+;;;343    				if ((g_cap_value2 > g_cap_value1) && (TIM_CAP_STA & 0x3F) != 0x3F)
+00006e  484e              LDR      r0,|L3.424|
 000070  8800              LDRH     r0,[r0,#0]  ; g_cap_value2
-000072  494e              LDR      r1,|L4.428|
+000072  494e              LDR      r1,|L3.428|
 000074  8809              LDRH     r1,[r1,#0]  ; g_cap_value1
 000076  4288              CMP      r0,r1
-000078  dd10              BLE      |L4.156|
-00007a  4849              LDR      r0,|L4.416|
+000078  dd10              BLE      |L3.156|
+00007a  4849              LDR      r0,|L3.416|
 00007c  7800              LDRB     r0,[r0,#0]  ; TIM_CAP_STA
 00007e  f000003f          AND      r0,r0,#0x3f
 000082  283f              CMP      r0,#0x3f
-000084  d00a              BEQ      |L4.156|
-;;;342    				{
-;;;343    					g_freq_buff[g_cap_cnt] = g_cap_value2 - g_cap_value1;	//捕获一次,暂存一次数值
-000086  4848              LDR      r0,|L4.424|
+000084  d00a              BEQ      |L3.156|
+;;;344    				{
+;;;345    					g_freq_buff[g_cap_cnt] = g_cap_value2 - g_cap_value1;	//捕获一次,暂存一次数值
+000086  4848              LDR      r0,|L3.424|
 000088  8800              LDRH     r0,[r0,#0]  ; g_cap_value2
-00008a  4948              LDR      r1,|L4.428|
+00008a  4948              LDR      r1,|L3.428|
 00008c  8809              LDRH     r1,[r1,#0]  ; g_cap_value1
 00008e  1a40              SUBS     r0,r0,r1
-000090  4947              LDR      r1,|L4.432|
-000092  4a44              LDR      r2,|L4.420|
+000090  4947              LDR      r1,|L3.432|
+000092  4a44              LDR      r2,|L3.420|
 000094  7812              LDRB     r2,[r2,#0]  ; g_cap_cnt
 000096  f8410022          STR      r0,[r1,r2,LSL #2]
-                  |L4.154|
-00009a  e07a              B        |L4.402|
-                  |L4.156|
-;;;344    				}
-;;;345    				else 
-;;;346    				{
-;;;347    					g_freq_buff[g_cap_cnt] = 65536 * ((TIM_CAP_STA & 0x3F) - 1) + (65536 - g_cap_value1 + g_cap_value2);
-00009c  4843              LDR      r0,|L4.428|
+                  |L3.154|
+00009a  e07a              B        |L3.402|
+                  |L3.156|
+;;;346    				}
+;;;347    				else 
+;;;348    				{
+;;;349    					g_freq_buff[g_cap_cnt] = 65536 * ((TIM_CAP_STA & 0x3F) - 1) + (65536 - g_cap_value1 + g_cap_value2);
+00009c  4843              LDR      r0,|L3.428|
 00009e  8800              LDRH     r0,[r0,#0]  ; g_cap_value1
 0000a0  f5c03080          RSB      r0,r0,#0x10000
-0000a4  4940              LDR      r1,|L4.424|
+0000a4  4940              LDR      r1,|L3.424|
 0000a6  8809              LDRH     r1,[r1,#0]  ; g_cap_value2
 0000a8  4401              ADD      r1,r1,r0
-0000aa  483d              LDR      r0,|L4.416|
+0000aa  483d              LDR      r0,|L3.416|
 0000ac  7800              LDRB     r0,[r0,#0]  ; TIM_CAP_STA
 0000ae  f000003f          AND      r0,r0,#0x3f
 0000b2  1e40              SUBS     r0,r0,#1
 0000b4  f44f3280          MOV      r2,#0x10000
 0000b8  fb021000          MLA      r0,r2,r0,r1
-0000bc  493c              LDR      r1,|L4.432|
-0000be  4a39              LDR      r2,|L4.420|
+0000bc  493c              LDR      r1,|L3.432|
+0000be  4a39              LDR      r2,|L3.420|
 0000c0  7812              LDRB     r2,[r2,#0]  ; g_cap_cnt
 0000c2  f8410022          STR      r0,[r1,r2,LSL #2]
-0000c6  e064              B        |L4.402|
-                  |L4.200|
-;;;348    				}
-;;;349    			}
-;;;350    			else 
-;;;351    			{
-;;;352    				bubble_sort(g_freq_buff, 10);	//排序
+0000c6  e064              B        |L3.402|
+                  |L3.200|
+;;;350    				}
+;;;351    			}
+;;;352    			else 
+;;;353    			{
+;;;354    				bubble_sort(g_freq_buff, 10);	//排序
 0000c8  210a              MOVS     r1,#0xa
-0000ca  4839              LDR      r0,|L4.432|
+0000ca  4839              LDR      r0,|L3.432|
 0000cc  f7fffffe          BL       bubble_sort
-;;;353    			
-;;;354    				for (i = 0; i < 8; i++)
+;;;355    			
+;;;356    				for (i = 0; i < 8; i++)
 0000d0  2500              MOVS     r5,#0
-0000d2  e00a              B        |L4.234|
-                  |L4.212|
-;;;355    				{
-;;;356    					g_freq_buff[0] += g_freq_buff[i+1];	//去掉最大,最小值
-0000d4  4836              LDR      r0,|L4.432|
+0000d2  e00a              B        |L3.234|
+                  |L3.212|
+;;;357    				{
+;;;358    					g_freq_buff[0] += g_freq_buff[i+1];	//去掉最大,最小值
+0000d4  4836              LDR      r0,|L3.432|
 0000d6  4602              MOV      r2,r0
 0000d8  6801              LDR      r1,[r0,#0]  ; g_freq_buff
 0000da  1c68              ADDS     r0,r5,#1
@@ -385,146 +350,146 @@
 0000e0  4408              ADD      r0,r0,r1
 0000e2  4611              MOV      r1,r2
 0000e4  6008              STR      r0,[r1,#0]  ; g_freq_buff
-0000e6  1c68              ADDS     r0,r5,#1              ;354
-0000e8  b2c5              UXTB     r5,r0                 ;354
-                  |L4.234|
-0000ea  2d08              CMP      r5,#8                 ;354
-0000ec  dbf2              BLT      |L4.212|
-;;;357    				}
-;;;358    				
-;;;359    				freq_value = g_freq_buff[0] / 8;	//得到8次捕获的平均值
-0000ee  4930              LDR      r1,|L4.432|
+0000e6  1c68              ADDS     r0,r5,#1              ;356
+0000e8  b2c5              UXTB     r5,r0                 ;356
+                  |L3.234|
+0000ea  2d08              CMP      r5,#8                 ;356
+0000ec  dbf2              BLT      |L3.212|
+;;;359    				}
+;;;360    				
+;;;361    				freq_value = g_freq_buff[0] / 8;	//得到8次捕获的平均值
+0000ee  4930              LDR      r1,|L3.432|
 0000f0  6809              LDR      r1,[r1,#0]  ; g_freq_buff
 0000f2  08c8              LSRS     r0,r1,#3
 0000f4  f7fffffe          BL       __aeabi_ui2f
 0000f8  4607              MOV      r7,r0
-;;;360    				
-;;;361    				freq_value = 1 / (freq_value / 4000000);	//计算频率(f=1/T)
-0000fa  492e              LDR      r1,|L4.436|
+;;;362    				
+;;;363    				freq_value = 1 / (freq_value / 4000000);	//计算频率(f=1/T)
+0000fa  492e              LDR      r1,|L3.436|
 0000fc  4638              MOV      r0,r7
 0000fe  f7fffffe          BL       __aeabi_fdiv
 000102  4680              MOV      r8,r0
 000104  4641              MOV      r1,r8
 000106  f04f507e          MOV      r0,#0x3f800000
-00010a  e000              B        |L4.270|
-                  |L4.268|
-00010c  e00e              B        |L4.300|
-                  |L4.270|
+00010a  e000              B        |L3.270|
+                  |L3.268|
+00010c  e00e              B        |L3.300|
+                  |L3.270|
 00010e  f7fffffe          BL       __aeabi_fdiv
 000112  4607              MOV      r7,r0
-;;;362    				
-;;;363    				//显示部分
-;;;364    				//printf("freq_value = %f \r\n", freq_value);
-;;;365    				
-;;;366    				TIM_CAP_STA = 0;	//一次测量结束,相关变量清0
+;;;364    				
+;;;365    				//显示部分
+;;;366    				//printf("freq_value = %f \r\n", freq_value);
+;;;367    				
+;;;368    				TIM_CAP_STA = 0;	//一次测量结束,相关变量清0
 000114  2000              MOVS     r0,#0
-000116  4922              LDR      r1,|L4.416|
+000116  4922              LDR      r1,|L3.416|
 000118  7008              STRB     r0,[r1,#0]
-;;;367    				g_cap_cnt = 0;
-00011a  4922              LDR      r1,|L4.420|
+;;;369    				g_cap_cnt = 0;
+00011a  4922              LDR      r1,|L3.420|
 00011c  7008              STRB     r0,[r1,#0]
-;;;368    				g_cap_value1 = 0;
-00011e  4923              LDR      r1,|L4.428|
+;;;370    				g_cap_value1 = 0;
+00011e  4923              LDR      r1,|L3.428|
 000120  8008              STRH     r0,[r1,#0]
-;;;369    				g_cap_value2 = 0;
-000122  4921              LDR      r1,|L4.424|
+;;;371    				g_cap_value2 = 0;
+000122  4921              LDR      r1,|L3.424|
 000124  8008              STRH     r0,[r1,#0]
-;;;370    				g_timer_cap_value = 0;
-000126  4924              LDR      r1,|L4.440|
+;;;372    				g_timer_cap_value = 0;
+000126  4924              LDR      r1,|L3.440|
 000128  6008              STR      r0,[r1,#0]  ; g_timer_cap_value
-00012a  e032              B        |L4.402|
-                  |L4.300|
-;;;371    			}
-;;;372    		}
-;;;373    	}
-;;;374    	else if (freq_rank == 1)
+00012a  e032              B        |L3.402|
+                  |L3.300|
+;;;373    			}
+;;;374    		}
+;;;375    	}
+;;;376    	else if (freq_rank == 1)
 00012c  2c01              CMP      r4,#1
-00012e  d130              BNE      |L4.402|
-;;;375    	{
-;;;376    		freq_value = g_cnt_value + g_over_time * 65536;
-000130  4922              LDR      r1,|L4.444|
+00012e  d130              BNE      |L3.402|
+;;;377    	{
+;;;378    		freq_value = g_cnt_value + g_over_time * 65536;
+000130  4922              LDR      r1,|L3.444|
 000132  8809              LDRH     r1,[r1,#0]  ; g_over_time
-000134  4a22              LDR      r2,|L4.448|
+000134  4a22              LDR      r2,|L3.448|
 000136  6812              LDR      r2,[r2,#0]  ; g_cnt_value
 000138  eb024001          ADD      r0,r2,r1,LSL #16
 00013c  f7fffffe          BL       __aeabi_ui2f
 000140  4607              MOV      r7,r0
-;;;377    		
-;;;378    		TIM_Cmd(TIM3, DISABLE);
+;;;379    		
+;;;380    		TIM_Cmd(TIM3, DISABLE);
 000142  2100              MOVS     r1,#0
-000144  4814              LDR      r0,|L4.408|
+000144  4814              LDR      r0,|L3.408|
 000146  f7fffffe          BL       TIM_Cmd
-;;;379    		TIM_ITConfig(TIM3, TIM_IT_Update, DISABLE);
+;;;381    		TIM_ITConfig(TIM3, TIM_IT_Update, DISABLE);
 00014a  2200              MOVS     r2,#0
 00014c  2101              MOVS     r1,#1
-00014e  4812              LDR      r0,|L4.408|
+00014e  4812              LDR      r0,|L3.408|
 000150  f7fffffe          BL       TIM_ITConfig
-;;;380    		
-;;;381    		TIM_Cmd(TIM2, DISABLE);
+;;;382    		
+;;;383    		TIM_Cmd(TIM2, DISABLE);
 000154  2100              MOVS     r1,#0
 000156  07a0              LSLS     r0,r4,#30
 000158  f7fffffe          BL       TIM_Cmd
-;;;382    		TIM_ITConfig(TIM2, TIM_IT_Update, DISABLE);
+;;;384    		TIM_ITConfig(TIM2, TIM_IT_Update, DISABLE);
 00015c  2200              MOVS     r2,#0
 00015e  2101              MOVS     r1,#1
 000160  0788              LSLS     r0,r1,#30
 000162  f7fffffe          BL       TIM_ITConfig
-;;;383    		TIM_SetCounter(TIM2, 0);
+;;;385    		TIM_SetCounter(TIM2, 0);
 000166  2100              MOVS     r1,#0
 000168  07a0              LSLS     r0,r4,#30
 00016a  f7fffffe          BL       TIM_SetCounter
-;;;384    		
-;;;385    		TIM_Cmd(TIM3, ENABLE);
+;;;386    		
+;;;387    		TIM_Cmd(TIM3, ENABLE);
 00016e  2101              MOVS     r1,#1
-000170  4809              LDR      r0,|L4.408|
+000170  4809              LDR      r0,|L3.408|
 000172  f7fffffe          BL       TIM_Cmd
-;;;386    		TIM_ITConfig(TIM3, TIM_IT_Update, ENABLE);
+;;;388    		TIM_ITConfig(TIM3, TIM_IT_Update, ENABLE);
 000176  2201              MOVS     r2,#1
 000178  4611              MOV      r1,r2
-00017a  4807              LDR      r0,|L4.408|
+00017a  4807              LDR      r0,|L3.408|
 00017c  f7fffffe          BL       TIM_ITConfig
-;;;387    		
-;;;388    		TIM_Cmd(TIM2, ENABLE);
+;;;389    		
+;;;390    		TIM_Cmd(TIM2, ENABLE);
 000180  2101              MOVS     r1,#1
 000182  0788              LSLS     r0,r1,#30
 000184  f7fffffe          BL       TIM_Cmd
-;;;389    		TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
+;;;391    		TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
 000188  2201              MOVS     r2,#1
 00018a  4611              MOV      r1,r2
 00018c  0790              LSLS     r0,r2,#30
 00018e  f7fffffe          BL       TIM_ITConfig
-                  |L4.402|
-;;;390    		
-;;;391    		//显示部分处理
-;;;392    		//printf();
-;;;393    	}
-;;;394    }
+                  |L3.402|
+;;;392    		
+;;;393    		//显示部分处理
+;;;394    		//printf();
+;;;395    	}
+;;;396    }
 000192  e8bd81f0          POP      {r4-r8,pc}
-;;;395    
+;;;397    
                           ENDP
 
 000196  0000              DCW      0x0000
-                  |L4.408|
+                  |L3.408|
                           DCD      0x40000400
-                  |L4.412|
+                  |L3.412|
                           DCD      0x40000c00
-                  |L4.416|
+                  |L3.416|
                           DCD      TIM_CAP_STA
-                  |L4.420|
+                  |L3.420|
                           DCD      g_cap_cnt
-                  |L4.424|
+                  |L3.424|
                           DCD      g_cap_value2
-                  |L4.428|
+                  |L3.428|
                           DCD      g_cap_value1
-                  |L4.432|
+                  |L3.432|
                           DCD      g_freq_buff
-                  |L4.436|
+                  |L3.436|
                           DCD      0x4a742400
-                  |L4.440|
+                  |L3.440|
                           DCD      g_timer_cap_value
-                  |L4.444|
+                  |L3.444|
                           DCD      g_over_time
-                  |L4.448|
+                  |L3.448|
                           DCD      g_cnt_value
 
                           AREA ||i.freq_gpio_input_config||, CODE, READONLY, ALIGN=2
@@ -550,12 +515,12 @@
 ;;;45     	
 ;;;46     	GPIO_Init(FREQ_GPIO_PORT, &gpio_config);	//初始化GPIO参数
 000016  4669              MOV      r1,sp
-000018  4803              LDR      r0,|L5.40|
+000018  4803              LDR      r0,|L4.40|
 00001a  f7fffffe          BL       GPIO_Init
 ;;;47     	
 ;;;48     	GPIO_ResetBits(FREQ_GPIO_PORT, FREQ_INPUT_IO);	//设置 PA0 初始状态为低电平
 00001e  2101              MOVS     r1,#1
-000020  4801              LDR      r0,|L5.40|
+000020  4801              LDR      r0,|L4.40|
 000022  f7fffffe          BL       GPIO_ResetBits
 ;;;49     	
 ;;;50     	return;
@@ -564,7 +529,7 @@
 ;;;52     	
                           ENDP
 
-                  |L5.40|
+                  |L4.40|
                           DCD      0x40010800
 
                           AREA ||i.timer_capture_config||, CODE, READONLY, ALIGN=2
@@ -582,29 +547,29 @@
 ;;;205    	
 ;;;206    	switch (temp_value)
 000006  2d06              CMP      r5,#6
-000008  d21b              BCS      |L6.66|
+000008  d21b              BCS      |L5.66|
 00000a  e8dff005          TBB      [pc,r5]
 00000e  0304              DCB      0x03,0x04
 000010  05060708          DCB      0x05,0x06,0x07,0x08
 ;;;207    	{
 ;;;208    		case 0:
 ;;;209    			break;
-000014  e016              B        |L6.68|
+000014  e016              B        |L5.68|
 ;;;210    		case 1:
 ;;;211    			break;
-000016  e015              B        |L6.68|
+000016  e015              B        |L5.68|
 ;;;212    		case 2:
 ;;;213    			break;
-000018  e014              B        |L6.68|
+000018  e014              B        |L5.68|
 ;;;214    		case 3:
 ;;;215    		{
 ;;;216    		
 ;;;217    		}
 ;;;218    		break;
-00001a  e013              B        |L6.68|
+00001a  e013              B        |L5.68|
 ;;;219    		case 4:
 ;;;220    			break;
-00001c  e012              B        |L6.68|
+00001c  e012              B        |L5.68|
 ;;;221    		case 5:
 ;;;222    		{
 ;;;223    			timer_ic_init.TIM_Channel		= TIM_Channel_1;	//输入端选择IC1映射到TI1上
@@ -623,16 +588,16 @@
 ;;;228    			
 ;;;229    			TIM_ICInit(TIM5, &timer_ic_init);	//初始化TIM5输入捕获参数
 000038  4669              MOV      r1,sp
-00003a  4803              LDR      r0,|L6.72|
+00003a  4803              LDR      r0,|L5.72|
 00003c  f7fffffe          BL       TIM_ICInit
 ;;;230    		}
 ;;;231    		break;
-000040  e000              B        |L6.68|
-                  |L6.66|
+000040  e000              B        |L5.68|
+                  |L5.66|
 ;;;232    		default:
 ;;;233    			break;
 000042  bf00              NOP      
-                  |L6.68|
+                  |L5.68|
 000044  bf00              NOP                            ;209
 ;;;234    	}
 ;;;235    	
@@ -642,7 +607,7 @@
 ;;;238    
                           ENDP
 
-                  |L6.72|
+                  |L5.72|
                           DCD      0x40000c00
 
                           AREA ||i.timer_counter_config||, CODE, READONLY, ALIGN=2
@@ -662,17 +627,17 @@
 ;;;69     	
 ;;;70     	switch (temp_value)
 00000a  2f06              CMP      r7,#6
-00000c  d267              BCS      |L7.222|
+00000c  d267              BCS      |L6.222|
 00000e  e8dff007          TBB      [pc,r7]
 000012  0304              DCB      0x03,0x04
 000014  0536664f          DCB      0x05,0x36,0x66,0x4f
 ;;;71     	{
 ;;;72     		case 0:
 ;;;73     			break;
-000018  e062              B        |L7.224|
+000018  e062              B        |L6.224|
 ;;;74     		case 1:
 ;;;75     			break;
-00001a  e061              B        |L7.224|
+00001a  e061              B        |L6.224|
 ;;;76     		case 2:
 ;;;77     		{
 ;;;78     			RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);	//使能定时器2的时钟
@@ -726,7 +691,7 @@
 000078  f7fffffe          BL       TIM_Cmd
 ;;;96     		}
 ;;;97     		break;
-00007c  e030              B        |L7.224|
+00007c  e030              B        |L6.224|
 ;;;98     		case 3:
 ;;;99     		{
 ;;;100    			RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);	//使能定时器3的时钟
@@ -735,7 +700,7 @@
 000082  f7fffffe          BL       RCC_APB1PeriphClockCmd
 ;;;101    			
 ;;;102    			TIM_DeInit(TIM3);	//复位定时器2的参数值
-000086  4817              LDR      r0,|L7.228|
+000086  4817              LDR      r0,|L6.228|
 000088  f7fffffe          BL       TIM_DeInit
 ;;;103    			
 ;;;104    			timer_init.TIM_Period			= timer_arr;	//设置重装数值
@@ -750,7 +715,7 @@
 ;;;108    			
 ;;;109    			TIM_TimeBaseInit(TIM3, &timer_init);	//初始化定时器2的参数
 00009e  4669              MOV      r1,sp
-0000a0  4810              LDR      r0,|L7.228|
+0000a0  4810              LDR      r0,|L6.228|
 0000a2  f7fffffe          BL       TIM_TimeBaseInit
 ;;;110    			
 ;;;111    		#if 0
@@ -762,7 +727,7 @@
 ;;;117    		#endif
 ;;;118    			TIM_Cmd(TIM3, ENABLE);	//定时器使能
 0000a6  2101              MOVS     r1,#1
-0000a8  480e              LDR      r0,|L7.228|
+0000a8  480e              LDR      r0,|L6.228|
 0000aa  f7fffffe          BL       TIM_Cmd
 ;;;119    		}
 ;;;120    		case 5:
@@ -785,13 +750,13 @@
 ;;;128    			
 ;;;129    			TIM_TimeBaseInit(TIM5, &timer_init);	//初始化定时器5的参数
 0000ca  4669              MOV      r1,sp
-0000cc  4806              LDR      r0,|L7.232|
+0000cc  4806              LDR      r0,|L6.232|
 0000ce  f7fffffe          BL       TIM_TimeBaseInit
 ;;;130    			
 ;;;131    			TIM_ITConfig(TIM5, TIM_IT_Update | TIM_IT_CC1, ENABLE);	//TIM5允许更新中断和CC1IE捕获中断
 0000d2  2201              MOVS     r2,#1
 0000d4  2103              MOVS     r1,#3
-0000d6  4804              LDR      r0,|L7.232|
+0000d6  4804              LDR      r0,|L6.232|
 0000d8  f7fffffe          BL       TIM_ITConfig
 ;;;132    			
 ;;;133    		#if 0
@@ -799,13 +764,13 @@
 ;;;135    		#endif
 ;;;136    		}
 ;;;137    		break;
-0000dc  e000              B        |L7.224|
-                  |L7.222|
+0000dc  e000              B        |L6.224|
+                  |L6.222|
 ;;;138    		
 ;;;139    		default:
 ;;;140    			break;
 0000de  bf00              NOP      
-                  |L7.224|
+                  |L6.224|
 0000e0  bf00              NOP                            ;73
 ;;;141    	}
 ;;;142    	return;
@@ -814,9 +779,9 @@
 ;;;144    
                           ENDP
 
-                  |L7.228|
+                  |L6.228|
                           DCD      0x40000400
-                  |L7.232|
+                  |L6.232|
                           DCD      0x40000c00
 
                           AREA ||i.timer_counter_nvic_config||, CODE, READONLY, ALIGN=1
@@ -834,7 +799,7 @@
 ;;;159    	
 ;;;160    	if (temp_value == 2)
 000006  2d02              CMP      r5,#2
-000008  d10e              BNE      |L8.40|
+000008  d10e              BNE      |L7.40|
 ;;;161    	{
 ;;;162    		nvic_config.NVIC_IRQChannel						= TIM2_IRQn;	//TIM2中断
 00000a  201c              MOVS     r0,#0x1c
@@ -851,12 +816,12 @@
 ;;;167    		NVIC_Init(&nvic_config);	//初始化NVIC配置参数
 000020  4668              MOV      r0,sp
 000022  f7fffffe          BL       NVIC_Init
-000026  e021              B        |L8.108|
-                  |L8.40|
+000026  e021              B        |L7.108|
+                  |L7.40|
 ;;;168    	}
 ;;;169    	else if (temp_value == 3)
 000028  2d03              CMP      r5,#3
-00002a  d10e              BNE      |L8.74|
+00002a  d10e              BNE      |L7.74|
 ;;;170    	{
 ;;;171    		nvic_config.NVIC_IRQChannel						= TIM3_IRQn;	//TIM3中断
 00002c  201d              MOVS     r0,#0x1d
@@ -873,12 +838,12 @@
 ;;;176    		NVIC_Init(&nvic_config);	//初始化NVIC配置参数
 000042  4668              MOV      r0,sp
 000044  f7fffffe          BL       NVIC_Init
-000048  e010              B        |L8.108|
-                  |L8.74|
+000048  e010              B        |L7.108|
+                  |L7.74|
 ;;;177    	}
 ;;;178    	else if (temp_value == 5)
 00004a  2d05              CMP      r5,#5
-00004c  d10e              BNE      |L8.108|
+00004c  d10e              BNE      |L7.108|
 ;;;179    	{
 ;;;180    		nvic_config.NVIC_IRQChannel						= TIM5_IRQn;	//TIM5中断
 00004e  2032              MOVS     r0,#0x32
@@ -896,7 +861,7 @@
 ;;;185    		NVIC_Init(&nvic_config);	//初始化NVIC配置参数
 000066  4668              MOV      r0,sp
 000068  f7fffffe          BL       NVIC_Init
-                  |L8.108|
+                  |L7.108|
 ;;;186    	}
 ;;;187    	
 ;;;188    	return;

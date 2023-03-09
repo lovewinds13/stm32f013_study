@@ -1,6 +1,6 @@
 L 1 "..\Driver\src\hcsr04.c"
 N#include "hcsr04.h"
-L 1 "..\Driver\src\hcsr04.h" 1
+L 1 "..\Driver\inc\hcsr04.h" 1
 N#ifndef __HCSR04_H__
 N#define __HCSR04_H__
 N
@@ -28952,7 +28952,7 @@ Nvoid INTX_ENABLE(void);	//开启所有中断
 Nvoid MSR_MSP(u32 addr);	//设置堆栈地址
 N
 N#endif
-L 5 "..\Driver\src\hcsr04.h" 2
+L 5 "..\Driver\inc\hcsr04.h" 2
 N
 Nextern u32 g_cap_distance;
 N

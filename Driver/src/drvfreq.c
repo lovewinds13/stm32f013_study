@@ -245,6 +245,7 @@ void TIM2_IRQHandler(void)
 	}
 }
 
+#if 0
 void TIM3_IRQHandler(void)
 {
 	if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET)	//TIM3更新中断
@@ -253,6 +254,7 @@ void TIM3_IRQHandler(void)
 		g_cnt_value = TIM_GetCounter(TIM2);	//捕获计数值(捕获时刻TIMx_CNT的值,未计满65536的数值)
 	}
 }
+#endif
 
 //---------------------------------------------------------------------------------------------------------------------------------------------
 //	函 数 名: TIM5_IRQHandler
